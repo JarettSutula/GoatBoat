@@ -14,7 +14,7 @@ Branching on this project is inspired by the Gitflow method of branching. The ma
 Before merging a branch to dev or main, developers must create a pull request. Each pull request must be reviewed by and meet the standards of two team members other than the developer who authored the pull request.
 
 # Project Summary
-Goat Boat is a web application that dynamically pairs students with tutors.
+Goat Boat is a web application that dynamically pairs students with tutors. When signing up for the service, both students and tutors will be asked to share a few, select details about themselves. Their responses allow our team to find ideal pairs that we guarantee will lead to a better academic experience for our users.
 
 # Prerequisites
 
