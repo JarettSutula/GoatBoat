@@ -3,9 +3,9 @@
 To connect students with mentors to foster academic growth
 
 # Hill Statements
-1. By filling out a short form, a struggling student can find an effective and relatable tutor to study with.
-2. A tutor should be able to find students to assist at just the touch of a button.
-3. All students at a university should have ease of access to educational resources with no extra cost to the school.
+1. In one minute, a student can find an effective and relatable tutor to study with.
+2. A tutor should be able to connect with students at just the touch of a button.
+3. A university can subscribe to the service on behalf of students, reducing labor cost.
 4. Our team is committed to keeping up-to-date with changing educational circumstances even in a post-pandemic world.
 
 # Branches
