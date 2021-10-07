@@ -14,7 +14,7 @@
 - Master branch
 - Development branch (pulled from latest Master)
 - Feature branch (pulled from the latest Development branch)
-- When a Feature is completed, members will delete the branch and push it to Dev.
+- When a Feature is completed, members will push it to Dev, have it approved and pushed to Main, and then remove it.
 - Any request from Dev has to be approved by the group before pushing to Master in order to keep it clean.
 
 **Repercussions:**
