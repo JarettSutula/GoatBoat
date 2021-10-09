@@ -16,6 +16,9 @@ Before merging a branch to dev or main, developers must create a pull request. E
 # Project Summary
 Goat Boat is a web application that dynamically pairs students with tutors. When signing up for the service, both students and tutors will be asked to share a few, select details about themselves. Their responses allow our team to find ideal pairs that we guarantee will lead to a better academic experience for our users.
 
+# High Level Design
+![Goat Boat Mentoring Architecture](docs/images/architecture.png)
+
 # Prerequisites
 
 # Installation
