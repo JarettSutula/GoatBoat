@@ -437,12 +437,44 @@ definitions:
         type: "string"
       major:
         type: "string"
-      isMentor: 
-        type: "integer"
+      lookingForMentor:
+        type: "array"
+        items:
+          type: "string"
+      lookingToMentor:
+        type: "array"
+        items:
+          type: "string"
       mentors:
-        type: "string"
+        type: "array"
+        items:
+          type: "object"
+          properties:
+            username:
+              type: "string"
+            class:
+              type: "string"
       students:
-        type: "string"
+        type: "array"
+        items:
+          type: "object"
+          properties:
+            username:
+              type: "string"
+            class:
+              type: "string"
+      schedule:
+        type: "array"
+        items:
+          type: "object"
+          properties:
+            day:
+              type: "object"
+              properties:
+                startTime: 
+                  type: "integer"
+                endTime:
+                  type: "integer"
     xml:
       name: "User"
   ApiResponse:
