@@ -25,21 +25,79 @@ paths:
     post:
       tags:
       - "user"
-      summary: "Create user"
+      summary: "Creates a user"
       description: "This can only be done by the logged in user."
       operationId: "createUser"
       produces:
       - "application/json"
       parameters:
-      - in: "body"
-        name: "body"
+      - name: "body"
+        in: "body"
         description: "Created user object"
         required: true
         schema:
           $ref: "#/definitions/User"
       responses:
         default:
-          description: "successful operation"
+          description: "Successful operation"
+  /user/details:
+    post:
+      tags:
+      - "user"
+      summary: "Updates active user's account information"
+      description: ""
+      operationId: "updateUser"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "body"
+        in: "body"
+        description: "Updated user object"
+        required: true
+        schema:
+          $ref: "#/definitions/User"
+      responses:
+        default:
+          description: "Successful operation"
+  /user/{username}:
+    get:
+      tags:
+      - "user"
+      summary: "Get user by username"
+      operationId: "getUser"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "username"
+        in: "path"
+        description: "The username that needs to be fetched"
+        required: true
+        type: "string"
+      responses:
+        "200":
+          description: "Successful operation"
+          schema:
+            $ref: "#/definitions/User"
+        "400":
+          description: "Invalid username supplied"
+  /user/suggestions:
+    get:
+      tags:
+      - "user"
+      summary: "Get server generated suggested connections for this user"
+      operationId: "getSuggestions"
+      produces:
+      - "application/json"
+      responses:
+        "200":
+          description: "Successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/User"
+        "400":
+          description: ""
+  /user/login:
     get:
       tags:
       - "user"
@@ -75,327 +133,6 @@ paths:
               description: "date in UTC when token expires"
         "400":
           description: "Invalid username/password supplied"
-  /user/profile/{username}:
-    get:
-      tags:
-      - "user"
-      summary: "Get all details of a user profile"
-      description: ""
-      operationId: "getProfile"
-      produces:
-      - "application/json"
-      parameters:
-      - name: "username"
-        in: "path"
-        description: "The name that needs to be fetched. Use user1 for testing. "
-        required: true
-        type: "string"
-      responses:
-        "200":
-          description: "successful operation"
-          schema:
-            $ref: "#/definitions/User"
-        "400":
-          description: "Invalid username supplied"
-        "404":
-          description: "User not found"
-  /user/profile/{username}/{detail}:
-    get:
-      tags:
-      - "user"
-      summary: "Get a specific field in a user profile"
-      description: ""
-      operationId: "getProfileDetail"
-      produces:
-      - "application/json"
-      parameters:
-      - name: "username"
-        in: "path"
-        description: "The name that needs to be fetched. Use user1 for testing. "
-        required: true
-        type: "string"
-      - name: "detail"
-        in: "path"
-        description: "The field that needs to be fetched from the user profile."
-        required: true
-        type: "string"
-      responses:
-        "200":
-          description: "successful operation"
-          schema:
-            $ref: "#/definitions/User"
-        "400":
-          description: "Invalid username supplied"
-        "404":
-          description: "User not found"
-    post:
-      tags:
-      - "user"
-      summary: "Get a specific field in a user profile"
-      description: ""
-      operationId: "postProfileDetail"
-      produces:
-      - "application/json"
-      parameters:
-      - name: "username"
-        in: "path"
-        description: "The name that needs to be fetched. Use user1 for testing. "
-        required: true
-        type: "string"
-      - name: "detail"
-        in: "path"
-        description: "The field that needs to be fetched from the user profile."
-        required: true
-        type: "string"
-      responses:
-        "200":
-          description: "successful operation"
-          schema:
-            $ref: "#/definitions/User"
-        "400":
-          description: "Invalid username supplied"
-        "404":
-          description: "User not found"
-  /user/{username}/courseRequests:
-    get:
-      tags:
-      - "user"
-      summary: "Get courses a user needs assistance in"
-      description: ""
-      operationId: "getCourseRequests"
-      produces:
-      - "application/json"
-      parameters:
-      - name: "username"
-        in: "path"
-        description: "The name that needs to be fetched. Use user1 for testing. "
-        required: true
-        type: "string"
-      responses:
-        "200":
-          description: "successful operation"
-          schema:
-            $ref: "#/definitions/User"
-        "204":
-          description: "This user has no course requests"
-        "400":
-          description: "Invalid username supplied"
-        "404":
-          description: "User not found"
-    post:
-      tags:
-      - "user"
-      summary: "Add a new course a user needs assistance in"
-      description: ""
-      operationId: "postCourseRequests"
-      produces:
-      - "application/json"
-      parameters:
-      - name: "username"
-        in: "path"
-        description: "The name that needs to be fetched. Use user1 for testing. "
-        required: true
-        type: "string"
-      responses:
-        "200":
-          description: "successful operation"
-          schema:
-            $ref: "#/definitions/User"
-        "400":
-          description: "Invalid username supplied"
-        "404":
-          description: "User not found"
-  /user/{username}/courseOfferings:
-    get:
-      tags:
-      - "user"
-      summary: "Get courses a user is offering assistance in"
-      description: ""
-      operationId: "getCourseOfferings"
-      produces:
-      - "application/json"
-      parameters:
-      - name: "username"
-        in: "path"
-        description: "The name that needs to be fetched. Use user1 for testing. "
-        required: true
-        type: "string"
-      responses:
-        "200":
-          description: "successful operation"
-          schema:
-            $ref: "#/definitions/User"
-        "204":
-          description: "This user has no course requests"
-        "400":
-          description: "Invalid username supplied"
-        "404":
-          description: "User not found"
-    post:
-      tags:
-      - "user"
-      summary: "Add a new course a user is offering assistance in"
-      description: ""
-      operationId: "postCourseOfferings"
-      produces:
-      - "application/json"
-      parameters:
-      - name: "username"
-        in: "path"
-        description: "The name that needs to be fetched. Use user1 for testing. "
-        required: true
-        type: "string"
-      responses:
-        "200":
-          description: "successful operation"
-          schema:
-            $ref: "#/definitions/User"
-        "400":
-          description: "Invalid username supplied"
-        "404":
-          description: "User not found"
-  /user/{username}/connections:
-    get:
-      tags:
-      - "user"
-      summary: "Gets all of a user's connections"
-      description: ""
-      operationId: "getConnections"
-      produces:
-      - "application/json"
-      parameters:
-      - name: "username"
-        in: "path"
-        description: "The name that needs to be fetched. Use user1 for testing. "
-        required: true
-        type: "string"
-      responses:
-        "200":
-          description: "successful operation"
-          schema:
-            $ref: "#/definitions/User"
-        "400":
-          description: "Invalid username supplied"
-        "404":
-          description: "User not found"
-    post:
-      tags:
-      - "user"
-      summary: "Post a new connection for a userr"
-      description: ""
-      operationId: "postConnection"
-      produces:
-      - "application/json"
-      parameters:
-      - name: "username"
-        in: "path"
-        description: "The name that needs to be fetched. Use user1 for testing. "
-        required: true
-        type: "string"
-      responses:
-        "200":
-          description: "successful operation"
-          schema:
-            $ref: "#/definitions/User"
-        "400":
-          description: "Invalid username supplied"
-        "404":
-          description: "User not found"
-  /user/{username}/suggestions:
-    get:
-      tags:
-      - "user"
-      summary: "Get server generated suggested connections for a user"
-      description: ""
-      operationId: "getSuggestions"
-      produces:
-      - "application/json"
-      parameters:
-      - name: "username"
-        in: "path"
-        description: "The name that needs to be fetched. Use user1 for testing. "
-        required: true
-        type: "string"
-      responses:
-        "200":
-          description: "successful operation"
-          schema:
-            $ref: "#/definitions/User"
-        "400":
-          description: "Invalid username supplied"
-        "404":
-          description: "User not found"
-  /user/{username}/like:
-    get:
-      tags:
-      - "user"
-      summary: "Get all users a user has shown interest in connecting with"
-      description: ""
-      operationId: "getLikes"
-      produces:
-      - "application/json"
-      parameters:
-      - name: "username"
-        in: "path"
-        description: "The name that needs to be fetched. Use user1 for testing. "
-        required: true
-        type: "string"
-      responses:
-        "200":
-          description: "successful operation"
-          schema:
-            $ref: "#/definitions/User"
-        "400":
-          description: "Invalid username supplied"
-        "404":
-          description: "User not found"
-    post:
-      tags:
-      - "user"
-      summary: "Post a new user to the current user's liked accounts"
-      description: ""
-      operationId: "postLike"
-      produces:
-      - "application/json"
-      parameters:
-      - name: "username"
-        in: "path"
-        description: "The name that needs to be fetched. Use user1 for testing. "
-        required: true
-        type: "string"
-      responses:
-        "200":
-          description: "successful operation"
-          schema:
-            $ref: "#/definitions/User"
-        "400":
-          description: "Invalid username supplied"
-        "404":
-          description: "User not found"
-  /user/{username}/pass:
-    post:
-      tags:
-      - "user"
-      summary: "Post a user to this user's list of passed on accounts"
-      description: ""
-      operationId: "postPass"
-      produces:
-      - "application/json"
-      parameters:
-      - name: "username"
-        in: "path"
-        description: "The name that needs to be fetched. Use user1 for testing. "
-        required: true
-        type: "string"
-      responses:
-        "200":
-          description: "successful operation"
-          schema:
-            $ref: "#/definitions/User"
-        "400":
-          description: "Invalid username supplied"
-        "404":
-          description: "User not found"
   /user/logout:
     get:
       tags:
@@ -405,22 +142,32 @@ paths:
       operationId: "logoutUser"
       produces:
       - "application/json"
-      parameters: []
       responses:
         default:
-          description: "successful operation"
-securityDefinitions:
-  goatboat_auth:
-    type: "oauth2"
-    authorizationUrl: "http://github.com/crav12345/GoatBoat"
-    flow: "implicit"
-    scopes:
-      write:details: "modify details in your account"
-      read:details: "read your account details"
-  api_key:
-    type: "apiKey"
-    name: "api_key"
-    in: "header"
+          description: "Successful operation"
+  /{like|pass}/{username}:
+    post:
+      tags:
+      - "like/pass"
+      summary: "Adds to the list of users this user has asked to connect with or ignore"
+      description: ""
+      operationId: "likeOrPass"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "like|pass"
+        in: "path"
+        description: "The boolean to determine whether the user wants to connect"
+        required: true
+        type: "boolean"
+      - name: "username"
+        in: "path"
+        description: "The user that is being liked or passed on"
+        required: true
+        type: "string"
+      responses:
+        default:
+          description: "Successful operation (need to add a match object to respond with)"
 definitions:
   User:
     type: "object"
@@ -475,8 +222,17 @@ definitions:
                   type: "integer"
                 endTime:
                   type: "integer"
-    xml:
-      name: "User"
+  Course:
+    type: "object"
+    properties:
+      name:
+        type: "string"
+      day:
+        type: "string"
+      startTime:
+        type: "integer"
+      endTime:
+        type: "integer"
   ApiResponse:
     type: "object"
     properties:
