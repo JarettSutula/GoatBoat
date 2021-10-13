@@ -216,12 +216,9 @@ definitions:
           type: "object"
           properties:
             day:
-              type: "object"
-              properties:
-                startTime: 
-                  type: "integer"
-                endTime:
-                  type: "integer"
+              type: "array"
+              items:
+                $ref: "#/definitions/Course"
   Course:
     type: "object"
     properties:
@@ -233,13 +230,3 @@ definitions:
         type: "integer"
       endTime:
         type: "integer"
-  ApiResponse:
-    type: "object"
-    properties:
-      code:
-        type: "integer"
-        format: "int32"
-      type:
-        type: "string"
-      message:
-        type: "string"
