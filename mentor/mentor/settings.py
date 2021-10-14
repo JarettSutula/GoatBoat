@@ -74,12 +74,14 @@ WSGI_APPLICATION = 'mentor.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
+# Not using django database settings - everything handled on utils.py using pymongo
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'pymongo',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
 
 
 # Password validation
