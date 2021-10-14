@@ -5,7 +5,7 @@ from django.http import HttpResponse
 
 
 def homePageView(request):
-    return HttpResponse('Hello, World!')
+    return HttpResponse('Welcome to Marist Mentoring!')
 
 
 def userSucess(request):
