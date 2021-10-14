@@ -6,6 +6,7 @@ db_handle, users = start_db()
 
 
 CLASS_CHOICES = [
+    ('none', ''),   
     ('cmpt120', 'CMPT 120'),
     ('cmpt220', 'CMPT 220'),
     ('cmpt221', 'CMPT 221'),
