@@ -1,0 +1,232 @@
+swagger: "2.0"
+info:
+  description: "This is the API definition for the team Goat Boat mentor pairing     app.  You can find out more about Goat Boat and our app at                     [http://github.com/crav12345/GoatBoat](http://github.com/crav12345/GoatBoat)."
+  version: "1.0.0"
+  title: "Goat Boat Mentor Connections"
+  termsOfService: "http://swagger.io/terms/"
+  contact:
+    email: "christopher.ravosa1@marist.edu"
+  license:
+    name: "Apache 2.0"
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+host: "github.com"
+basePath: "/crav12345/GoatBoat"
+tags:
+- name: "user"
+  description: "Everything a user can do with their account"
+  externalDocs:
+    description: "Find out more"
+    url: "http://github.com/crav12345/GoatBoat"
+schemes:
+- "https"
+- "http"
+paths:
+  /user:
+    post:
+      tags:
+      - "user"
+      summary: "Creates a user"
+      description: "This can only be done by the logged in user."
+      operationId: "createUser"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "body"
+        in: "body"
+        description: "Created user object"
+        required: true
+        schema:
+          $ref: "#/definitions/User"
+      responses:
+        default:
+          description: "Successful operation"
+  /user/details:
+    post:
+      tags:
+      - "user"
+      summary: "Updates active user's account information"
+      description: ""
+      operationId: "updateUser"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "body"
+        in: "body"
+        description: "Updated user object"
+        required: true
+        schema:
+          $ref: "#/definitions/User"
+      responses:
+        default:
+          description: "Successful operation"
+  /user/{username}:
+    get:
+      tags:
+      - "user"
+      summary: "Get user by username"
+      operationId: "getUser"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "username"
+        in: "path"
+        description: "The username that needs to be fetched"
+        required: true
+        type: "string"
+      responses:
+        "200":
+          description: "Successful operation"
+          schema:
+            $ref: "#/definitions/User"
+        "400":
+          description: "Invalid username supplied"
+  /user/suggestions:
+    get:
+      tags:
+      - "user"
+      summary: "Get server generated suggested connections for this user"
+      operationId: "getSuggestions"
+      produces:
+      - "application/json"
+      responses:
+        "200":
+          description: "Successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/User"
+        "400":
+          description: ""
+  /user/login:
+    get:
+      tags:
+      - "user"
+      summary: "Logs user into the system"
+      description: ""
+      operationId: "loginUser"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "username"
+        in: "query"
+        description: "The user name for login"
+        required: true
+        type: "string"
+      - name: "password"
+        in: "query"
+        description: "The password for login in clear text"
+        required: true
+        type: "string"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            type: "string"
+          headers:
+            X-Rate-Limit:
+              type: "integer"
+              format: "int32"
+              description: "calls per hour allowed by the user"
+            X-Expires-After:
+              type: "string"
+              format: "date-time"
+              description: "date in UTC when token expires"
+        "400":
+          description: "Invalid username/password supplied"
+  /user/logout:
+    get:
+      tags:
+      - "user"
+      summary: "Logs out current logged in user session"
+      description: ""
+      operationId: "logoutUser"
+      produces:
+      - "application/json"
+      responses:
+        default:
+          description: "Successful operation"
+  /{like|pass}/{username}:
+    post:
+      tags:
+      - "like/pass"
+      summary: "Adds to the list of users this user has asked to connect with or ignore"
+      description: ""
+      operationId: "likeOrPass"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "like|pass"
+        in: "path"
+        description: "The boolean to determine whether the user wants to connect"
+        required: true
+        type: "boolean"
+      - name: "username"
+        in: "path"
+        description: "The user that is being liked or passed on"
+        required: true
+        type: "string"
+      responses:
+        default:
+          description: "Successful operation (need to add a match object to respond with)"
+definitions:
+  User:
+    type: "object"
+    properties:
+      username:
+        type: "string"
+      firstName:
+        type: "string"
+      lastName:
+        type: "string"
+      email:
+        type: "string"
+      profession:
+        type: "string"
+      major:
+        type: "string"
+      lookingForMentor:
+        type: "array"
+        items:
+          type: "string"
+      lookingToMentor:
+        type: "array"
+        items:
+          type: "string"
+      mentors:
+        type: "array"
+        items:
+          type: "object"
+          properties:
+            username:
+              type: "string"
+            class:
+              type: "string"
+      students:
+        type: "array"
+        items:
+          type: "object"
+          properties:
+            username:
+              type: "string"
+            class:
+              type: "string"
+      schedule:
+        type: "array"
+        items:
+          type: "object"
+          properties:
+            day:
+              type: "array"
+              items:
+                $ref: "#/definitions/Course"
+  Course:
+    type: "object"
+    properties:
+      name:
+        type: "string"
+      day:
+        type: "string"
+      startTime:
+        type: "integer"
+      endTime:
+        type: "integer"
