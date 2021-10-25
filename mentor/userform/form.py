@@ -44,7 +44,7 @@ class LogInForm(forms.Form):
     password = forms.CharField(max_length=50)
 
 
-def form(request):
+def create_user_form(request):
     submitted = False
     if request.method == 'POST':
         form = UserForm(request.POST)
@@ -82,7 +82,7 @@ def form(request):
     return render(request, 'form.html', {'form': form, 'submitted': submitted})
 
 
-def loginform(request):
+def login_form(request):
     submitted = False
     if request.method == 'POST':
         form = LogInForm(request.POST)
