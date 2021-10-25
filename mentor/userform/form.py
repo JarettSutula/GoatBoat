@@ -39,6 +39,7 @@ class UserForm(forms.Form):
     mentorclasschoice= forms.CharField(label='What class are you looking to tutor for?', widget=forms.Select(choices=CLASS_CHOICES))
     menteeclasschoice= forms.CharField(label='What class are you looking for help in?', widget=forms.Select(choices=CLASS_CHOICES))
 
+
 def form(request):
     submitted = False
     if request.method == 'POST':
@@ -54,7 +55,8 @@ def form(request):
             mentorclasschoice = form.cleaned_data.get("mentorclasschoice")
             menteeclasschoice = form.cleaned_data.get("menteeclasschoice")
 
-            context= { 'firstname': firstname, 
+            context= { 'username': username,
+                       'firstname': firstname,
                        'lastname':lastname,
                        'email':email,
                        'profession':profession,
