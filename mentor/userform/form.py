@@ -2,8 +2,9 @@ from django import forms
 from userform.models import UserForm, LogInForm
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
-from utils import start_db
-db_handle, users = start_db()
+from utils import start_db, collection_link
+db_handle = start_db()
+users = collection_link(db_handle, 'users')
 
 
 def create_user_form(request):

@@ -1,5 +1,6 @@
-from utils import start_db
-db_handle, users = start_db()
+from utils import start_db, collection_link
+db_handle= start_db()
+users = collection_link(db_handle, 'users')
 
 test_new = {
     'firstName': 'testing',
