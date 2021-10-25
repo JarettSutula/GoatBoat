@@ -41,7 +41,7 @@ class UserForm(forms.Form):
 
 class LogInForm(forms.Form):
     username = forms.CharField(max_length=100, label='User Name')
-    password = models.CharField(max_length=50)
+    password = forms.CharField(max_length=50)
 
 
 def form(request):
@@ -89,22 +89,10 @@ def loginform(request):
         if form.is_valid():
             cd = form.cleaned_data
             username = form.cleaned_data.get("username")
-            firstname = form.cleaned_data.get("firstname")
-            lastname = form.cleaned_data.get("lastname")
-            email = form.cleaned_data.get("email")
-            profession = form.cleaned_data.get("profession")
-            major = form.cleaned_data.get("major")
-            mentorclasschoice = form.cleaned_data.get("mentorclasschoice")
-            menteeclasschoice = form.cleaned_data.get("menteeclasschoice")
+            password = form.cleaned_data.get("password")
 
             context= { 'username': username,
-                       'firstname': firstname,
-                       'lastname':lastname,
-                       'email':email,
-                       'profession':profession,
-                       'major':major,
-                       'mentorclasschoice':mentorclasschoice,
-                       'menteeclasschoice':menteeclasschoice
+                       'password': password
                       }
 
             print(context)
@@ -113,7 +101,7 @@ def loginform(request):
 
             return HttpResponseRedirect('/form?submitted=True')
     else:
-        form = UserForm()
+        form = LogInForm()
         if 'submitted' in request.GET:
             submitted = True
 
