@@ -39,6 +39,10 @@ class UserForm(forms.Form):
     mentorclasschoice= forms.CharField(label='What class are you looking to tutor for?', widget=forms.Select(choices=CLASS_CHOICES))
     menteeclasschoice= forms.CharField(label='What class are you looking for help in?', widget=forms.Select(choices=CLASS_CHOICES))
 
+class LogInForm(forms.Form):
+    username = forms.CharField(max_length=100, label='User Name')
+    password = models.CharField(max_length=50)
+
 
 def form(request):
     submitted = False
@@ -67,6 +71,44 @@ def form(request):
 
             print(context)
             
+            users.insert_one(context)
+
+            return HttpResponseRedirect('/form?submitted=True')
+    else:
+        form = UserForm()
+        if 'submitted' in request.GET:
+            submitted = True
+
+    return render(request, 'form.html', {'form': form, 'submitted': submitted})
+
+
+def loginform(request):
+    submitted = False
+    if request.method == 'POST':
+        form = LogInForm(request.POST)
+        if form.is_valid():
+            cd = form.cleaned_data
+            username = form.cleaned_data.get("username")
+            firstname = form.cleaned_data.get("firstname")
+            lastname = form.cleaned_data.get("lastname")
+            email = form.cleaned_data.get("email")
+            profession = form.cleaned_data.get("profession")
+            major = form.cleaned_data.get("major")
+            mentorclasschoice = form.cleaned_data.get("mentorclasschoice")
+            menteeclasschoice = form.cleaned_data.get("menteeclasschoice")
+
+            context= { 'username': username,
+                       'firstname': firstname,
+                       'lastname':lastname,
+                       'email':email,
+                       'profession':profession,
+                       'major':major,
+                       'mentorclasschoice':mentorclasschoice,
+                       'menteeclasschoice':menteeclasschoice
+                      }
+
+            print(context)
+
             users.insert_one(context)
 
             return HttpResponseRedirect('/form?submitted=True')
