@@ -41,7 +41,8 @@ class UserForm(forms.Form):
 
 class LogInForm(forms.Form):
     username = forms.CharField(max_length=100, label='User Name')
-    password = forms.CharField(max_length=50)
+    password = forms.CharField(widget=forms.PasswordInput)
+
 
 
 def create_user_form(request):
