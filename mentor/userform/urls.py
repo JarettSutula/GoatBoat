@@ -5,5 +5,6 @@ from . import form
 
 urlpatterns = [
     path('', homePageView, name='home'),
-    path('form/', form.form, name='form')
+    path('form/createuser/', form.create_user_form, name='createuserform'),
+    path('form/login/', form.login_form, name='loginform')
 ]
