@@ -9,7 +9,7 @@ import certifi
 
 # Create your tests here.
 
-class TestStringMethods(unittest.TestCase):
+class TestDatabaseMethods(unittest.TestCase):
 
     def test_dbconnect(self):
         ca = certifi.where()
