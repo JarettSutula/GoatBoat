@@ -1,14 +1,9 @@
-run: setup test clean
+run: setup test 
 	#python ./mentor/manage.py runserver
 	docker compose up
 
 setup: requirements.txt
 	pip install -r requirements.txt
-clean:
-	if [ -a ./mentor/__pycache__ ] ; \
-	then \
-     		rm -r ./mentor/__pycache__ ; \
-	fi;
 
 test: 
 	python ./mentor/userform/tests.py
