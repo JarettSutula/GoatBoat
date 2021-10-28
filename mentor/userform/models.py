@@ -29,6 +29,8 @@ CLASS_CHOICES = [
 
 class UserForm(forms.Form):
     username = forms.CharField(max_length=100, label='User Name')
+    password = forms.CharField(widget=forms.PasswordInput)
+    #confirmpassword = forms.CharField(widget=forms.PasswordInput)
     firstname = forms.CharField(max_length=100, label='First Name')
     lastname = forms.CharField(max_length=100, label='Last Name')
     email = forms.EmailField(required=False, label='Your Email Address')
