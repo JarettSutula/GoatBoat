@@ -5,8 +5,7 @@ from django.http import HttpResponse
 
 
 def homePageView(request):
-    return HttpResponse('Welcome to Marist Mentoring!')
-
+    return render(request,'home.html')
 
 def userSucess(request):
     submitbutton= request.POST.get("submit")
