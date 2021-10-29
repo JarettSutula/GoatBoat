@@ -1,10 +1,12 @@
-from django import forms
+from django import db, forms
 from userform.models import UserForm, LogInForm
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from utils import start_db, collection_link
+import bcrypt
 db_handle = start_db()
 users = collection_link(db_handle, 'users')
+logins = collection_link(db_handle, 'logins')
 
 
 def create_user_form(request):
@@ -14,6 +16,8 @@ def create_user_form(request):
         if form.is_valid():
             cd = form.cleaned_data
             username = form.cleaned_data.get("username")
+            password = form.cleaned_data.get("password")
+            confirmedpassword = form.cleaned_data.get("confirmedpassword")
             firstname = form.cleaned_data.get("firstname")
             lastname = form.cleaned_data.get("lastname")
             email = form.cleaned_data.get("email")
@@ -31,10 +35,21 @@ def create_user_form(request):
                        'mentorclasschoice':mentorclasschoice,
                        'menteeclasschoice':menteeclasschoice
                       }
+            
+            # make sure the user's username/password is stored safely in logins.
+            # hash it in binary string first!
+            byte_password = password.encode('UTF-8')
+            hashed_password = bcrypt.hashpw(byte_password, bcrypt.gensalt())
+
+            context_2 = { 'username': username,
+                          'password': hashed_password
+                        }
 
             print(context)
             
             users.insert_one(context)
+
+            logins.insert_one(context_2)
 
             return HttpResponseRedirect('/form/createuser?submitted=True')
     else:
@@ -54,13 +69,14 @@ def login_form(request):
             username = form.cleaned_data.get("username")
             password = form.cleaned_data.get("password")
 
-            context= { 'username': username,
-                       'password': password
-                      }
+            # do not need this - we are not posting anything in login_form.
+            # context= { 'username': username,
+            #            'password': password
+            #           }
 
-            print(context)
+            # print(context)
 
-            users.insert_one(context)
+            # users.insert_one(context)
 
             return HttpResponseRedirect('/form/login?submitted=True')
     else:
