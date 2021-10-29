@@ -1,3 +1,4 @@
+from django.core.exceptions import ValidationError
 from django.db import models
 from django import forms
 
@@ -30,7 +31,7 @@ CLASS_CHOICES = [
 class UserForm(forms.Form):
     username = forms.CharField(max_length=100, label='User Name')
     password = forms.CharField(widget=forms.PasswordInput)
-    #confirmpassword = forms.CharField(widget=forms.PasswordInput)
+    confirm_password = forms.CharField(widget=forms.PasswordInput)
     firstname = forms.CharField(max_length=100, label='First Name')
     lastname = forms.CharField(max_length=100, label='Last Name')
     email = forms.EmailField(required=False, label='Your Email Address')
@@ -38,6 +39,14 @@ class UserForm(forms.Form):
     major = forms.CharField(max_length=100, label='Major')
     mentorclasschoice= forms.CharField(label='What class are you looking to tutor for?', widget=forms.Select(choices=CLASS_CHOICES))
     menteeclasschoice= forms.CharField(label='What class are you looking for help in?', widget=forms.Select(choices=CLASS_CHOICES))
+
+    def clean_confirm_password(self):
+        pass1 = self.cleaned_data['password']
+        pass2 = self.cleaned_data['confirm_password']
+        if pass1 != pass2:
+            raise ValidationError('The passwords must match.')
+        return pass2
+        
 
 class LogInForm(forms.Form):
     username = forms.CharField(max_length=100, label='User Name')

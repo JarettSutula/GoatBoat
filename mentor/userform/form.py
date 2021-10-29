@@ -17,6 +17,7 @@ def create_user_form(request):
             cd = form.cleaned_data
             username = form.cleaned_data.get("username")
             password = form.cleaned_data.get("password")
+            confirmedpassword = form.cleaned_data.get("confirmedpassword")
             firstname = form.cleaned_data.get("firstname")
             lastname = form.cleaned_data.get("lastname")
             email = form.cleaned_data.get("email")
