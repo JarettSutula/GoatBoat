@@ -10,13 +10,68 @@
  
   {% else %}
    <form action="" method="post" novalidate>
-   <table>
-     {{ form.as_table }}
-     <tr>
-      <td>&nbsp;</td>
-       <td><input type="submit" value="Submit"></td>
-     </tr>
-   </table>
+   <div class = "fieldWrapper">
+     {{ form.username.label_tag}}
+     {{ form.username}}
+     {{ form.username.errors}}
+   </div>
+   <div class = "fieldWrapper">
+    {{ form.password.label_tag}}
+    {{ form.password}}
+    {{ form.password.errors}}
+  </div>
+  <div class = "fieldWrapper">
+    {{ form.confirmpassword.label_tag}}
+    {{ form.confirmpassword}}
+    {{ form.confirmpassword.errors}}
+  </div>
+  <div class = "fieldWrapper">
+    {{ form.firstname.label_tag}}
+    {{ form.firstname}}
+    {{ form.firstname.errors}}
+  </div>
+  <div class = "fieldWrapper">
+    {{ form.lastname.label_tag}}
+    {{ form.lastname}}
+    {{ form.lastname.errors}}
+  </div>
+  <div class = "fieldWrapper">
+    {{ form.email.label_tag}}
+    {{ form.email}}
+    {{ form.email.errors}}
+  </div>
+  <div class = "fieldWrapper">
+    {{ form.profession.label_tag}}
+    {{ form.profession}}
+    {{ form.profession.errors}}
+  </div>
+  <div class = "fieldWrapper">
+    {{ form.major.label_tag}}
+    {{ form.major}}
+    {{ form.major.errors}}
+  </div>
+  <div class = "fieldWrapper">
+    {{ form.mentorclasschoice.label_tag}}
+    {{ form.mentorclasschoice}}
+    {{ form.mentorclasschoice.errors}}
+  </div>
+  <div class = "fieldWrapper">
+    {{ form.menteeclasschoice.label_tag}}
+    {{ form.menteeclasschoice}}
+    {{ form.menteclasschoice.errors}}
+  </div>
+  <div class = "fieldWrapper">
+    {{form.mondaystart.label_tag}}
+    {{form.mondaystart}}
+    {{form.mondayend.label_tag}}
+    {{form.mondayend}}
+    {{form.mondaystart.errors}}
+    {{form.mondayend.errors}}
+  </div>
+    <tr>
+     <td>&nbsp;</td>
+     <td><input type="submit" value="Submit"></td>
+    </tr>
    {% csrf_token %}
    </form>
  {% endif %}
