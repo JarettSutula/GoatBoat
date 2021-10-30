@@ -10,6 +10,10 @@ logins = collection_link(db_handle, 'logins')
 
 
 def create_user_form(request):
+    """Validates user creation form and returns appropriate response.
+    If the form is valid, insert inputs into database and return HTTPResponseRedirect:
+    If not, return the previously filled form values and alert user of validation errors.
+    """
     submitted = False
     if request.method == 'POST':
         form = UserForm(request.POST)
@@ -51,7 +55,7 @@ def create_user_form(request):
             saturday = create_day_array(saturdaystart, saturdayend)
             sunday = create_day_array(sundaystart, sundayend)
 
-
+            # object to be passed into users
             context= { 'username': username,
                        'firstname': firstname,
                        'lastname':lastname,
@@ -83,7 +87,6 @@ def create_user_form(request):
             print(context)
             
             users.insert_one(context)
-
             logins.insert_one(context_2)
 
             return HttpResponseRedirect('/form/createuser?submitted=True')
