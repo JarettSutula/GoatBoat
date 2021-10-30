@@ -2,7 +2,7 @@ from django import db, forms
 from userform.models import UserForm, LogInForm
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
-from utils import start_db, collection_link
+from utils import start_db, collection_link, create_day_object
 import bcrypt
 db_handle = start_db()
 users = collection_link(db_handle, 'users')
@@ -30,7 +30,10 @@ def create_user_form(request):
             schedule = []
             mondaystart = form.cleaned_data.get("mondaystart")
             mondayend = form.cleaned_data.get("mondayend")
-            
+            monday = create_day_object(mondaystart, mondayend, 'monday')
+            schedule.append(monday)
+            print(schedule)
+
 
             context= { 'username': username,
                        'firstname': firstname,
@@ -39,7 +42,8 @@ def create_user_form(request):
                        'profession':profession,
                        'major':major,
                        'mentorclasschoice':mentorclasschoice,
-                       'menteeclasschoice':menteeclasschoice
+                       'menteeclasschoice':menteeclasschoice,
+                       'schedule':schedule
                       }
             
             # make sure the user's username/password is stored safely in logins.
