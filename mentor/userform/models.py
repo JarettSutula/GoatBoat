@@ -57,8 +57,22 @@ class UserForm(forms.Form):
     major = forms.CharField(max_length=100, label='Major')
     mentorclasschoice= forms.CharField(label='What class are you looking to tutor for?', widget=forms.Select(choices=CLASS_CHOICES))
     menteeclasschoice= forms.CharField(label='What class are you looking for help in?', widget=forms.Select(choices=CLASS_CHOICES))
+
     mondaystart= forms.IntegerField(required=False, label= 'Monday Availability', widget=forms.Select(choices=TIME_CHOICES))
     mondayend= forms.IntegerField(required=False, label= ' to ', widget=forms.Select(choices=TIME_CHOICES))
+    tuesdaystart= forms.IntegerField(required=False, label= 'Tuesday Availability', widget=forms.Select(choices=TIME_CHOICES))
+    tuesdayend= forms.IntegerField(required=False, label= ' to ', widget=forms.Select(choices=TIME_CHOICES))
+    wednesdaystart= forms.IntegerField(required=False, label= 'Wednesday Availability', widget=forms.Select(choices=TIME_CHOICES))
+    wednesdayend= forms.IntegerField(required=False, label= ' to ', widget=forms.Select(choices=TIME_CHOICES))
+    thursdaystart= forms.IntegerField(required=False, label= 'Thursday Availability', widget=forms.Select(choices=TIME_CHOICES))
+    thursdayend= forms.IntegerField(required=False, label= ' to ', widget=forms.Select(choices=TIME_CHOICES))
+    fridaystart= forms.IntegerField(required=False, label= 'Friday Availability', widget=forms.Select(choices=TIME_CHOICES))
+    fridayend= forms.IntegerField(required=False, label= ' to ', widget=forms.Select(choices=TIME_CHOICES))
+    saturdaystart= forms.IntegerField(required=False, label= 'Saturday Availability', widget=forms.Select(choices=TIME_CHOICES))
+    saturdayend= forms.IntegerField(required=False, label= ' to ', widget=forms.Select(choices=TIME_CHOICES))
+    sundaystart= forms.IntegerField(required=False, label= 'Sunday Availability', widget=forms.Select(choices=TIME_CHOICES))
+    sundayend= forms.IntegerField(required=False, label= ' to ', widget=forms.Select(choices=TIME_CHOICES))
+
 
     def clean_confirmpassword(self):
         pass1 = self.cleaned_data['password']

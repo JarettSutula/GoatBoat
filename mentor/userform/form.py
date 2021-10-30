@@ -2,7 +2,7 @@ from django import db, forms
 from userform.models import UserForm, LogInForm
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
-from utils import start_db, collection_link, create_day_object
+from utils import start_db, collection_link, create_day_array
 import bcrypt
 db_handle = start_db()
 users = collection_link(db_handle, 'users')
@@ -27,12 +27,29 @@ def create_user_form(request):
             menteeclasschoice = form.cleaned_data.get("menteeclasschoice")
 
             # schedule-based form fields
-            schedule = []
             mondaystart = form.cleaned_data.get("mondaystart")
             mondayend = form.cleaned_data.get("mondayend")
-            monday = create_day_object(mondaystart, mondayend, 'monday')
-            schedule.append(monday)
-            print(schedule)
+            tuesdaystart = form.cleaned_data.get("tuesdaystart")
+            tuesdayend = form.cleaned_data.get("tuesdayend")
+            wednesdaystart = form.cleaned_data.get("wednesdaystart")
+            wednesdayend = form.cleaned_data.get("wednesdayend")
+            thursdaystart = form.cleaned_data.get("thursdaystart")
+            thursdayend = form.cleaned_data.get("thursdayend")
+            fridaystart = form.cleaned_data.get("fridaystart")
+            fridayend = form.cleaned_data.get("fridayend")
+            saturdaystart = form.cleaned_data.get("saturdaystart")
+            saturdayend = form.cleaned_data.get("saturdayend")
+            sundaystart = form.cleaned_data.get("sundaystart")
+            sundayend = form.cleaned_data.get("sundayend")
+
+            # create arrays of objects with 1-hour block objects.
+            monday = create_day_array(mondaystart, mondayend)
+            tuesday = create_day_array(tuesdaystart, tuesdayend)
+            wednesday = create_day_array(wednesdaystart, wednesdayend)
+            thursday = create_day_array(thursdaystart, thursdayend)
+            friday = create_day_array(fridaystart, fridayend)
+            saturday = create_day_array(saturdaystart, saturdayend)
+            sunday = create_day_array(sundaystart, sundayend)
 
 
             context= { 'username': username,
@@ -43,7 +60,15 @@ def create_user_form(request):
                        'major':major,
                        'mentorclasschoice':mentorclasschoice,
                        'menteeclasschoice':menteeclasschoice,
-                       'schedule':schedule
+                       'schedule':{
+                           'monday': monday,
+                           'tuesday': tuesday,
+                           'wednesday': wednesday,
+                           'thursday': thursday,
+                           'friday': friday,
+                           'saturday': saturday,
+                           'sunday': sunday
+                       }
                       }
             
             # make sure the user's username/password is stored safely in logins.

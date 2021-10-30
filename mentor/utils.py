@@ -29,18 +29,16 @@ def collection_link(db_handle, collection_name):
 
 # generate a day in this format, if 8-10am:
 # "day": [{'starttime': 8, 'endtime': 9}, {'starttime': 9, 'endtime': 10}]
-def create_day_object(start, end, day_string):
-    # validation: if either is -1, return empty array of objects.
+def create_day_array(start, end):
+    day = []
+    # validation: if either is -1, return empty array.
     if(start == -1 or end == -1):
-        return {day_string:[]}
+        return day
 
-    # if not, create day object to be returned.
-    blocks = []
     # loop through each hour block between start and end.
     for x in range(start, end):
         block = {'starttime':x, 'endtime':x +1}
-        blocks.append(block)
+        day.append(block)
     
     # when done, return the array of block objects.
-    day = {day_string:blocks}
     return day
