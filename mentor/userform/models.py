@@ -73,14 +73,85 @@ class UserForm(forms.Form):
     sundaystart= forms.IntegerField(required=False, label= 'Sunday Availability', widget=forms.Select(choices=TIME_CHOICES))
     sundayend= forms.IntegerField(required=False, label= ' to ', widget=forms.Select(choices=TIME_CHOICES))
 
-
+    # Make sure that our passwords match, otherwise throw a validation error
     def clean_confirmpassword(self):
         pass1 = self.cleaned_data['password']
         pass2 = self.cleaned_data['confirmpassword']
         if pass1 != pass2:
             raise ValidationError('The passwords must match.')
         return pass2
-        
+
+    # clean end values only, requires both start and end values to be cleaned,
+    # form validation errors return in same place regardless.
+    def clean_mondayend(self):
+        start = self.cleaned_data['mondaystart']
+        end = self.cleaned_data['mondayend']
+
+        # conditions - cannot be the same time, nor can starttime come after endtime,
+        # nor can only one value be empty.
+        if (start == end and start != -1) or (start > end) or (start != end and (start == -1 or end == -1)):
+            raise ValidationError('Please select a valid time frame.')
+        return end
+
+    def clean_tuesdayend(self):
+        start = self.cleaned_data['tuesdaystart']
+        end = self.cleaned_data['tuesdayend']
+
+        # conditions - cannot be the same time, nor can starttime come after endtime,
+        # nor can only one value be empty.
+        if (start == end and start != -1) or (start > end) or (start != end and (start == -1 or end == -1)):
+            raise ValidationError('Please select a valid time frame.')
+        return end
+    
+    def clean_wednesdayend(self):
+        start = self.cleaned_data['wednesdaystart']
+        end = self.cleaned_data['wednesdayend']
+
+        # conditions - cannot be the same time, nor can starttime come after endtime,
+        # nor can only one value be empty.
+        if (start == end and start != -1) or (start > end) or (start != end and (start == -1 or end == -1)):
+            raise ValidationError('Please select a valid time frame.')
+        return end
+    
+    def clean_thursdayend(self):
+        start = self.cleaned_data['thursdaystart']
+        end = self.cleaned_data['thursdayend']
+
+        # conditions - cannot be the same time, nor can starttime come after endtime,
+        # nor can only one value be empty.
+        if (start == end and start != -1) or (start > end) or (start != end and (start == -1 or end == -1)):
+            raise ValidationError('Please select a valid time frame.')
+        return end
+    
+    def clean_fridayend(self):
+        start = self.cleaned_data['fridaystart']
+        end = self.cleaned_data['fridayend']
+
+        # conditions - cannot be the same time, nor can starttime come after endtime,
+        # nor can only one value be empty.
+        if (start == end and start != -1) or (start > end) or (start != end and (start == -1 or end == -1)):
+            raise ValidationError('Please select a valid time frame.')
+        return end
+
+    def clean_saturdayend(self):
+        start = self.cleaned_data['saturdaystart']
+        end = self.cleaned_data['saturdayend']
+
+        # conditions - cannot be the same time, nor can starttime come after endtime,
+        # nor can only one value be empty.
+        if (start == end and start != -1) or (start > end) or (start != end and (start == -1 or end == -1)):
+            raise ValidationError('Please select a valid time frame.')
+        return end
+
+    def clean_sundayend(self):
+        start = self.cleaned_data['sundaystart']
+        end = self.cleaned_data['sundayend']
+
+        # conditions - cannot be the same time, nor can starttime come after endtime,
+        # nor can only one value be empty.
+        if (start == end and start != -1) or (start > end) or (start != end and (start == -1 or end == -1)):
+            raise ValidationError('Please select a valid time frame.')
+        return end
 
 class LogInForm(forms.Form):
     username = forms.CharField(max_length=100, label='User Name')
