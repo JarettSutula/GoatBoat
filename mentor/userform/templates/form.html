@@ -1,7 +1,10 @@
-  {% block title %}User Creation Form{% endblock title %}
+  {% load static %}
+  <head>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/formstyle.css' %}">
+  </head>
+  {% block title %}User Creation Form{% endblock title %}<br></br>
   
   {% block content %}
-  <h1>New User</h1>
   
   {% if submitted %}
     <p class="success">
@@ -10,117 +13,117 @@
  
   {% else %}
    <form action="" method="post" novalidate>
-   <div class = "fieldWrapper">
-     {{ form.username.label_tag}}
-     {{ form.username}}
-     {{ form.username.errors}}
-   </div>
-   <div class = "fieldWrapper">
-    {{ form.password.label_tag}}
-    {{ form.password}}
-    {{ form.password.errors}}
-  </div>
-  <div class = "fieldWrapper">
-    {{ form.confirmpassword.label_tag}}
-    {{ form.confirmpassword}}
-    {{ form.confirmpassword.errors}}
-  </div>
-  <div class = "fieldWrapper">
-    {{ form.firstname.label_tag}}
-    {{ form.firstname}}
-    {{ form.firstname.errors}}
-  </div>
-  <div class = "fieldWrapper">
-    {{ form.lastname.label_tag}}
-    {{ form.lastname}}
-    {{ form.lastname.errors}}
-  </div>
-  <div class = "fieldWrapper">
-    {{ form.email.label_tag}}
-    {{ form.email}}
-    {{ form.email.errors}}
-  </div>
-  <div class = "fieldWrapper">
-    {{ form.profession.label_tag}}
-    {{ form.profession}}
-    {{ form.profession.errors}}
-  </div>
-  <div class = "fieldWrapper">
-    {{ form.major.label_tag}}
-    {{ form.major}}
-    {{ form.major.errors}}
-  </div>
-  <div class = "fieldWrapper">
-    {{ form.mentorclasschoice.label_tag}}
-    {{ form.mentorclasschoice}}
-    {{ form.mentorclasschoice.errors}}
-  </div>
-  <div class = "fieldWrapper">
-    {{ form.menteeclasschoice.label_tag}}
-    {{ form.menteeclasschoice}}
-    {{ form.menteclasschoice.errors}}
-  </div>
-  <div class = "fieldWrapper">
-    {{form.mondaystart.label_tag}}
-    {{form.mondaystart}}
-    {{form.mondayend.label_tag}}
-    {{form.mondayend}}
-    {{form.mondaystart.errors}}
-    {{form.mondayend.errors}}
-  </div>
-  <div class = "fieldWrapper">
-    {{form.tuesdaystart.label_tag}}
-    {{form.tuesdaystart}}
-    {{form.tuesdayend.label_tag}}
-    {{form.tuesdayend}}
-    {{form.tuesdaystart.errors}}
-    {{form.tuesdayend.errors}}
-  </div>
-  <div class = "fieldWrapper">
-    {{form.wednesdaystart.label_tag}}
-    {{form.wednesdaystart}}
-    {{form.wednesdayend.label_tag}}
-    {{form.wednesdayend}}
-    {{form.wednesdaystart.errors}}
-    {{form.wednesdayend.errors}}
-  </div>
-  <div class = "fieldWrapper">
-    {{form.thursdaystart.label_tag}}
-    {{form.thursdaystart}}
-    {{form.thursdayend.label_tag}}
-    {{form.thursdayend}}
-    {{form.thursdaystart.errors}}
-    {{form.thursdayend.errors}}
-  </div>
-  <div class = "fieldWrapper">
-    {{form.fridaystart.label_tag}}
-    {{form.fridaystart}}
-    {{form.fridayend.label_tag}}
-    {{form.fridayend}}
-    {{form.fridaystart.errors}}
-    {{form.fridayend.errors}}
-  </div>
-  <div class = "fieldWrapper">
-    {{form.saturdaystart.label_tag}}
-    {{form.saturdaystart}}
-    {{form.saturdayend.label_tag}}
-    {{form.saturdayend}}
-    {{form.saturdaystart.errors}}
-    {{form.saturdayend.errors}}
-  </div>
-  <div class = "fieldWrapper">
-    {{form.sundaystart.label_tag}}
-    {{form.sundaystart}}
-    {{form.sundayend.label_tag}}
-    {{form.sundayend}}
-    {{form.sundaystart.errors}}
-    {{form.sundayend.errors}}
-  </div>
+    <div class = "fieldWrapper">
+      <topblock>{{ form.username.label_tag }}</topblock>
+      {{ form.username }}
+      {{ form.username.errors }}
+    </div>
+    <div class = "fieldWrapper">
+      <topblock>{{ form.password.label_tag }}</topblock>
+      {{ form.password }}
+      {{ form.password.errors }}
+    </div>
+    <div class = "fieldWrapper">
+      <topblock>{{ form.confirmpassword.label_tag }}</topblock>
+      {{ form.confirmpassword }}
+      {{ form.confirmpassword.errors }}
+    </div>
+    <div class = "fieldWrapper">
+      <topblock>{{ form.firstname.label_tag }}</topblock>
+      {{ form.firstname }}
+      {{ form.firstname.errors }}
+    </div>
+    <div class = "fieldWrapper">
+      <topblock>{{ form.lastname.label_tag }}</topblock>
+      {{ form.lastname }}
+      {{ form.lastname.errors }}
+    </div>
+    <div class = "fieldWrapper">
+      <topblock>{{ form.email.label_tag }}</topblock>
+      {{ form.email }}
+      {{ form.email.errors }}
+    </div>
+    <div class = "fieldWrapper">
+      <topblock>{{ form.profession.label_tag }}</topblock>
+      {{ form.profession }}
+      {{ form.profession.errors }}
+    </div>
+    <div class = "fieldWrapper">
+      <topblock>{{ form.major.label_tag}}</topblock>
+      {{ form.major}}
+      {{ form.major.errors}}
+    </div>
+    <div class = "fieldWrapper">
+      <midblock>{{ form.mentorclasschoice.label_tag }}</midblock>
+      {{ form.mentorclasschoice }}
+      {{ form.mentorclasschoice.errors }}
+    </div>
+    <div class = "fieldWrapper">
+      <midblock>{{ form.menteeclasschoice.label_tag }}</midblock>
+      {{ form.menteeclasschoice }}
+      {{ form.menteclasschoice.errors }}
+    </div>
+    <div class = "fieldWrapper">
+      <botblock>{{ form.mondaystart.label_tag }}</botblock>
+      {{ form.mondaystart }}
+      {{ form.mondayend.label_tag }}
+      {{ form.mondayend }}
+      {{ form.mondaystart.errors }}
+      {{ form.mondayend.errors }}
+    </div>
+    <div class = "fieldWrapper">
+      <botblock>{{ form.tuesdaystart.label_tag }}</botblock>
+      {{ form.tuesdaystart }}
+      {{ form.tuesdayend.label_tag }}
+      {{ form.tuesdayend }}
+      {{ form.tuesdaystart.errors }}
+      {{ form.tuesdayend.errors }}
+    </div>
+    <div class = "fieldWrapper">
+      <botblock>{{ form.wednesdaystart.label_tag }}</botblock>
+      {{ form.wednesdaystart }}
+      {{ form.wednesdayend.label_tag }}
+      {{ form.wednesdayend }}
+      {{ form.wednesdaystart.errors }}
+      {{ form.wednesdayend.errors }}
+    </div>
+    <div class = "fieldWrapper">
+      <botblock>{{ form.thursdaystart.label_tag }}</botblock>
+      {{ form.thursdaystart }}
+      {{ form.thursdayend.label_tag }}
+      {{ form.thursdayend }}
+      {{ form.thursdaystart.errors }}
+      {{ form.thursdayend.errors }}
+    </div>
+    <div class = "fieldWrapper">
+      <botblock>{{ form.fridaystart.label_tag }}</botblock>
+      {{ form.fridaystart }}
+      {{ form.fridayend.label_tag }}
+      {{ form.fridayend }}
+      {{ form.fridaystart.errors }}
+      {{ form.fridayend.errors }}
+    </div>
+    <div class = "fieldWrapper">
+      <botblock>{{ form.saturdaystart.label_tag }}</botblock>
+      {{ form.saturdaystart }}
+      {{ form.saturdayend.label_tag }}
+      {{ form.saturdayend }}
+      {{ form.saturdaystart.errors }}
+      {{ form.saturdayend.errors }}
+    </div>
+    <div class = "fieldWrapper">
+      <botblock>{{ form.sundaystart.label_tag }}</botblock>
+      {{ form.sundaystart }}
+      {{ form.sundayend.label_tag }}
+      {{ form.sundayend }}
+      {{ form.sundaystart.errors }}
+      {{ form.sundayend.errors }}
+    </div>
     <tr>
-     <td>&nbsp;</td>
-     <td><input type="submit" value="Submit"></td>
+      <td>&nbsp;</td>
+      <td><input type="submit" value="Submit"></td>
     </tr>
-   {% csrf_token %}
+    {% csrf_token %}
    </form>
  {% endif %}
  {% endblock content %}
