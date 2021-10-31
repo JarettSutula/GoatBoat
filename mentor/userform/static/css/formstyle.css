@@ -12,3 +12,8 @@ botblock {
     display: inline-block;
     width:162px;
 }
+
+submitbutton {
+    display: inline-block;
+    width:120px;
+}
