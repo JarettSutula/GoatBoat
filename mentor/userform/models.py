@@ -3,7 +3,6 @@ from django.db import models
 from django import forms
 
 # Create your models here.
-
 CLASS_CHOICES = [
     ('none', ''),
     ('cmpt120', 'CMPT 120'),
@@ -27,7 +26,7 @@ CLASS_CHOICES = [
     ('math393', 'MATH 393'),
     ('math394', 'MATH 394'),
     ]
-    
+
 TIME_CHOICES = [
     (-1, '---------'),
     (8, '8:00am'),
@@ -46,6 +45,7 @@ TIME_CHOICES = [
     (21, '9:00pm'),
     (22, '10:00pm'),
 ]
+
 
 class UserForm(forms.Form):
     """Contains fields for profile creation."""
@@ -187,6 +187,7 @@ class UserForm(forms.Form):
         if (start == end and start != -1) or (start > end) or (start != end and (start == -1 or end == -1)):
             raise ValidationError('Please select a valid time frame.')
         return end
+
 
 class LogInForm(forms.Form):
     username = forms.CharField(max_length=100, label='User Name')

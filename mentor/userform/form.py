@@ -4,10 +4,10 @@ from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from utils import start_db, collection_link, create_day_array
 import bcrypt
+
 db_handle = start_db()
 users = collection_link(db_handle, 'users')
 logins = collection_link(db_handle, 'logins')
-
 
 def create_user_form(request):
     """Validates user creation form and returns appropriate response.
@@ -98,8 +98,8 @@ def create_user_form(request):
 
     return render(request, 'form.html', {'form': form, 'submitted': submitted})
 
-
 def login_form(request):
+    """TODO: implement login form and authentication."""
     submitted = False
     if request.method == 'POST':
         form = LogInForm(request.POST)
