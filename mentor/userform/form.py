@@ -11,15 +11,16 @@ logins = collection_link(db_handle, 'logins')
 
 def create_user_form(request):
     """Validates user creation form and returns appropriate response.
-    If the form is valid, insert inputs into database and return HTTPResponseRedirect:
-    If not, return the previously filled form values and alert user of validation errors.
+    If the form is valid, insert inputs into database and return 
+    a HTTPResponseRedirect. If not, return the previously filled
+    form values and alert user of validation errors.
     """
     submitted = False
     if request.method == 'POST':
         form = UserForm(request.POST)
         if form.is_valid():
             cd = form.cleaned_data
-            # base form fields
+            # Base form fields
             username = form.cleaned_data.get("username")
             password = form.cleaned_data.get("password")
             firstname = form.cleaned_data.get("firstname")
@@ -30,7 +31,7 @@ def create_user_form(request):
             mentorclasschoice = form.cleaned_data.get("mentorclasschoice")
             menteeclasschoice = form.cleaned_data.get("menteeclasschoice")
 
-            # schedule-based form fields
+            # Schedule-based form fields
             mondaystart = form.cleaned_data.get("mondaystart")
             mondayend = form.cleaned_data.get("mondayend")
             tuesdaystart = form.cleaned_data.get("tuesdaystart")
@@ -46,7 +47,7 @@ def create_user_form(request):
             sundaystart = form.cleaned_data.get("sundaystart")
             sundayend = form.cleaned_data.get("sundayend")
 
-            # create arrays of objects with 1-hour block objects.
+            # Create arrays of objects with 1-hour block objects.
             monday = create_day_array(mondaystart, mondayend)
             tuesday = create_day_array(tuesdaystart, tuesdayend)
             wednesday = create_day_array(wednesdaystart, wednesdayend)
@@ -55,7 +56,7 @@ def create_user_form(request):
             saturday = create_day_array(saturdaystart, saturdayend)
             sunday = create_day_array(sundaystart, sundayend)
 
-            # object to be passed into users
+            # Object to be passed into users
             context= { 'username': username,
                        'firstname': firstname,
                        'lastname':lastname,
@@ -75,8 +76,8 @@ def create_user_form(request):
                        }
                       }
             
-            # make sure the user's username/password is stored safely in logins.
-            # hash it in binary string first!
+            # Make sure the user's username/password is stored safely in logins.
+            # Hash it in binary string first!
             byte_password = password.encode('UTF-8')
             hashed_password = bcrypt.hashpw(byte_password, bcrypt.gensalt())
 

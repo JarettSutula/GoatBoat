@@ -27,8 +27,9 @@ CLASS_CHOICES = [
     ('math393', 'MATH 393'),
     ('math394', 'MATH 394'),
     ]
+    
 TIME_CHOICES = [
-    (-1, '-----'),
+    (-1, '---------'),
     (8, '8:00am'),
     (9, '9:00am'),
     (10, '10:00am'),
@@ -47,6 +48,7 @@ TIME_CHOICES = [
 ]
 
 class UserForm(forms.Form):
+    """Contains fields for profile creation."""
     username = forms.CharField(max_length=100, label='User Name')
     password = forms.CharField(widget=forms.PasswordInput)
     confirmpassword = forms.CharField(label='Confirm Password',widget=forms.PasswordInput)
@@ -73,17 +75,20 @@ class UserForm(forms.Form):
     sundaystart= forms.IntegerField(required=False, label= 'Sunday Availability', widget=forms.Select(choices=TIME_CHOICES))
     sundayend= forms.IntegerField(required=False, label= ' to ', widget=forms.Select(choices=TIME_CHOICES))
 
-    # Make sure that our passwords match, otherwise throw a validation error
     def clean_confirmpassword(self):
+        """Validate that password and confirmed password match."""
         pass1 = self.cleaned_data['password']
         pass2 = self.cleaned_data['confirmpassword']
         if pass1 != pass2:
             raise ValidationError('The passwords must match.')
         return pass2
 
-    # clean end values only, requires both start and end values to be cleaned,
-    # form validation errors return in same place regardless.
     def clean_mondayend(self):
+        """Validates Monday time availability before form submission.
+        Override clean for end value only to reduce function calls.
+        End value is the priority - start value is cleaned before it,
+        requires both values to be clean to compare.
+        """
         start = self.cleaned_data['mondaystart']
         end = self.cleaned_data['mondayend']
 
@@ -94,6 +99,11 @@ class UserForm(forms.Form):
         return end
 
     def clean_tuesdayend(self):
+        """Validates Tuesday time availability before form submission.
+        Override clean for end value only to reduce function calls.
+        End value is the priority - start value is cleaned before it,
+        requires both values to be clean to compare.
+        """
         start = self.cleaned_data['tuesdaystart']
         end = self.cleaned_data['tuesdayend']
 
@@ -104,6 +114,11 @@ class UserForm(forms.Form):
         return end
     
     def clean_wednesdayend(self):
+        """Validates Wednesday time availability before form submission.
+        Override clean for end value only to reduce function calls.
+        End value is the priority - start value is cleaned before it,
+        requires both values to be clean to compare.
+        """
         start = self.cleaned_data['wednesdaystart']
         end = self.cleaned_data['wednesdayend']
 
@@ -114,6 +129,11 @@ class UserForm(forms.Form):
         return end
     
     def clean_thursdayend(self):
+        """Validates Thursday time availability before form submission.
+        Override clean for end value only to reduce function calls.
+        End value is the priority - start value is cleaned before it,
+        requires both values to be clean to compare.
+        """
         start = self.cleaned_data['thursdaystart']
         end = self.cleaned_data['thursdayend']
 
@@ -124,6 +144,11 @@ class UserForm(forms.Form):
         return end
     
     def clean_fridayend(self):
+        """Validates Friday time availability before form submission.
+        Override clean for end value only to reduce function calls.
+        End value is the priority - start value is cleaned before it,
+        requires both values to be clean to compare.
+        """
         start = self.cleaned_data['fridaystart']
         end = self.cleaned_data['fridayend']
 
@@ -134,6 +159,11 @@ class UserForm(forms.Form):
         return end
 
     def clean_saturdayend(self):
+        """Validates Saturday time availability before form submission.
+        Override clean for end value only to reduce function calls.
+        End value is the priority - start value is cleaned before it,
+        requires both values to be clean to compare.
+        """
         start = self.cleaned_data['saturdaystart']
         end = self.cleaned_data['saturdayend']
 
@@ -144,6 +174,11 @@ class UserForm(forms.Form):
         return end
 
     def clean_sundayend(self):
+        """Validates Sunday time availability before form submission.
+        Override clean for end value only to reduce function calls.
+        End value is the priority - start value is cleaned before it,
+        requires both values to be clean to compare.
+        """
         start = self.cleaned_data['sundaystart']
         end = self.cleaned_data['sundayend']
 
