@@ -71,7 +71,6 @@ a.button:hover {
 
 .gbform{
     text-align:center;
-    padding-top: 50px;
 }
 
 .fieldWrapper{
@@ -80,4 +79,9 @@ a.button:hover {
 
 .fieldWrapper label{
     font-weight: bold;
+}
+
+.formheader{
+    font-family: sans-serif;
+    text-align:center;
 }

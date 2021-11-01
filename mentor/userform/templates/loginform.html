@@ -1,3 +1,7 @@
+{% load static %}
+{% include "navigation.html" %}
+{% include "loginheader.html" %}
+
 {% block content %}
 
 {% if submitted %}
@@ -6,8 +10,8 @@
 </p>
 
 {% else %}
-
-<form action="" method="post" novalidate>
+<form class="gbform" action="" method="post" novalidate>
+  <div class = "fieldWrapper">
   <table>
     {{ form.as_table }}
     <tr>
@@ -16,6 +20,7 @@
     </tr>
   </table>
   {% csrf_token %}
+  </div>
 </form>
 {% endif %}
 {% endblock content %}
