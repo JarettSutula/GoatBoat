@@ -77,8 +77,19 @@ a.button:hover {
     padding: 10px;
 }
 
-.fieldWrapper label{
+.fieldWrapper topblock label{
     font-weight: bold;
+    float:left;
+}
+
+.fieldWrapper midblock label{
+    font-weight: bold;
+    float: none;
+
+}
+
+.fieldWrapper midblock{
+    width: 272px;
 }
 
 .formheader{
