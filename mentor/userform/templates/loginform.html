@@ -1,7 +1,8 @@
-{% block title %}Log In{% endblock title %}
+{% load static %}
+{% include "navigation.html" %}
+{% include "loginheader.html" %}
 
 {% block content %}
-<h1>Log In</h1>
 
 {% if submitted %}
 <p class="success">
@@ -9,8 +10,9 @@
 </p>
 
 {% else %}
-<form action="" method="post" novalidate>
-  <table>
+<form class="gbform" action="" method="post" novalidate>
+  <div class = "fieldWrapper">
+  <table id="loginformtable">
     {{ form.as_table }}
     <tr>
       <td>&nbsp;</td>
@@ -18,6 +20,7 @@
     </tr>
   </table>
   {% csrf_token %}
+  </div>
 </form>
 {% endif %}
 {% endblock content %}

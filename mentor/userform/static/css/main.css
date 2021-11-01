@@ -1,0 +1,113 @@
+body {
+  margin:0;
+}
+
+#gblogo{
+    height:45px;
+    padding-left:10px;
+}
+
+#logoclick{
+    margin:0;
+    padding:0;
+}
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #333333;
+  font-family: sans-serif;
+}
+
+li {
+  float: left;
+}
+
+li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 16px;
+  text-decoration: none;
+}
+
+li a:hover {
+  background-color: #111111;
+}
+
+#goatboathome{
+  text-align:center;
+}
+
+#goatboatdescr{
+  text-align:center;
+  font-size:20px;
+  font-family: sans-serif;
+}
+
+#createloginbuttons{
+  text-align:center;
+}
+
+a.button {
+    -webkit-appearance: button;
+    -moz-appearance: button;
+    appearance: button;
+
+    text-decoration: none;
+    color: initial;
+    outline: auto;
+    padding: 15px;
+    font-family: sans-serif;
+    background-color: #3333;
+}
+
+a.button:hover {
+    background-color: #fff;
+
+}
+
+.gbform{
+    text-align:center;
+}
+
+.fieldWrapper{
+    padding: 10px;
+}
+
+.fieldWrapper topblock label{
+    font-weight: bold;
+    float:left;
+}
+
+.fieldWrapper midblock label{
+    font-weight: bold;
+    float: none;
+
+}
+
+.fieldWrapper midblock{
+    width: 272px;
+}
+
+.formheader{
+    font-family: sans-serif;
+    text-align:center;
+}
+
+.errorlist{
+    color:red;
+    background-color:white;
+}
+
+.errorlist li{
+        text-align: center;
+        float: none;
+        padding: 10px;
+}
+
+#loginformtable{
+    display:initial;
+}

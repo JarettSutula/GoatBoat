@@ -123,4 +123,4 @@ def login_form(request):
         if 'submitted' in request.GET:
             submitted = True
 
-    return render(request, 'form.html', {'form': form, 'submitted': submitted})
+    return render(request, 'loginform.html', {'form': form, 'submitted': submitted})

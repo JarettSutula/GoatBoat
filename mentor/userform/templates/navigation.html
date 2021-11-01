@@ -1,0 +1,31 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<!-- development version, includes helpful console warnings -->
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<link rel="shortcut icon" type="image/png" href="{% static 'images/gblogo.png' %}"/>
+<link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+
+
+    <meta charset="UTF-8">
+    <title>GoatBoat Mentor</title>
+
+    <div id="navigation">
+        <ul>
+            <li>
+                <a id="logoclick" href="/">
+                    <img id="gblogo" src="{% static 'images/gblogo.png' %}">
+                </a>
+            </li>
+            <li>
+                <a class="" href="/">Home</a>
+            </li>
+            <li>
+                <a class="" href="/login/">Login</a>
+            </li>
+            <li>
+                <a class="" href="/createuser/">Create A User</a>
+            </li>
+        </ul>
+    </div>
