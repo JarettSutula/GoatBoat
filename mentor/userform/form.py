@@ -65,6 +65,8 @@ def create_user_form(request):
                        'major':major,
                        'mentorclasschoice':mentorclasschoice,
                        'menteeclasschoice':menteeclasschoice,
+                       'currentmentors': [],
+                       'currentmentees': [],
                        'schedule':{
                            'monday': monday,
                            'tuesday': tuesday,
@@ -73,7 +75,9 @@ def create_user_form(request):
                            'friday': friday,
                            'saturday': saturday,
                            'sunday': sunday
-                       }
+                       },
+                       'suggestedmatches': [],
+                       'currentmatches': []
                       }
             
             # Make sure the user's username/password is stored safely in logins.
