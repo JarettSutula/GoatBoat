@@ -85,3 +85,14 @@ a.button:hover {
     font-family: sans-serif;
     text-align:center;
 }
+
+.errorlist{
+    color:red;
+    background-color:white;
+}
+
+.errorlist li{
+        text-align: center;
+        float: none;
+        padding: 10px;
+}
