@@ -96,3 +96,7 @@ a.button:hover {
         float: none;
         padding: 10px;
 }
+
+#loginformtable{
+    display:initial;
+}
