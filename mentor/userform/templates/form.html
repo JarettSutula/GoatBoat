@@ -1,9 +1,12 @@
   {% load static %}
+
+  {% include "navigation.html" %}
   <head>
     <link rel="stylesheet" type="text/css" href="{% static 'css/formstyle.css' %}">
   </head>
-  {% block title %}User Creation Form{% endblock title %}<br></br>
-  
+
+  {% block title %}Log In{% endblock title %}
+
   {% block content %}
   
   {% if submitted %}
@@ -12,7 +15,7 @@
    </p>
  
   {% else %}
-   <form action="" method="post" novalidate>
+   <form class="gbform" action="" method="post" novalidate>
     <div class = "fieldWrapper">
       <topblock>{{ form.username.label_tag }}</topblock>
       {{ form.username }}

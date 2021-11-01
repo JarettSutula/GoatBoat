@@ -1,23 +1,20 @@
 {% load static %}
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>GoatBoat Mentor</title>
-</head>
+{% include "navigation.html" %}
+
 <body>
+<div id="goatboathome">
+        <img src="{% static 'images/goatboat.png' %}" alt="GoatBoat!">
+</div>
 
-<img src="{% static 'images/goatboat.png' %}" alt="My image">
-<!--<img src="/images/GOATBOAT!.png">-->
+<div id="goatboatdescr">
+    <h1> The Great Mentor Meeting Place! </h1>
+</div>
 
-<p>
-    <a href="/form/login/"> Login </a>
-</p>
-
-<p>
-    <a href="/form/createuser/"> Create User </a>
-</p>
+<div id="createloginbuttons">
+    <a class="button" href="/form/login/">Log In</a>
+    <a class="button" href="/form/createuser/">Create A User</a>
+</div>
 
 </body>
 </html>
