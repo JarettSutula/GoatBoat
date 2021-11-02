@@ -7,6 +7,7 @@ setup: requirements.txt
 
 test: 
 	python ./mentor/userform/tests.py
+	python ./mentor/formtests.py
 
 testDB:
 	python ./mentor/userform/dbtests.py

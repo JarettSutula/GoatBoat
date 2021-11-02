@@ -37,9 +37,15 @@ def create_day_array(start, end):
     and returns the array of block objects.
     """
     # Ensure input is valid!
-    if type(start, end) not in (int, int):
+    if type(start) != int or type(end) != int:
         raise TypeError('Start and End times must be a valid integer.')
-    
+
+    if (start < 8 and start != -1) or (start > 22):
+        raise ValueError('Start value must be in appropriate range.')
+
+    if (end < 8 and end != -1) or (end > 22):
+        raise ValueError('End value must be in appropriate range.')
+        
     day = []
     # Validation: if either is -1, return empty array.
     if(start == -1 or end == -1):
