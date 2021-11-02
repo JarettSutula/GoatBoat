@@ -19,7 +19,7 @@ def start_db():
     client = pymongo.MongoClient(connection_string, tlsCAfile = ca)
     db_handle = client.get_database('gbmDB')
     # db_collection = db_handle.get_collection(collection)
-
+    
     return db_handle
 
 def collection_link(db_handle, collection_name):
