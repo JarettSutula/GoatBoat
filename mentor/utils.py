@@ -36,6 +36,10 @@ def create_day_array(start, end):
     as "----", otherwise splits the time given into one-hour objects
     and returns the array of block objects.
     """
+    # Ensure input is valid!
+    if type(start, end) not in (int, int):
+        raise TypeError('Start and End times must be a valid integer.')
+    
     day = []
     # Validation: if either is -1, return empty array.
     if(start == -1 or end == -1):
