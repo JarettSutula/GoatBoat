@@ -41,16 +41,16 @@ class TestFormCreation(unittest.TestCase):
         with self.assertRaises(TypeError):
             test_day1 = create_day_array('string', 1)
 
-    # def test_start_db(self):
-    #     """Testing the connection to the database."""
-    #     result = start_db()
-    #     self.assertEqual(result.list_collection_names()[0], 'users')
+    def test_start_db(self):
+        """Testing the connection to the database."""
+        result = start_db()
+        self.assertEqual(result.list_collection_names()[0], 'users')
 
-    # def test_collection_link(self):
-    #     """Testing the connection to a specific collection in db."""
-    #     my_db = start_db()
-    #     my_collection = collection_link(my_db, 'users')
-    #     self.assertGreater(my_collection.estimated_document_count(), 0)
+    def test_collection_link(self):
+        """Testing the connection to a specific collection in db."""
+        my_db = start_db()
+        my_collection = collection_link(my_db, 'users')
+        self.assertGreater(my_collection.estimated_document_count(), 0)
 
 if __name__ == '__main__':
     unittest.main()

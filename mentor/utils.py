@@ -8,7 +8,6 @@ def start_db():
     If a file wants to access the 'users' collection, call 
     my_db = start_db(), then call collection_link(my_db, 'users').
     """
-    ca = certifi.where()
 
     # load the .env file in local directories for DB access.
     load_dotenv()
@@ -16,9 +15,8 @@ def start_db():
     DB_PASSWORD = os.getenv('DB_PASSWORD')
     connection_string = "mongodb+srv://"+DB_USERNAME+":"+DB_PASSWORD+"@gb-mentoring-cluster.jhwgr.mongodb.net/?retryWrites=true&w=majority"
 
-    client = pymongo.MongoClient(connection_string, tlsCAfile = ca)
+    client = pymongo.MongoClient(connection_string, tlsCAfile = certifi.where())
     db_handle = client.get_database('gbmDB')
-    # db_collection = db_handle.get_collection(collection)
     
     return db_handle
 
