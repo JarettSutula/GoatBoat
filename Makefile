@@ -1,4 +1,4 @@
-run: clean install setup test build
+run: clean install setup test mutatetest build
 	docker compose up
 
 clean:
@@ -21,7 +21,11 @@ setup: requirements.txt
 #run tests
 test: 
 	python ./mentor/userform/tests.py
+	python ./mentor/formtests.py
 
 #build dist
 build:
 	python setup.py bdist
+
+mutatetest:
+	-cd mentor && python -m mutmut run --paths-to-mutate=utils.py --runner "python -m unittest formtests.py"
