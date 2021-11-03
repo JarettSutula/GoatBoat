@@ -112,16 +112,8 @@ def login_form(request):
             username = form.cleaned_data.get("username")
             password = form.cleaned_data.get("password")
 
-            # do not need this - we are not posting anything in login_form.
-            # context= { 'username': username,
-            #            'password': password
-            #           }
-
-            # print(context)
-
-            # users.insert_one(context)
-
-            return HttpResponseRedirect('/form/login?submitted=True')
+            # redirect user home.
+            return HttpResponseRedirect('/')
     else:
         form = LogInForm()
         if 'submitted' in request.GET:
