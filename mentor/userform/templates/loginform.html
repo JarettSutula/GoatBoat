@@ -4,12 +4,7 @@
 
 {% block content %}
 
-{% if submitted %}
-<p class="success">
-  Your user was submitted successfully. Thank you.
-</p>
-
-{% else %}
+{% if username is None %}
 <form class="gbform" action="" method="post" novalidate>
   <div class = "fieldWrapper">
   <table id="loginformtable">
@@ -22,5 +17,7 @@
   {% csrf_token %}
   </div>
 </form>
+{% else %}
+  <h2> Welcome, {{ username }}.</h2>
 {% endif %}
 {% endblock content %}
