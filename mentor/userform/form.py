@@ -94,7 +94,7 @@ def create_user_form(request):
             users.insert_one(context)
             logins.insert_one(context_2)
 
-            return HttpResponseRedirect('/form/createuser?submitted=True')
+            return HttpResponseRedirect('/createuser?submitted=True')
     else:
         form = UserForm()
         if 'submitted' in request.GET:
@@ -105,17 +105,17 @@ def create_user_form(request):
 def login_form(request):
     """TODO: implement login form and authentication."""
     # Set username to none to start.
-    username = None
+    session_username = None
+    form = LogInForm()
     if request.method == 'POST':
         form = LogInForm(request.POST)
         if form.is_valid():
             cd = form.cleaned_data
             username = form.cleaned_data.get("username")
-            password = form.cleaned_data.get("password")
 
             # if cleaners pass, that means the login should be successful.
             # create session with username for use across web server.
-            request.session['username']== username
+            request.session['username'] = username
             print(request.session)
             print(request.session['username'])
             # redirect user home.
@@ -129,4 +129,4 @@ def login_form(request):
         if 'submitted' in request.GET:
             submitted = True
 
-    return render(request, 'loginform.html', {'form': form, 'username': username})
+    return render(request, 'loginform.html', {'form': form, 'username': session_username})
