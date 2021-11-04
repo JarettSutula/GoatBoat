@@ -106,8 +106,6 @@ def login_form(request):
     """Provides login form for new users.
     Creates a session if the login information is correct.
     """
-    # Set username to none to start.
-    session_username = None
     form = LogInForm()
     if request.method == 'POST':
         form = LogInForm(request.POST)
@@ -120,16 +118,19 @@ def login_form(request):
             # set session expiration time for 10 minutes.
             request.session.set_expiry(600)
             # redirect user home.
-            return HttpResponseRedirect('/login')
+            return HttpResponseRedirect('/')
 
     elif request.method == 'GET':
         # see if the session has a username.
         if 'username' in request.session:
-            session_username = request.session['username']
+            # if we are back here while we are logged in, delete the session.
+            request.session.flush()
+            # if we want to go back to home instead of log in page after, uncomment this.
+            # return HttpResponseRedirect('/')
 
     else:
         form = LogInForm()
         if 'submitted' in request.GET:
             submitted = True
 
-    return render(request, 'loginform.html', {'form': form, 'username': session_username})
+    return render(request, 'loginform.html', {'form': form})
