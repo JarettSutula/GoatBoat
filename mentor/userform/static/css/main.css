@@ -12,7 +12,89 @@ body {
     padding:0;
 }
 
-ul {
+#profile{
+    list-style-type: none;
+    font-family: sans-serif;
+}
+
+#profilename{
+    padding-left: 20px;
+    padding-top: 155px;
+    font-size: 60px;
+}
+
+#picandusername{
+    padding-top:20px;
+}
+
+#details{
+    position: absolute;
+    top:330px;
+}
+
+#detaillist{
+    list-style-type: none;
+    font-family: sans-serif;
+    font-size: 20px;
+}
+
+.detailitem{
+    float:none;
+}
+
+#profilepic{
+    height:250px;
+}
+
+#accountdetails{
+    font-family: sans-serif;
+}
+
+#mentormatches{
+    position: absolute;
+    top: 420px;
+    left: 400px;
+    font-size: 50px;
+    font-family: sans-serif;
+}
+
+#mentorgap{
+
+}
+
+#mentorlist{
+    list-style-type: none;
+    font-family: sans-serif;
+    font-size: 20px;
+}
+
+.mentorlistitem{
+    float:none;
+}
+
+#menteematches{
+    position: absolute;
+    top: 420px;
+    left: 840px;
+    font-size: 50px;
+    font-family: sans-serif;
+}
+
+#menteelist{
+    list-style-type: none;
+    font-family: sans-serif;
+    font-size: 20px;
+}
+
+.menteelistitem{
+    float:none;
+}
+
+#profilenotallowed{
+    text-align:center;
+}
+
+#navbar {
   list-style-type: none;
   margin: 0;
   padding: 0;

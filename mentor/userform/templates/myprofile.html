@@ -8,13 +8,73 @@
 <body>
 
 {% if request.session.username %}
-<div>
-    <h1> This is {{ request.session.username }}'s Profile Page! </h1>
+<div id="picandusername">
+    <ul id="profile">
+        <li>
+            <img id="profilepic" src="https://th-thumbnailer.cdn-si-edu.com/S1QUXEGEJ_0Tr1aiVUSYlKxNP7s=/1000x750/filters:no_upscale()/https://tf-cmsv2-smithsonianmag-media.s3.amazonaws.com/filer/b9/d2/b9d271f3-7f66-4132-b5af-7d33844505b7/goat.jpg">
+        </li>
+        <li>
+            <h1 id="profilename"> {{ request.session.username }} </h1>
+        </li>
+    </ul>
+</div>
+
+<div id="details">
+    <ul id = "detaillist">
+        <li class="detailitem">
+            <span id="accountdetails"> Account Details </span>
+        </li>
+        <li class="detailitem">
+            <span> <b> Username </b> : {{ context.username }}</span>
+        </li>
+        <li class="detailitem">
+            <span> <b> First Name </b>  : {{ context.firstname }} </span>
+        </li>
+        <li class="detailitem">
+            <span> <b> Last Name </b>  : {{ context.lastname }} </span>
+        </li>
+        <li class="detailitem">
+            <span> <b> Email </b>  : {{ context.email }} </span>
+        </li>
+        <li class="detailitem">
+            <span> <b> Major </b>  : {{ context.major }} </span>
+        </li>
+        <li class="detailitem">
+            <span> <b> Profession </b>  : {{ context.profession }} </span>
+        </li>
+        <li class="detailitem">
+            <span> <b> Classes Looking For Help In </b> : </br> {{ context.mentorclasschoice }} </span>
+        </li>
+        <li class="detailitem">
+            <span> <b> Classes Looking To Mentor </b> : </br> {{ context.menteeclasschoice }} </span>
+        </li>
+    </ul>
+</div>
+
+
+<div id="mentormatches">
+    <span> <b> Mentor Matches </b> </span>
+        <ul id="mentorlist">
+            <li class="mentorlistitem"> Judy Snoozy </li>
+            <li class="mentorlistitem"> Apple Banana </li>
+            <li class="mentorlistitem"> Bookshelf Shoezen </li>
+            <li class="mentorlistitem"> Carpet Dirtilley </li>
+        </ul>
+</div>
+
+<div id="menteematches">
+    <span> <b> Mentor Matches </b> </span>
+    <ul id="menteelist">
+        <li class="menteelistitem"> Tommy Bahama </li>
+        <li class="menteelistitem"> Coffee Drinkington </li>
+        <li class="menteelistitem"> Silverstein Bandington </li>
+        <li class="menteelistitem"> Old Halloweendecore </li>
+    </ul>
 </div>
 
 {% else %}
 
-<div>
+<div id="profilenotallowed">
     <a href="/login">
         <h1> You need to login! </h1>
     </a>
