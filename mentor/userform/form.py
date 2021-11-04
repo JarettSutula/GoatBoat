@@ -104,7 +104,8 @@ def create_user_form(request):
 
 def login_form(request):
     """TODO: implement login form and authentication."""
-    submitted = False
+    # Set username to none to start.
+    username = None
     if request.method == 'POST':
         form = LogInForm(request.POST)
         if form.is_valid():
@@ -112,11 +113,20 @@ def login_form(request):
             username = form.cleaned_data.get("username")
             password = form.cleaned_data.get("password")
 
+            # if cleaners pass, that means the login should be successful.
+            # create session with username for use across web server.
+            request.session['username']== username
+            print(request.session)
+            print(request.session['username'])
             # redirect user home.
             return HttpResponseRedirect('/')
+
+    elif request.method == 'GET':
+        action = request.GET.get('action')
+
     else:
         form = LogInForm()
         if 'submitted' in request.GET:
             submitted = True
 
-    return render(request, 'loginform.html', {'form': form, 'submitted': submitted})
+    return render(request, 'loginform.html', {'form': form, 'username': username})
