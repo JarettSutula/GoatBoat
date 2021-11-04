@@ -4,6 +4,7 @@ from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from utils import start_db, collection_link, create_day_array
 import bcrypt
+import logging
 
 db_handle = start_db()
 users = collection_link(db_handle, 'users')
@@ -89,7 +90,8 @@ def create_user_form(request):
                           'password': hashed_password
                         }
 
-            print(context)
+            # print(context)
+            logging.Logger.info(context)
             
             users.insert_one(context)
             logins.insert_one(context_2)

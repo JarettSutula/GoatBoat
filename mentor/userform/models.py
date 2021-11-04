@@ -1,6 +1,7 @@
 from django.core.exceptions import ValidationError
 from django.db import models
 from django import forms
+import logging
 
 # Create your models here.
 CLASS_CHOICES = [
@@ -80,6 +81,7 @@ class UserForm(forms.Form):
         pass1 = self.cleaned_data['password']
         pass2 = self.cleaned_data['confirmpassword']
         if pass1 != pass2:
+            logging.Logger.warning("The passwords must match")
             raise ValidationError('The passwords must match.')
         return pass2
 
@@ -95,6 +97,7 @@ class UserForm(forms.Form):
         # conditions - cannot be the same time, nor can starttime come after endtime,
         # nor can only one value be empty.
         if (start == end and start != -1) or (start > end) or (start != end and (start == -1 or end == -1)):
+            logging.Logger.warning("Please select a valid time frame")
             raise ValidationError('Please select a valid time frame.')
         return end
 
@@ -110,6 +113,7 @@ class UserForm(forms.Form):
         # conditions - cannot be the same time, nor can starttime come after endtime,
         # nor can only one value be empty.
         if (start == end and start != -1) or (start > end) or (start != end and (start == -1 or end == -1)):
+            logging.Logger.warning("Please select a valid time frame")            
             raise ValidationError('Please select a valid time frame.')
         return end
     
@@ -125,6 +129,7 @@ class UserForm(forms.Form):
         # conditions - cannot be the same time, nor can starttime come after endtime,
         # nor can only one value be empty.
         if (start == end and start != -1) or (start > end) or (start != end and (start == -1 or end == -1)):
+            logging.Logger.warning("Please select a valid time frame")            
             raise ValidationError('Please select a valid time frame.')
         return end
     
@@ -140,6 +145,7 @@ class UserForm(forms.Form):
         # conditions - cannot be the same time, nor can starttime come after endtime,
         # nor can only one value be empty.
         if (start == end and start != -1) or (start > end) or (start != end and (start == -1 or end == -1)):
+            logging.Logger.warning("Please select a valid time frame")
             raise ValidationError('Please select a valid time frame.')
         return end
     
@@ -155,6 +161,7 @@ class UserForm(forms.Form):
         # conditions - cannot be the same time, nor can starttime come after endtime,
         # nor can only one value be empty.
         if (start == end and start != -1) or (start > end) or (start != end and (start == -1 or end == -1)):
+            logging.Logger.warning("Please select a valid time frame")
             raise ValidationError('Please select a valid time frame.')
         return end
 
@@ -170,6 +177,7 @@ class UserForm(forms.Form):
         # conditions - cannot be the same time, nor can starttime come after endtime,
         # nor can only one value be empty.
         if (start == end and start != -1) or (start > end) or (start != end and (start == -1 or end == -1)):
+            logging.Logger.warning("Please select a valid time frame")
             raise ValidationError('Please select a valid time frame.')
         return end
 
@@ -185,6 +193,7 @@ class UserForm(forms.Form):
         # conditions - cannot be the same time, nor can starttime come after endtime,
         # nor can only one value be empty.
         if (start == end and start != -1) or (start > end) or (start != end and (start == -1 or end == -1)):
+            logging.Logger.warning("Please select a valid time frame")
             raise ValidationError('Please select a valid time frame.')
         return end
 

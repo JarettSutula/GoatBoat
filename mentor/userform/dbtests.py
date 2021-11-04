@@ -4,6 +4,7 @@ import unittest
 import pymongo
 from dotenv import load_dotenv
 import certifi
+import logging
 
 
 
@@ -16,6 +17,7 @@ class TestDatabaseMethods(unittest.TestCase):
 
         # load the .env file in local directories for DB access.
         load_dotenv()
+        logging.Logger.debug("load .env file")
         DB_USERNAME = os.getenv('DB_USERNAME')
         DB_PASSWORD = os.getenv('DB_PASSWORD')
         connection_string = "mongodb+srv://"+DB_USERNAME+":"+DB_PASSWORD+"@gb-mentoring-cluster.jhwgr.mongodb.net/?retryWrites=true&w=majority"
@@ -53,6 +55,7 @@ class TestDatabaseMethods(unittest.TestCase):
         client = pymongo.MongoClient(connection_string, tlsCAfile = ca)
         db_handle = client.get_database('gbmDB')
         
+        logging.Logger.info("Attempting connection")
         return db_handle        
         
 
