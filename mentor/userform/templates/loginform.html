@@ -4,20 +4,23 @@
 
 {% block content %}
 
-{% if username is None %}
+{% if request.session.username %}
+<div>
+  <h2 class="formheader"> Welcome, {{ request.session.username }}!</h2>
+</div>
+
+{% else %}
 <form class="gbform" action="" method="post" novalidate>
   <div class = "fieldWrapper">
-  <table id="loginformtable">
-    {{ form.as_table }}
-    <tr>
-      <td>&nbsp;</td>
-      <td><input type="submit" value="Submit"></td>
-    </tr>
-  </table>
-  {% csrf_token %}
+    <table id="loginformtable">
+      {{ form.as_table }}
+      <tr>
+        <td>&nbsp;</td>
+        <td><input type="submit" value="Submit"></td>
+      </tr>
+    </table>
+    {% csrf_token %}
   </div>
 </form>
-{% else %}
-  <h2> Welcome, {{ username }}.</h2>
 {% endif %}
 {% endblock content %}
