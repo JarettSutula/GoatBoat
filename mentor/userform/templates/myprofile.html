@@ -1,0 +1,24 @@
+{% load static %}
+{% include "navigation.html" %}
+
+<head>
+    <meta charset="UTF-8">
+    <title>{{ request.session.username }} Profile</title>
+</head>
+<body>
+
+{% if request.session.username %}
+<div>
+    <h1> This is {{ request.session.username }}'s Profile Page! </h1>
+</div>
+
+{% else %}
+
+<div>
+    <a href="/login">
+        <h1> You need to login! </h1>
+    </a>
+</div>
+
+{% endif %}
+</body>
