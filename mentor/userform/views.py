@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 
-from mentor import userform
+from userform.models import UserForm
 import logging
 
 # Create your views here.
@@ -22,7 +22,7 @@ def userSucess(request):
     lastname=''
     emailvalue=''
 
-    form= userform(request.POST or None)
+    form= UserForm(request.POST or None)
     if form.is_valid():
         firstname= form.cleaned_data.get("first_name")
         lastname= form.cleaned_data.get("last_name")
