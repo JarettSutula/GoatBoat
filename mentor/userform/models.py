@@ -1,6 +1,14 @@
+import os, sys
+currentdir = os.path.dirname(os.path.realpath(__file__))
+parentdir = os.path.dirname(currentdir)
+sys.path.append(parentdir)
+
 from django.core.exceptions import ValidationError
 from django.db import models
 from django import forms
+from utils import start_db, collection_link
+
+import bcrypt
 
 # Create your models here.
 CLASS_CHOICES = [
@@ -190,5 +198,31 @@ class UserForm(forms.Form):
 
 
 class LogInForm(forms.Form):
+    """Login form with username and password fields."""
     username = forms.CharField(max_length=100, label='User Name')
     password = forms.CharField(widget=forms.PasswordInput)
+
+    def clean_password(self):
+        """Validates that the username and password exist in database."""
+        username = self.cleaned_data['username']
+        password = self.cleaned_data['password']
+
+        db = start_db()
+        logins = collection_link(db, 'logins')
+    
+        # ensure that username and password are valid in database.
+        user = logins.find_one({'username':username})
+        # if user is not found, it returns None - invalid username.
+        if user == None:
+            raise ValidationError('There is no account associated with this username.')
+        
+        # if there is an account with that username, check the password.
+        byte_password = password.encode('UTF-8')
+        correct_password = bcrypt.checkpw(byte_password, user['password'])
+        
+        if correct_password:
+            print("it matches.")
+        else: 
+            raise ValidationError('Incorrect password, please try again.')
+        
+        
