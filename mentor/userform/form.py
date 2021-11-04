@@ -122,7 +122,18 @@ def login_form(request):
             return HttpResponseRedirect('/')
 
     elif request.method == 'GET':
-        action = request.GET.get('action')
+        # check if we are clicking logout first
+        if 'logout_attempt' in request.GET:
+            action = request.GET.get('logout_attempt')
+            if action == 'logout':
+                # if our action is to logout, get rid of the session
+                if 'username' in request.session:
+                    request.session.flush()
+
+
+        # see if the session has a username.
+        if 'username' in request.session:
+            session_username = request.session['username']
 
     else:
         form = LogInForm()
