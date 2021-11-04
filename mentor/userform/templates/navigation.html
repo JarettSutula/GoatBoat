@@ -1,0 +1,48 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<!-- development version, includes helpful console warnings -->
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="{% static 'js/main.js' %}"></script>
+<link rel="shortcut icon" type="image/png" href="{% static 'images/gblogo.png' %}"/>
+<link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+
+
+    <meta charset="UTF-8">
+    <title>GoatBoat Mentor</title>
+
+    <div id="navigation">
+        <ul id="navbar">
+            <li>
+                <a id="logoclick" href="/">
+                    <img id="gblogo" src="{% static 'images/gblogo.png' %}">
+                </a>
+            </li>
+            <li>
+                <a class="" href="/">Home</a>
+            </li>
+            <li>
+                <a class="" href="/createuser/">Create A User</a>
+            </li>
+
+
+        {% if request.session.username %}
+        </ul>
+        <div class="dropdown">
+            <button onclick="myProfileDropdown()" class="dropbtn"> {{ request.session.username }} </button>
+            <div id="myProfileDropdown" class="dropdown-content">
+                <a href="/profile">My Profile</a>
+                <a href="/login">Logout</a>
+            </div>
+        </div>
+
+        {% else %}
+
+        <li id="loginlink">
+            <a class="" href="/login">Login</a>
+        </li>
+        </ul>
+        {% endif %}
+
+    </div>

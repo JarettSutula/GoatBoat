@@ -1,14 +1,47 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from utils import collection_link, start_db
+from userform.models import UserForm
 
 # Create your views here.
 
 
 def homePageView(request):
-    return HttpResponse('Welcome to Marist Mentoring!')
+    """View of the home page."""
+    return render(request,'home.html', )
 
+def loginView(request):
+    "View for the login page."
+    return render(request,'loginheader.html')
 
-def userSucess(request):
+def myProfileView(request):
+    """View for the user's profile.
+    This will return relevant user object fields to the html page.
+    """
+    # before checking anything, initialize blank context. If they don't log in and 
+    # still find themselves on profile, blank context will remove errors.
+    context = {}
+    # if they are logged in, make the object to pass to html.
+    if 'username' in request.session:
+        db = start_db()
+        users = collection_link(db, 'users')
+        result = users.find_one({'username': request.session['username']})
+        
+        # object for html
+        context = {
+            'username': result['username'],
+            'firstname': result['firstname'],
+            'lastname': result['lastname'],
+            'email': result['email'],
+            'profession': result['profession'],
+            'major': result['major'],
+            'mentorclasschoice': result['mentorclasschoice'],
+            'menteeclasschoice': result['menteeclasschoice']
+        }
+
+    return render(request,'myprofile.html', {'context':context})
+
+def userSuccess(request):
     submitbutton= request.POST.get("submit")
 
     firstname=''

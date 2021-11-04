@@ -1,0 +1,19 @@
+topblock {
+    display: inline-block;
+    width:172px;
+}
+
+midblock {
+    display: inline-block;
+    width:255px;
+}
+
+botblock {
+    display: inline-block;
+    width:162px;
+}
+
+submitbutton {
+    display: inline-block;
+    width:120px;
+}
