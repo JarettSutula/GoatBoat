@@ -8,8 +8,26 @@
 <body>
 
 {% if request.session.username %}
-<div>
-    <h1> This is {{ request.session.username }}'s Profile Page! </h1>
+<div id="picandusername">
+    <ul id="profile">
+        <li>
+            <img src="https://dummyimage.com/250x250/000/fff">
+        </li>
+        <li>
+            <h1 id="profilename"> {{ request.session.username }} </h1>
+        </li>
+    </ul>
+</div>
+
+<div id="details">
+    <ul>
+        <li>
+            <span> First Name </span>
+        </li>
+        <li>
+            <span> Last Name </span>
+        </li>
+    </ul>
 </div>
 
 {% else %}

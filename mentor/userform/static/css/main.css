@@ -12,7 +12,27 @@ body {
     padding:0;
 }
 
-ul {
+#profile{
+    list-style-type: none;
+    font-family: sans-serif;
+}
+
+#profilename{
+    padding-left: 20px;
+    padding-top: 195px;
+}
+
+#picandusername{
+    padding-top:20px;
+}
+
+#details{
+    position: absolute;
+    top:330px;
+}
+
+
+#navbar {
   list-style-type: none;
   margin: 0;
   padding: 0;
