@@ -5,10 +5,13 @@ from django.http import HttpResponse
 
 
 def homePageView(request):
-    return render(request,'home.html')
+    return render(request,'home.html', )
 
 def loginView(request):
     return render(request,'loginheader.html')
+
+def myProfileView(request):
+    return render(request,'myprofile.html')
 
 def userSucess(request):
     submitbutton= request.POST.get("submit")
