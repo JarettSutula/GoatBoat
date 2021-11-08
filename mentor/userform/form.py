@@ -150,5 +150,5 @@ def profile_search(request):
         # just return the form.
         form = ProfileSearch()
 
-    return render(request, 'profilesearch.html', {'form': form, 'profile':profile})
+    return render(request, 'profilesearch.html', {'form': form, 'profile': profile})
 

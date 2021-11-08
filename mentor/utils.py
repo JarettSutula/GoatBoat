@@ -56,3 +56,8 @@ def create_day_array(start, end):
     
     # When done, return the array of block objects.
     return day
+
+def get_profile_snapshot(username, full_profile):
+
+    # TODO: return profile based on parameters.
+    return {}
