@@ -2,7 +2,7 @@ from django import db, forms
 from userform.models import UserForm, LogInForm, ProfileSearch
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
-from utils import start_db, collection_link, create_day_array
+from utils import start_db, collection_link, create_day_array, get_profile_snapshot
 import bcrypt
 
 db_handle = start_db()
@@ -141,7 +141,8 @@ def profile_search(request):
             cd = form.cleaned_data
             username = form.cleaned_data.get("username")
 
-            # fill profile with valid/invalid stuff.
+            # fill profile with snapshot information, use False to dictate only a snapshot.
+            profile = get_profile_snapshot(username, False)
             
             # return route, if necessary.
             # return HttpResponseRedirect('/')
