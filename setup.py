@@ -23,6 +23,7 @@ tests = [
 ]
 
 dev = [
+    'tox==3.24.4'
 ]
 
 setup(
