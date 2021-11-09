@@ -9,21 +9,20 @@
 
 <form class="profilesearchform" action="" method="post" novalidate>
     <div class = "fieldWrapper">
-        <table id="profilesearchtable">
-            {{ form.as_table}}
+            <b>{{ form.username.label_tag }}</b>
+            {{ form.username }}
+            {{ form.username.errors }}
             <tr>
                 <td>&nbsp;</td>
                 <td><input type="submit" value="Submit"></td>
             </tr>
-        </table>
         {% csrf_token %}
     </div>
 </form>
 
-{% if profile.username %}
+{% if profile.firstname %}
     <div class= "profilesearchform">
         <div class= 'profileblock'>
-            <b>Username</b>: {{ profile.username }}<br>
             <b>First Name</b>: {{ profile.firstname }}<br>
             <b>Last Name</b>: {{ profile.lastname }}<br>
             <b>Profession</b>: {{ profile.profession }}<br>
@@ -31,8 +30,10 @@
         </div>
     </div>
 
-{% else %}
+{% elif profile.failed %}
     <h4 class="validmessage">Please enter a valid profile.</h4>
+
+{% else %}
 
 {% endif %}
 {% endblock content %}

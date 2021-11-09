@@ -69,12 +69,11 @@ def get_profile_snapshot(username, full_profile):
     # connect to database
     db = start_db()
     users = collection_link(db, 'users')
-
     attempted_find = users.find_one({'username': username})
 
     if attempted_find == None:
         # couldn't find username, return something that tells html it doesn't exist.
-        profile = {}
+        profile = {'failed':True}
 
     else:
         if full_profile:
@@ -93,7 +92,6 @@ def get_profile_snapshot(username, full_profile):
         elif not full_profile:
             # this is for our 'snapshot' for generic profile searching.
             profile = {
-                'username': attempted_find['username'],
                 'firstname': attempted_find['firstname'],
                 'lastname': attempted_find['lastname'],
                 'profession': attempted_find['profession'],
