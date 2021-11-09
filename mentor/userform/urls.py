@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import homePageView, myProfileView, profileSearchView
+from .views import homePageView, myProfileView
 from . import form
 
 
@@ -8,5 +8,5 @@ urlpatterns = [
     path('createuser/', form.create_user_form, name='createuserform'),
     path('login/', form.login_form, name='loginform'),
     path('profile/', myProfileView, name='myprofile'),
-    path('profile/search', form.profile_search, name='profilesearch')
+    path('search/', form.profile_search, name='profilesearch')
 ]

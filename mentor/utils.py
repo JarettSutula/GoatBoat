@@ -65,7 +65,7 @@ def get_profile_snapshot(username, full_profile):
     profession and major.
     """
     profile = {}
-
+   
     # connect to database
     db = start_db()
     users = collection_link(db, 'users')

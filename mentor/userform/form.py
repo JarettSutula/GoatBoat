@@ -137,13 +137,13 @@ def profile_search(request):
     profile = {}
     form = ProfileSearch()
     if request.method == 'POST':
+        form = ProfileSearch(request.POST)
         if form.is_valid():
             cd = form.cleaned_data
             username = form.cleaned_data.get("username")
 
             # fill profile with snapshot information, use False to dictate only a snapshot.
             profile = get_profile_snapshot(username, False)
-            
             # return route, if necessary.
             # return HttpResponseRedirect('/')
     

@@ -254,3 +254,20 @@ a.button:hover {
 .dropdown a:hover {background-color: #ddd;}
 
 .show {display: block;}
+
+.profilesearchform {
+    text-align:center;
+}
+
+#profilesearchtable {
+    display:initial;
+}
+
+.validmessage {
+    text-align:center;
+}
+
+.profileblock {
+    display: inline-block;
+    text-align: left;
+}

@@ -1,0 +1,38 @@
+{% load static %}
+{% include "navigation.html" %}
+
+{% block content %}
+
+<div>
+    <h2 class="formheader">Profile Search</h2>
+</div>
+
+<form class="profilesearchform" action="" method="post" novalidate>
+    <div class = "fieldWrapper">
+        <table id="profilesearchtable">
+            {{ form.as_table}}
+            <tr>
+                <td>&nbsp;</td>
+                <td><input type="submit" value="Submit"></td>
+            </tr>
+        </table>
+        {% csrf_token %}
+    </div>
+</form>
+
+{% if profile.username %}
+    <div class= "profilesearchform">
+        <div class= 'profileblock'>
+            <b>Username</b>: {{ profile.username }}<br>
+            <b>First Name</b>: {{ profile.firstname }}<br>
+            <b>Last Name</b>: {{ profile.lastname }}<br>
+            <b>Profession</b>: {{ profile.profession }}<br>
+            <b>Major</b>: {{ profile.major }}<br>
+        </div>
+    </div>
+
+{% else %}
+    <h4 class="validmessage">Please enter a valid profile.</h4>
+
+{% endif %}
+{% endblock content %}
