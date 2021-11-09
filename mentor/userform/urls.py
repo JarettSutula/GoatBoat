@@ -7,5 +7,6 @@ urlpatterns = [
     path('', homePageView, name='home'),
     path('createuser/', form.create_user_form, name='createuserform'),
     path('login/', form.login_form, name='loginform'),
-    path('profile/', myProfileView, name='myprofile')
+    path('profile/', myProfileView, name='myprofile'),
+    path('search/', form.profile_search, name='profilesearch')
 ]

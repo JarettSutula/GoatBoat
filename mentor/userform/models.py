@@ -225,4 +225,7 @@ class LogInForm(forms.Form):
         else: 
             raise ValidationError('Incorrect password, please try again.')
         
-        
+
+class ProfileSearch(forms.Form):
+    """Profile searching form given a username."""
+    username = forms.CharField(max_length=100, label='Username')

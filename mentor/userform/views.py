@@ -8,7 +8,7 @@ from userform.models import UserForm
 
 def homePageView(request):
     """View of the home page."""
-    return render(request,'home.html', )
+    return render(request,'home.html')
 
 def loginView(request):
     "View for the login page."
@@ -59,4 +59,3 @@ def userSuccess(request):
               'submitbutton': submitbutton, 'emailvalue':emailvalue}
 
     return render(request, 'form.html', context)
-

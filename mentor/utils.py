@@ -56,3 +56,50 @@ def create_day_array(start, end):
     
     # When done, return the array of block objects.
     return day
+
+def get_profile_snapshot(username, full_profile):
+    """Returns a user's profile, given the username.
+    If we want to get the full profile for matching, return all values.
+    If we want to get generic search profile, it will just return the
+    values that anyone should be able to see - username, first/last name,
+    profession and major.
+    """
+    profile = {}
+   
+    # connect to database
+    db = start_db()
+    users = collection_link(db, 'users')
+    attempted_find = users.find_one({'username': username})
+
+    if attempted_find == None:
+        # couldn't find username, return something that tells html it doesn't exist.
+        profile = {'failed':True}
+
+    else:
+        if full_profile:
+            # this is for matching.
+            profile = {
+                'username': attempted_find['username'],
+                'firstname': attempted_find['firstname'],
+                'lastname': attempted_find['lastname'],
+                'email': attempted_find['email'],
+                'profession': attempted_find['profession'],
+                'major': attempted_find['major'],
+                'mentorclasschoice': attempted_find['mentorclasschoice'],
+                'menteeclasschoice': attempted_find['menteeclasschoice']
+            }
+
+        elif not full_profile:
+            # this is for our 'snapshot' for generic profile searching.
+            profile = {
+                'firstname': attempted_find['firstname'],
+                'lastname': attempted_find['lastname'],
+                'profession': attempted_find['profession'],
+                'major': attempted_find['major']
+        }
+
+        # if not passed in somehow, default to empty.
+        else:
+            profile = {}
+
+    return profile
