@@ -83,6 +83,17 @@ class UserForm(forms.Form):
     sundaystart= forms.IntegerField(required=False, label= 'Sunday Availability', widget=forms.Select(choices=TIME_CHOICES))
     sundayend= forms.IntegerField(required=False, label= ' to ', widget=forms.Select(choices=TIME_CHOICES))
 
+    def clean_username(self):
+        """Validate that usernames are unique."""
+        username = self.cleaned_data['username']
+        db = start_db()
+        users = collection_link(db, 'users')
+        
+        if users.count_documents({'username': username}, limit = 1) != 0:
+            raise ValidationError('This username is already in use.')
+        else:
+            return username
+
     def clean_confirmpassword(self):
         """Validate that password and confirmed password match."""
         pass1 = self.cleaned_data['password']
