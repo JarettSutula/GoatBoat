@@ -1,6 +1,7 @@
+from re import sub
 from django.shortcuts import render
 from django.http import HttpResponse
-from utils import collection_link, start_db, restructure_day_array
+from utils import collection_link, start_db, restructure_day_array, create_day_array
 from userform.models import UserForm
 
 # Create your views here.
@@ -66,8 +67,81 @@ def editProfileView(request):
     """
     profile_context = {}
     form = UserForm()
+    submitted = False
+
+    if 'username' in request.session and request.method == 'POST':
+        print("we are trying to post")
+        form = UserForm(request.POST)
+        print(form.errors)
+        if form.is_valid():
+            print("form is valid, moving on")
+            # Base form fields
+            firstname = form.cleaned_data.get("firstname")
+            lastname = form.cleaned_data.get("lastname")
+            email = form.cleaned_data.get("email")
+            profession = form.cleaned_data.get("profession")
+            major = form.cleaned_data.get("major")
+            mentorclasschoice = form.cleaned_data.get("mentorclasschoice")
+            menteeclasschoice = form.cleaned_data.get("menteeclasschoice")
+
+            # Schedule-based form fields
+            mondaystart = form.cleaned_data.get("mondaystart")
+            mondayend = form.cleaned_data.get("mondayend")
+            tuesdaystart = form.cleaned_data.get("tuesdaystart")
+            tuesdayend = form.cleaned_data.get("tuesdayend")
+            wednesdaystart = form.cleaned_data.get("wednesdaystart")
+            wednesdayend = form.cleaned_data.get("wednesdayend")
+            thursdaystart = form.cleaned_data.get("thursdaystart")
+            thursdayend = form.cleaned_data.get("thursdayend")
+            fridaystart = form.cleaned_data.get("fridaystart")
+            fridayend = form.cleaned_data.get("fridayend")
+            saturdaystart = form.cleaned_data.get("saturdaystart")
+            saturdayend = form.cleaned_data.get("saturdayend")
+            sundaystart = form.cleaned_data.get("sundaystart")
+            sundayend = form.cleaned_data.get("sundayend")
+
+            # Create arrays of objects with 1-hour block objects.
+            monday = create_day_array(mondaystart, mondayend)
+            tuesday = create_day_array(tuesdaystart, tuesdayend)
+            wednesday = create_day_array(wednesdaystart, wednesdayend)
+            thursday = create_day_array(thursdaystart, thursdayend)
+            friday = create_day_array(fridaystart, fridayend)
+            saturday = create_day_array(saturdaystart, saturdayend)
+            sunday = create_day_array(sundaystart, sundayend)
+
+            # Object to be passed into users
+            user_context= { 'username': request.session['username'],
+                       'firstname': firstname,
+                       'lastname':lastname,
+                       'email':email,
+                       'profession':profession,
+                       'major':major,
+                       'mentorclasschoice':mentorclasschoice,
+                       'menteeclasschoice':menteeclasschoice,
+                       'schedule':{
+                           'monday': monday,
+                           'tuesday': tuesday,
+                           'wednesday': wednesday,
+                           'thursday': thursday,
+                           'friday': friday,
+                           'saturday': saturday,
+                           'sunday': sunday
+                       }
+                      }
+            
+            # update database object.
+            db = start_db()
+            users = collection_link(db, 'users')
+
+            # update the user from their username and whatever fields they changed.
+            users.update_one({'username': request.session['username']},
+                             {'$set': user_context})
+            print(user_context)
+            # tell HTML that we are submitted.
+            submitted = True
+
     # if we are logged in, fill the form with current profile values.
-    if 'username' in request.session:
+    else:
         db = start_db()
         users = collection_link(db, 'users')
         current_profile = users.find_one({'username': request.session['username']})
@@ -110,5 +184,5 @@ def editProfileView(request):
 
         form = UserForm(initial= profile_context)
     
-    return render(request, 'editprofile.html', {'form':form})
+    return render(request, 'editprofile.html', {'form':form, 'submitted':submitted})
 

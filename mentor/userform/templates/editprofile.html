@@ -10,15 +10,11 @@
   {% if submitted %}
     <p class="success">
      Your profile was edited successfully. Thank you.
+     <a href="/profile">Click here to go to your profile.</a>
    </p>
  
-  {% else %}
+  {% elif request.session.username %}
    <form class="gbform" action="" method="post" novalidate>
-    <div class = "fieldWrapper">
-      <topblock>{{ form.username.label_tag }}</topblock>
-      {{ form.username }}
-      {{ form.username.errors }}
-    </div>
     <div class = "fieldWrapper">
       <topblock>{{ form.firstname.label_tag }}</topblock>
       {{ form.firstname }}
@@ -116,5 +112,12 @@
     </tr>
     {% csrf_token %}
    </form>
+ {% else %}
+  <div id="profilenotallowed">
+    <a href="/login">
+        <h1> You need to login before you can edit your profile. </h1>
+    </a>
+  </div>
+   
  {% endif %}
  {% endblock content %}
