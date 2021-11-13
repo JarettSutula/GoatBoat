@@ -1,0 +1,120 @@
+  {% load static %}
+  {% include "navigation.html" %}
+  {% include "createuserheader.html" %}
+  <head>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/formstyle.css' %}">
+  </head>
+
+  {% block content %}
+  
+  {% if submitted %}
+    <p class="success">
+     Your profile was edited successfully. Thank you.
+   </p>
+ 
+  {% else %}
+   <form class="gbform" action="" method="post" novalidate>
+    <div class = "fieldWrapper">
+      <topblock>{{ form.username.label_tag }}</topblock>
+      {{ form.username }}
+      {{ form.username.errors }}
+    </div>
+    <div class = "fieldWrapper">
+      <topblock>{{ form.firstname.label_tag }}</topblock>
+      {{ form.firstname }}
+      {{ form.firstname.errors }}
+    </div>
+    <div class = "fieldWrapper">
+      <topblock>{{ form.lastname.label_tag }}</topblock>
+      {{ form.lastname }}
+      {{ form.lastname.errors }}
+    </div>
+    <div class = "fieldWrapper">
+      <topblock>{{ form.email.label_tag }}</topblock>
+      {{ form.email }}
+      {{ form.email.errors }}
+    </div>
+    <div class = "fieldWrapper">
+      <topblock>{{ form.profession.label_tag }}</topblock>
+      {{ form.profession }}
+      {{ form.profession.errors }}
+    </div>
+    <div class = "fieldWrapper">
+      <topblock>{{ form.major.label_tag}}</topblock>
+      {{ form.major}}
+      {{ form.major.errors}}
+    </div>
+    <div class = "fieldWrapper">
+      <midblock>{{ form.mentorclasschoice.label_tag }}</midblock>
+      {{ form.mentorclasschoice }}
+      {{ form.mentorclasschoice.errors }}
+    </div>
+    <div class = "fieldWrapper">
+      <midblock>{{ form.menteeclasschoice.label_tag }}</midblock>
+      {{ form.menteeclasschoice }}
+      {{ form.menteclasschoice.errors }}
+    </div>
+    <div class = "fieldWrapper">
+      <botblock>{{ form.mondaystart.label_tag }}</botblock>
+      {{ form.mondaystart }}
+      {{ form.mondayend.label_tag }}
+      {{ form.mondayend }}
+      {{ form.mondaystart.errors }}
+      {{ form.mondayend.errors }}
+    </div>
+    <div class = "fieldWrapper">
+      <botblock>{{ form.tuesdaystart.label_tag }}</botblock>
+      {{ form.tuesdaystart }}
+      {{ form.tuesdayend.label_tag }}
+      {{ form.tuesdayend }}
+      {{ form.tuesdaystart.errors }}
+      {{ form.tuesdayend.errors }}
+    </div>
+    <div class = "fieldWrapper">
+      <botblock>{{ form.wednesdaystart.label_tag }}</botblock>
+      {{ form.wednesdaystart }}
+      {{ form.wednesdayend.label_tag }}
+      {{ form.wednesdayend }}
+      {{ form.wednesdaystart.errors }}
+      {{ form.wednesdayend.errors }}
+    </div>
+    <div class = "fieldWrapper">
+      <botblock>{{ form.thursdaystart.label_tag }}</botblock>
+      {{ form.thursdaystart }}
+      {{ form.thursdayend.label_tag }}
+      {{ form.thursdayend }}
+      {{ form.thursdaystart.errors }}
+      {{ form.thursdayend.errors }}
+    </div>
+    <div class = "fieldWrapper">
+      <botblock>{{ form.fridaystart.label_tag }}</botblock>
+      {{ form.fridaystart }}
+      {{ form.fridayend.label_tag }}
+      {{ form.fridayend }}
+      {{ form.fridaystart.errors }}
+      {{ form.fridayend.errors }}
+    </div>
+    <div class = "fieldWrapper">
+      <botblock>{{ form.saturdaystart.label_tag }}</botblock>
+      {{ form.saturdaystart }}
+      {{ form.saturdayend.label_tag }}
+      {{ form.saturdayend }}
+      {{ form.saturdaystart.errors }}
+      {{ form.saturdayend.errors }}
+    </div>
+    <div class = "fieldWrapper">
+      <botblock>{{ form.sundaystart.label_tag }}</botblock>
+      {{ form.sundaystart }}
+      {{ form.sundayend.label_tag }}
+      {{ form.sundayend }}
+      {{ form.sundaystart.errors }}
+      {{ form.sundayend.errors }}
+    </div>
+    <tr>
+      <td>&nbsp;</td>
+      <td><input type="submit" value="Submit" style="position:relative; top:5px;"></td>
+    </tr>
+    {% csrf_token %}
+   </form>
+ {% endif %}
+ {% endblock content %}

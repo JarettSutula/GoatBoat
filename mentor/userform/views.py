@@ -59,3 +59,31 @@ def userSuccess(request):
               'submitbutton': submitbutton, 'emailvalue':emailvalue}
 
     return render(request, 'form.html', context)
+
+def editProfileView(request):
+    """Pulls up an editable profile, with previously inputted
+    values placed already in the form.
+    """
+    profile_context = {}
+    form = UserForm()
+    # if we are logged in, fill the form with current profile values.
+    if 'username' in request.session:
+        db = start_db()
+        users = collection_link(db, 'users')
+        current_profile = users.find_one({'username': request.session['username']})
+
+        profile_context = {
+            'username': current_profile['username'],
+            'firstname': current_profile['firstname'],
+            'lastname': current_profile['lastname'],
+            'email': current_profile['email'],
+            'profession': current_profile['profession'],
+            'major': current_profile['major'],
+            'mentorclasschoice': current_profile['mentorclasschoice'],
+            'menteeclasschoice': current_profile['menteeclasschoice']
+        }
+
+        form = UserForm(initial= profile_context)
+    
+    return render(request, 'editprofile.html', {'form':form})
+
