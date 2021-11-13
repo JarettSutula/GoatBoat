@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from utils import collection_link, start_db
+from utils import collection_link, start_db, restructure_day_array
 from userform.models import UserForm
 
 # Create your views here.
@@ -74,10 +74,15 @@ def editProfileView(request):
 
         # need to translate current schedule to mondaystart, mondayend ... etc
         # without it, form will not display proper schedule.
-        schedule = current_profile['schedule']['monday']
-        print(schedule[0]['starttime'])
-        print(schedule[-1]['endtime'])
+        mondaystart, mondayend = restructure_day_array(current_profile['schedule']['monday'])
+        tuesdaystart, tuesdayend = restructure_day_array(current_profile['schedule']['tuesday'])
+        wednesdaystart, wednesdayend = restructure_day_array(current_profile['schedule']['wednesday'])
+        thursdaystart, thursdayend = restructure_day_array(current_profile['schedule']['thursday'])
+        fridaystart, fridayend = restructure_day_array(current_profile['schedule']['friday'])
+        saturdaystart, saturdayend = restructure_day_array(current_profile['schedule']['saturday'])
+        sundaystart, sundayend = restructure_day_array(current_profile['schedule']['sunday'])
 
+        # pass the relevant user profile form fields into an object.
         profile_context = {
             'username': current_profile['username'],
             'firstname': current_profile['firstname'],
@@ -87,15 +92,20 @@ def editProfileView(request):
             'major': current_profile['major'],
             'mentorclasschoice': current_profile['mentorclasschoice'],
             'menteeclasschoice': current_profile['menteeclasschoice'],
-                # 'schedule':{
-                #     'monday': monday,
-                #     'tuesday': tuesday,
-                #     'wednesday': wednesday,
-                #     'thursday': thursday,
-                #     'friday': friday,
-                #     'saturday': saturday,
-                #     'sunday': sunday
-                # },
+            'mondaystart': mondaystart,
+            'mondayend': mondayend,
+            'tuesdaystart': tuesdaystart,
+            'tuesdayend': tuesdayend,
+            'wednesdaystart': wednesdaystart,
+            'wednesdayend': wednesdayend,
+            'thursdaystart': thursdaystart,
+            'thursdayend': thursdayend,
+            'fridaystart': fridaystart,
+            'fridayend': fridayend,
+            'saturdaystart': saturdaystart,
+            'saturdayend': saturdayend,
+            'sundaystart': sundaystart,
+            'sundayend': sundayend
         }
 
         form = UserForm(initial= profile_context)
