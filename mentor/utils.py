@@ -103,3 +103,14 @@ def get_profile_snapshot(username, full_profile):
             profile = {}
 
     return profile
+
+def restructure_day_array(day):
+    """Restructures day array into start times and end times.
+    Will be used to fill the editable profile form with correct
+    values.
+    """
+    # day is received as a list [{starttime, endtime}, {startime, endtime}]
+    # all are in 1-hour blocks. Only need first and last.
+    # if the day we are given is empty, it will be 'false'.
+    
+

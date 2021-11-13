@@ -72,6 +72,12 @@ def editProfileView(request):
         users = collection_link(db, 'users')
         current_profile = users.find_one({'username': request.session['username']})
 
+        # need to translate current schedule to mondaystart, mondayend ... etc
+        # without it, form will not display proper schedule.
+        schedule = current_profile['schedule']['monday']
+        print(schedule[0]['starttime'])
+        print(schedule[-1]['endtime'])
+
         profile_context = {
             'username': current_profile['username'],
             'firstname': current_profile['firstname'],
@@ -80,7 +86,16 @@ def editProfileView(request):
             'profession': current_profile['profession'],
             'major': current_profile['major'],
             'mentorclasschoice': current_profile['mentorclasschoice'],
-            'menteeclasschoice': current_profile['menteeclasschoice']
+            'menteeclasschoice': current_profile['menteeclasschoice'],
+                # 'schedule':{
+                #     'monday': monday,
+                #     'tuesday': tuesday,
+                #     'wednesday': wednesday,
+                #     'thursday': thursday,
+                #     'friday': friday,
+                #     'saturday': saturday,
+                #     'sunday': sunday
+                # },
         }
 
         form = UserForm(initial= profile_context)
