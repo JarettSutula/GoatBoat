@@ -240,3 +240,134 @@ class LogInForm(forms.Form):
 class ProfileSearch(forms.Form):
     """Profile searching form given a username."""
     username = forms.CharField(max_length=100, label='Username')
+
+
+class EditProfile(forms.Form):
+    """Contains fields for editing profile."""
+    firstname = forms.CharField(max_length=100, label='First Name')
+    lastname = forms.CharField(max_length=100, label='Last Name')
+    email = forms.EmailField(required=False, label='Your Email Address')
+    profession = forms.CharField(max_length=100, label='Profession')
+    major = forms.CharField(max_length=100, label='Major')
+    mentorclasschoice= forms.CharField(label='What class are you looking to tutor for?', widget=forms.Select(choices=CLASS_CHOICES))
+    menteeclasschoice= forms.CharField(label='What class are you looking for help in?', widget=forms.Select(choices=CLASS_CHOICES))
+
+    mondaystart= forms.IntegerField(required=False, label= 'Monday Availability', widget=forms.Select(choices=TIME_CHOICES))
+    mondayend= forms.IntegerField(required=False, label= ' to ', widget=forms.Select(choices=TIME_CHOICES))
+    tuesdaystart= forms.IntegerField(required=False, label= 'Tuesday Availability', widget=forms.Select(choices=TIME_CHOICES))
+    tuesdayend= forms.IntegerField(required=False, label= ' to ', widget=forms.Select(choices=TIME_CHOICES))
+    wednesdaystart= forms.IntegerField(required=False, label= 'Wednesday Availability', widget=forms.Select(choices=TIME_CHOICES))
+    wednesdayend= forms.IntegerField(required=False, label= ' to ', widget=forms.Select(choices=TIME_CHOICES))
+    thursdaystart= forms.IntegerField(required=False, label= 'Thursday Availability', widget=forms.Select(choices=TIME_CHOICES))
+    thursdayend= forms.IntegerField(required=False, label= ' to ', widget=forms.Select(choices=TIME_CHOICES))
+    fridaystart= forms.IntegerField(required=False, label= 'Friday Availability', widget=forms.Select(choices=TIME_CHOICES))
+    fridayend= forms.IntegerField(required=False, label= ' to ', widget=forms.Select(choices=TIME_CHOICES))
+    saturdaystart= forms.IntegerField(required=False, label= 'Saturday Availability', widget=forms.Select(choices=TIME_CHOICES))
+    saturdayend= forms.IntegerField(required=False, label= ' to ', widget=forms.Select(choices=TIME_CHOICES))
+    sundaystart= forms.IntegerField(required=False, label= 'Sunday Availability', widget=forms.Select(choices=TIME_CHOICES))
+    sundayend= forms.IntegerField(required=False, label= ' to ', widget=forms.Select(choices=TIME_CHOICES))
+
+    def clean_mondayend(self):
+        """Validates Monday time availability before form submission.
+        Override clean for end value only to reduce function calls.
+        End value is the priority - start value is cleaned before it,
+        requires both values to be clean to compare.
+        """
+        start = self.cleaned_data['mondaystart']
+        end = self.cleaned_data['mondayend']
+
+        # conditions - cannot be the same time, nor can starttime come after endtime,
+        # nor can only one value be empty.
+        if (start == end and start != -1) or (start > end) or (start != end and (start == -1 or end == -1)):
+            raise ValidationError('Please select a valid time frame.')
+        return end
+
+    def clean_tuesdayend(self):
+        """Validates Tuesday time availability before form submission.
+        Override clean for end value only to reduce function calls.
+        End value is the priority - start value is cleaned before it,
+        requires both values to be clean to compare.
+        """
+        start = self.cleaned_data['tuesdaystart']
+        end = self.cleaned_data['tuesdayend']
+
+        # conditions - cannot be the same time, nor can starttime come after endtime,
+        # nor can only one value be empty.
+        if (start == end and start != -1) or (start > end) or (start != end and (start == -1 or end == -1)):
+            raise ValidationError('Please select a valid time frame.')
+        return end
+    
+    def clean_wednesdayend(self):
+        """Validates Wednesday time availability before form submission.
+        Override clean for end value only to reduce function calls.
+        End value is the priority - start value is cleaned before it,
+        requires both values to be clean to compare.
+        """
+        start = self.cleaned_data['wednesdaystart']
+        end = self.cleaned_data['wednesdayend']
+
+        # conditions - cannot be the same time, nor can starttime come after endtime,
+        # nor can only one value be empty.
+        if (start == end and start != -1) or (start > end) or (start != end and (start == -1 or end == -1)):
+            raise ValidationError('Please select a valid time frame.')
+        return end
+    
+    def clean_thursdayend(self):
+        """Validates Thursday time availability before form submission.
+        Override clean for end value only to reduce function calls.
+        End value is the priority - start value is cleaned before it,
+        requires both values to be clean to compare.
+        """
+        start = self.cleaned_data['thursdaystart']
+        end = self.cleaned_data['thursdayend']
+
+        # conditions - cannot be the same time, nor can starttime come after endtime,
+        # nor can only one value be empty.
+        if (start == end and start != -1) or (start > end) or (start != end and (start == -1 or end == -1)):
+            raise ValidationError('Please select a valid time frame.')
+        return end
+    
+    def clean_fridayend(self):
+        """Validates Friday time availability before form submission.
+        Override clean for end value only to reduce function calls.
+        End value is the priority - start value is cleaned before it,
+        requires both values to be clean to compare.
+        """
+        start = self.cleaned_data['fridaystart']
+        end = self.cleaned_data['fridayend']
+
+        # conditions - cannot be the same time, nor can starttime come after endtime,
+        # nor can only one value be empty.
+        if (start == end and start != -1) or (start > end) or (start != end and (start == -1 or end == -1)):
+            raise ValidationError('Please select a valid time frame.')
+        return end
+
+    def clean_saturdayend(self):
+        """Validates Saturday time availability before form submission.
+        Override clean for end value only to reduce function calls.
+        End value is the priority - start value is cleaned before it,
+        requires both values to be clean to compare.
+        """
+        start = self.cleaned_data['saturdaystart']
+        end = self.cleaned_data['saturdayend']
+
+        # conditions - cannot be the same time, nor can starttime come after endtime,
+        # nor can only one value be empty.
+        if (start == end and start != -1) or (start > end) or (start != end and (start == -1 or end == -1)):
+            raise ValidationError('Please select a valid time frame.')
+        return end
+
+    def clean_sundayend(self):
+        """Validates Sunday time availability before form submission.
+        Override clean for end value only to reduce function calls.
+        End value is the priority - start value is cleaned before it,
+        requires both values to be clean to compare.
+        """
+        start = self.cleaned_data['sundaystart']
+        end = self.cleaned_data['sundayend']
+
+        # conditions - cannot be the same time, nor can starttime come after endtime,
+        # nor can only one value be empty.
+        if (start == end and start != -1) or (start > end) or (start != end and (start == -1 or end == -1)):
+            raise ValidationError('Please select a valid time frame.')
+        return end

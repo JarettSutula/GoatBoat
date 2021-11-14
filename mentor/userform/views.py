@@ -2,7 +2,7 @@ from re import sub
 from django.shortcuts import render
 from django.http import HttpResponse
 from utils import collection_link, start_db, restructure_day_array, create_day_array
-from userform.models import UserForm
+from userform.models import UserForm, EditProfile
 
 # Create your views here.
 
@@ -66,12 +66,12 @@ def editProfileView(request):
     values placed already in the form.
     """
     profile_context = {}
-    form = UserForm()
+    form = EditProfile()
     submitted = False
 
     if 'username' in request.session and request.method == 'POST':
         print("we are trying to post")
-        form = UserForm(request.POST)
+        form = EditProfile(request.POST)
         print(form.errors)
         if form.is_valid():
             print("form is valid, moving on")
@@ -141,7 +141,7 @@ def editProfileView(request):
             submitted = True
 
     # if we are logged in, fill the form with current profile values.
-    else:
+    elif 'username' in request.session:
         db = start_db()
         users = collection_link(db, 'users')
         current_profile = users.find_one({'username': request.session['username']})
@@ -182,7 +182,10 @@ def editProfileView(request):
             'sundayend': sundayend
         }
 
-        form = UserForm(initial= profile_context)
+        form = EditProfile(initial= profile_context)
+    
+    else:
+        form = EditProfile()
     
     return render(request, 'editprofile.html', {'form':form, 'submitted':submitted})
 

@@ -271,3 +271,7 @@ a.button:hover {
     display: inline-block;
     text-align: left;
 }
+
+.success {
+    text-align: center;
+}
