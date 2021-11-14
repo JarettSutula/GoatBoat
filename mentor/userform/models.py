@@ -1,4 +1,8 @@
 import os, sys
+
+from django.forms.fields import CharField
+from django.forms.widgets import PasswordInput
+from dns.rdataclass import CH
 currentdir = os.path.dirname(os.path.realpath(__file__))
 parentdir = os.path.dirname(currentdir)
 sys.path.append(parentdir)
@@ -371,3 +375,49 @@ class EditProfile(forms.Form):
         if (start == end and start != -1) or (start > end) or (start != end and (start == -1 or end == -1)):
             raise ValidationError('Please select a valid time frame.')
         return end
+
+
+class ResetPassword(forms.Form):
+    """Allows logged-in users to reset their password. Includes 
+    original password, original password checker, new password,
+    new password checker, and a cleaner that ensures that the
+    new password is not the same as the old password.
+    """
+    username = forms.CharField(widget=forms.TextInput(attrs={'readonly':'readonly'}), label= "Username")
+    oldpassword = CharField(widget=forms.PasswordInput, label= "Old Password")
+    confirmoldpassword = CharField(widget=forms.PasswordInput, label= "Confirm Old Password")
+    newpassword = CharField(widget=forms.PasswordInput, label= "New Password")
+    confirmnewpassword = CharField(widget=forms.PasswordInput, label= "Confirm New Password")
+
+    def clean_confirmoldpassword(self):
+        """Raise errors if the passwords do not match."""
+        username = self.cleaned_data['username']
+        pass1 = self.cleaned_data['oldpassword']
+        pass2 = self.cleaned_data['confirmoldpassword']
+
+        if pass1 != pass2:
+            raise ValidationError("Your old password does not match its confirmation.")
+
+        db = start_db()
+        logins = collection_link(db, 'logins')
+        login_context = logins.find_one({'username':username})
+        byte_password = pass1.encode('UTF-8')
+        
+        # check if user's old password is right.
+        if bcrypt.checkpw(byte_password, login_context['password']):
+            return pass2
+        else:
+            raise ValidationError("Incorrect password.")
+
+    def clean_confirmnewpassword(self):
+        """Raise errors if the passwords do not match."""
+        oldpassword = self.cleaned_data['oldpassword']
+        pass1 = self.cleaned_data['newpassword']
+        pass2 = self.cleaned_data['confirmnewpassword']
+
+        if pass1 != pass2:
+            raise ValidationError("Your new password does not match its confirmation.")
+        elif oldpassword == pass1:
+            raise ValidationError("Your old and new passwords must be different.")
+        else:
+            return pass2

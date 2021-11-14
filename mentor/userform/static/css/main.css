@@ -275,3 +275,12 @@ a.button:hover {
 .success {
     text-align: center;
 }
+
+.changepasswordform {
+    text-align:center;
+}
+
+.changepasswordblock {
+    display: inline-block;
+    text-align: right;
+}

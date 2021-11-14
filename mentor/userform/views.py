@@ -1,8 +1,9 @@
 from re import sub
+import bcrypt
 from django.shortcuts import render
 from django.http import HttpResponse
 from utils import collection_link, start_db, restructure_day_array, create_day_array
-from userform.models import UserForm, EditProfile
+from userform.models import UserForm, EditProfile, ResetPassword
 
 # Create your views here.
 
@@ -189,3 +190,34 @@ def editProfileView(request):
     
     return render(request, 'editprofile.html', {'form':form, 'submitted':submitted})
 
+def changePasswordView(request):
+    """Allows user to change their password."""
+    form = ResetPassword()
+    submitted = False
+    
+    if 'username' in request.session and request.method == 'POST':
+        form = ResetPassword(request.POST)
+        if form.is_valid():
+            submitted = True
+            newpassword = form.cleaned_data.get("newpassword")
+
+            db = start_db()
+            logins = collection_link(db, 'logins')
+    
+            # encode and hash the new password
+            new_pass = newpassword.encode('UTF-8')
+            new_pass_hashed = bcrypt.hashpw(new_pass, bcrypt.gensalt())
+
+            # pass the new password into the db.
+            logins.update_one({'username': request.session['username']},
+                                {'$set': {'password':new_pass_hashed}})
+            submitted = True
+
+    elif 'username' in request.session:
+        # load the form with the current logged-in username.
+        form = ResetPassword(initial={'username': request.session['username']})
+
+    else:
+        form = ResetPassword()
+
+    return render(request, 'resetpassword.html', {'form':form, 'submitted':submitted})
