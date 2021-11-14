@@ -71,11 +71,8 @@ def editProfileView(request):
     submitted = False
 
     if 'username' in request.session and request.method == 'POST':
-        print("we are trying to post")
         form = EditProfile(request.POST)
-        print(form.errors)
         if form.is_valid():
-            print("form is valid, moving on")
             # Base form fields
             firstname = form.cleaned_data.get("firstname")
             lastname = form.cleaned_data.get("lastname")
@@ -137,7 +134,7 @@ def editProfileView(request):
             # update the user from their username and whatever fields they changed.
             users.update_one({'username': request.session['username']},
                              {'$set': user_context})
-            print(user_context)
+                             
             # tell HTML that we are submitted.
             submitted = True
 
