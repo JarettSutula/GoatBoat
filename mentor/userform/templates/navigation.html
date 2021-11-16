@@ -28,7 +28,11 @@
             <li>
                 <a class="" href="/search/">Search Profiles</a>
             </li>
-
+            {% if request.session.username %}
+            <li>
+                <a class="" href="/match/">Find a Mentor</a>
+            </li>
+            {% endif %}
 
         {% if request.session.username %}
         </ul>
@@ -36,8 +40,8 @@
             <button onclick="myProfileDropdown()" class="dropbtn"> {{ request.session.username }} </button>
             <div id="myProfileDropdown" class="dropdown-content">
                 <a href="/profile">My Profile</a>
-                <a href="/login">Logout</a>
                 <a href="/changepassword">Reset Password</a>
+                <a href="/login">Logout</a>
             </div>
         </div>
 

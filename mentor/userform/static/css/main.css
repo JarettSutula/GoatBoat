@@ -194,6 +194,15 @@ a.button:hover {
     display:initial;
 }
 
+#mentorformtable{
+    display:initial;
+}
+
+#menteeformtable{
+    display:initial;
+}
+
+
 #username{
     float:right;
     display: block;
@@ -283,4 +292,19 @@ a.button:hover {
 .changepasswordblock {
     display: inline-block;
     text-align: right;
+}
+
+#mentorbuttons{
+    text-align:center;
+}
+
+.mentorbutton{
+    position: relative;
+    top: 5px;
+    padding: 60px;
+    font-size:20px;
+}
+
+.mentorlink{
+    text-decoration: none!important;
 }
