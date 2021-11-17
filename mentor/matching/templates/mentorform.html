@@ -3,7 +3,15 @@
 
 {% block content %}
 
-{% if request.session.username %}
+{% if submitted %}
+<div>
+    <p class = "success">
+        Your class choice was successfully added. Thank you.
+        <a href= "/">Click here to go back to matching.</a>
+    </p>
+</div>
+
+{% elif request.session.username %}
 <div>
     <h2 class="formheader"> Select a class you'd like help in, {{ request.session.username }}!</h2>
     <h3 class="formheader"> Mentor Class Form </h3>
