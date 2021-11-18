@@ -54,11 +54,31 @@ def menteeFormPageView(request):
     """View of the mentee page."""
     submitted = False
     form = menteeForm()
-    if request.method == 'POST':
+    # if we are signed in and posting
+    if 'username' in request.session and request.method == 'POST':
         form = menteeForm(request.POST)
         if form.is_valid():
-            # do my stuff
+            # update the object's class choices.
+            classchoice = form.cleaned_data.get("menteeclasschoice")
+
+            db = start_db()
+            users = collection_link(db, 'users')
+
+            # grab the user's mentorclasschoice list.
+            user = users.find_one({'username': request.session['username']})
+            menteeclasses = user['menteeclasschoice']
+
+            # append the class chosen in the form.
+            menteeclasses.append(classchoice)
+
+            # update the user object.
+            users.update_one({'username': request.session['username']},
+                                {'$set': {'menteeclasschoice': menteeclasses}})
             submitted = True
+
+    # if we are signed in but not posting, fill hidden form with username.
+    elif 'username' in request.session:
+        form = menteeForm(initial= {'username': request.session['username']})
 
     else: 
         form = menteeForm()
