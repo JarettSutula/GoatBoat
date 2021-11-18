@@ -79,8 +79,6 @@ def editProfileView(request):
             email = form.cleaned_data.get("email")
             profession = form.cleaned_data.get("profession")
             major = form.cleaned_data.get("major")
-            mentorclasschoice = form.cleaned_data.get("mentorclasschoice")
-            menteeclasschoice = form.cleaned_data.get("menteeclasschoice")
 
             # Schedule-based form fields
             mondaystart = form.cleaned_data.get("mondaystart")
@@ -114,8 +112,6 @@ def editProfileView(request):
                        'email':email,
                        'profession':profession,
                        'major':major,
-                       'mentorclasschoice':mentorclasschoice,
-                       'menteeclasschoice':menteeclasschoice,
                        'schedule':{
                            'monday': monday,
                            'tuesday': tuesday,
