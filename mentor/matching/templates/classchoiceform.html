@@ -7,14 +7,14 @@
 <div>
     <p class = "success">
         Your class choice was successfully added. Thank you.
-        <a href= "/">Click here to go back to matching.</a>
+        <a href= "\">Click here to go back.</a>
     </p>
 </div>
 
 {% elif request.session.username %}
 <div>
-    <h2 class="formheader"> Select a class you'd like to help others in, {{ request.session.username }}!</h2>
-    <h3 class="formheader"> Mentor Class Form </h3>
+    <h2 class="formheader"> Choose a class to interact with, {{ request.session.username }}!</h2>
+    <h3 class="formheader"> Class Choice Form </h3>
 </div>
 
 
@@ -30,6 +30,27 @@
         {% csrf_token %}
     </div>
 </form>
+
+<div id="details">
+    <ul id = "detaillist">
+      <li class="detailitem">
+        <span> <b> Classes Looking For Help In </b> : </span>
+      </li>
+      {% for class in user.menteeclasschoice %}
+          <li class="detailitem">
+          {{ class }}
+          </li>
+      {% endfor %}
+      <li class="detailitem">
+        <span> <b> Classes Looking To Mentor </b> : </span>
+      </li>
+      {% for class in user.mentorclasschoice %}
+          <li class="detailitem">
+          {{ class }}
+          </li>
+      {% endfor %}
+    </ul>
+  </div>
 
 {% else %}
 

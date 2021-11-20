@@ -1,8 +1,7 @@
 from django.urls import path
-from .views import matchPageView, mentorFormPageView, menteeFormPageView
+from .views import matchPageView, ClassChoiceFormPageView
 
 urlpatterns = [
     path('', matchPageView, name='match'),
-    path('mentorform/', mentorFormPageView, name='mentorForm'),
-    path('menteeform/', menteeFormPageView, name='menteeform')
+    path('chooseclass/', ClassChoiceFormPageView, name='classChoiceForm'),
 ]

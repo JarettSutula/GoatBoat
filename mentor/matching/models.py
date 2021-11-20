@@ -29,11 +29,23 @@ CLASS_CHOICES = [
     ('math394', 'MATH 394'),
 ]
 
-class mentorForm(forms.Form):
-    """Contains fields for Mentor Form."""
+ACTION_CHOICES = [
+    ('adding', 'adding'),
+    ('removing', 'removing'),
+]
+
+MENTOR_MENTEE_CHOICES = [
+    ('mentee', 'I want to recieve help for this class'),
+    ('mentor', 'I want to give help for this class'),
+]
+
+class ClassChoiceForm(forms.Form):
+    """Contains fields for class choice Form."""
     username = forms.CharField(widget=forms.TextInput(attrs={'readonly':'readonly'}), label= "Username")
     password = forms.CharField(widget=forms.PasswordInput)
-    mentorclasschoice= forms.CharField(label='What class are you looking to help others in?', widget=forms.Select(choices=CLASS_CHOICES))
+    action = forms.CharField(label='Are you adding or removing a class?', widget=forms.Select(choices=ACTION_CHOICES))
+    mentormenteechoice = forms.CharField(label='Are you looking to recieve help or give help for this class?', widget=forms.Select(choices=MENTOR_MENTEE_CHOICES))
+    mentorclasschoice= forms.CharField(label='What class are you looking for?', widget=forms.Select(choices=CLASS_CHOICES))
 
     def clean_password(self):
         """Raise error if the password is incorrect."""
@@ -63,51 +75,28 @@ class mentorForm(forms.Form):
 
         user = users.find_one({'username': username})
 
-        # see if the class is already in the user object.
-        if classchoice in user['mentorclasschoice']:
-            raise ValidationError("You already have this class on your profile.")
-        else:
-            return classchoice
+        action = self.cleaned_data['action']
+        mentormentee = self.cleaned_data['mentormenteechoice']
 
+        # If we are adding, ensure class doesn't already exist in the right place.
+        if action == 'adding':
+            if mentormentee == 'mentor':
+                if classchoice in user['mentorclasschoice']:
+                    raise ValidationError("You already have this class on your profile.")
 
-class menteeForm(forms.Form):
-    """Contains fields for Mentee Form."""
-    """Contains fields for Mentor Form."""
-    username = forms.CharField(widget=forms.TextInput(attrs={'readonly':'readonly'}), label= "Username")
-    password = forms.CharField(widget=forms.PasswordInput)
-    menteeclasschoice= forms.CharField(label='What class are you looking for help in?', widget=forms.Select(choices=CLASS_CHOICES))
+            elif mentormentee == 'mentee':
+                if classchoice in user['menteeclasschoice']:
+                    raise ValidationError("You already have this class on your profile.")
+        
+        # if we are removing, ensure class does already exist in the right place.
+        elif action == 'removing':
+            if mentormentee == 'mentor':
+                if classchoice not in user['mentorclasschoice']:
+                    raise ValidationError("You don't have this class on your profile.")
 
-    def clean_password(self):
-        """Raise error if the password is incorrect."""
-        username = self.cleaned_data['username']
-        password = self.cleaned_data['password']
+            elif mentormentee == "mentee":
+                if classchoice not in user['menteeclasschoice']:
+                    raise ValidationError("You don't have this class on your profile.")
 
-        db = start_db()
-        logins = collection_link(db, 'logins')
-
-        user = logins.find_one({'username': username})
-        byte_password = password.encode('UTF-8')
-
-        if bcrypt.checkpw(byte_password, user['password']):
-            return password
-        else:
-            raise ValidationError("Incorrect password.")
-
-    def clean_menteeclasschoice(self):
-        """Raise error if the class they select to post is already
-        in their user object.
-        """
-        username = self.cleaned_data['username']
-        classchoice = self.cleaned_data['menteeclasschoice']
-
-        db = start_db()
-        users = collection_link(db, 'users')
-
-        user = users.find_one({'username': username})
-
-        # see if the class is already in the user object.
-        if classchoice in user['menteeclasschoice']:
-            raise ValidationError("You already have this class on your profile.")
-        else:
-            return classchoice
-
+        # if no errors are raised, just pass back the field as cleaned.
+        return classchoice
