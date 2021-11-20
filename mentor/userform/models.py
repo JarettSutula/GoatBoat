@@ -236,7 +236,7 @@ class LogInForm(forms.Form):
         if correct_password:
             print("it matches.")
         else: 
-            raise ValidationError('Incorrect password, please try again.')
+            raise ValidationError('Incorrect username or password, please try again.')
         
 
 class ProfileSearch(forms.Form):

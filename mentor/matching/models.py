@@ -61,7 +61,7 @@ class ClassChoiceForm(forms.Form):
         if bcrypt.checkpw(byte_password, user['password']):
             return password
         else:
-            raise ValidationError("Incorrect password.")
+            raise ValidationError("Incorrect username or password.")
 
     def clean_classchoice(self):
         """Raise error if the class they select to post is already
@@ -71,7 +71,7 @@ class ClassChoiceForm(forms.Form):
         classchoice = self.cleaned_data['classchoice']
 
         if classchoice == 'none':
-            raise ValidationError("You must select a class.")
+            raise ValidationError("A class is required.")
 
         db = start_db()
         users = collection_link(db, 'users')
@@ -80,26 +80,28 @@ class ClassChoiceForm(forms.Form):
 
         action = self.cleaned_data['action']
         mentormentee = self.cleaned_data['mentormenteechoice']
+        alreadyexists = "This class already exists on this profile."
+        doesntexist = "This class doesn't exist on this profile and can't be removed."
 
         # If we are adding, ensure class doesn't already exist in the right place.
         if action == 'adding':
             if mentormentee == 'mentor':
                 if classchoice in user['mentorclasschoice']:
-                    raise ValidationError("You already have this class on your profile.")
+                    raise ValidationError(alreadyexists)
 
             elif mentormentee == 'mentee':
                 if classchoice in user['menteeclasschoice']:
-                    raise ValidationError("You already have this class on your profile.")
+                    raise ValidationError(alreadyexists)
         
         # if we are removing, ensure class does already exist in the right place.
         elif action == 'removing':
             if mentormentee == 'mentor':
                 if classchoice not in user['mentorclasschoice']:
-                    raise ValidationError("You don't have this class on your profile.")
+                    raise ValidationError(doesntexist)
 
             elif mentormentee == "mentee":
                 if classchoice not in user['menteeclasschoice']:
-                    raise ValidationError("You don't have this class on your profile.")
+                    raise ValidationError(doesntexist)
 
         # if no errors are raised, just pass back the field as cleaned.
         return classchoice
