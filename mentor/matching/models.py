@@ -7,26 +7,26 @@ import bcrypt
 # Create your models here.
 CLASS_CHOICES = [
     ('none', ''),
-    ('cmpt120', 'CMPT 120'),
-    ('cmpt220', 'CMPT 220'),
-    ('cmpt221', 'CMPT 221'),
-    ('cmpt230', 'CMPT 230'),
-    ('cmpt305', 'CMPT 305'),
-    ('cmpt306', 'CMPT 306'),
-    ('cmpt307', 'CMPT 307'),
-    ('cmpt308', 'CMPT 308'),
-    ('cmpt330', 'CMPT 330'),
-    ('cmpt422', 'CMPT 422'),
-    ('cmpt435', 'CMPT 435'),
-    ('math210', 'MATH 210'),
-    ('math241', 'MATH 241'),
-    ('math242', 'MATH 242'),
-    ('math310', 'MATH 310'),
-    ('math321', 'MATH 321'),
-    ('math331', 'MATH 331'),
-    ('math343', 'MATH 343'),
-    ('math393', 'MATH 393'),
-    ('math394', 'MATH 394'),
+    ('CMPT120', 'CMPT 120'),
+    ('CMPT220', 'CMPT 220'),
+    ('CMPT221', 'CMPT 221'),
+    ('CMPT230', 'CMPT 230'),
+    ('CMPT305', 'CMPT 305'),
+    ('CMPT306', 'CMPT 306'),
+    ('CMPT307', 'CMPT 307'),
+    ('CMPT308', 'CMPT 308'),
+    ('CMPT330', 'CMPT 330'),
+    ('CMPT422', 'CMPT 422'),
+    ('CMPT435', 'CMPT 435'),
+    ('MATH210', 'MATH 210'),
+    ('MATH241', 'MATH 241'),
+    ('MATH242', 'MATH 242'),
+    ('MATH310', 'MATH 310'),
+    ('MATH321', 'MATH 321'),
+    ('MATH331', 'MATH 331'),
+    ('MATH343', 'MATH 343'),
+    ('MATH393', 'MATH 393'),
+    ('MATH394', 'MATH 394'),
 ]
 
 ACTION_CHOICES = [
@@ -35,8 +35,8 @@ ACTION_CHOICES = [
 ]
 
 MENTOR_MENTEE_CHOICES = [
-    ('mentee', 'I want to recieve help for this class'),
-    ('mentor', 'I want to give help for this class'),
+    ('mentee', 'receive'),
+    ('mentor', 'give'),
 ]
 
 class ClassChoiceForm(forms.Form):
@@ -44,8 +44,8 @@ class ClassChoiceForm(forms.Form):
     username = forms.CharField(widget=forms.TextInput(attrs={'readonly':'readonly'}), label= "Username")
     password = forms.CharField(widget=forms.PasswordInput)
     action = forms.CharField(label='Are you adding or removing a class?', widget=forms.Select(choices=ACTION_CHOICES))
-    mentormenteechoice = forms.CharField(label='Are you looking to recieve help or give help for this class?', widget=forms.Select(choices=MENTOR_MENTEE_CHOICES))
-    mentorclasschoice= forms.CharField(label='What class are you looking for?', widget=forms.Select(choices=CLASS_CHOICES))
+    mentormenteechoice = forms.CharField(label='Are you looking to receive help or give help for this class?', widget=forms.Select(choices=MENTOR_MENTEE_CHOICES))
+    classchoice= forms.CharField(label='What class are you looking for?', widget=forms.Select(choices=CLASS_CHOICES))
 
     def clean_password(self):
         """Raise error if the password is incorrect."""
@@ -63,12 +63,15 @@ class ClassChoiceForm(forms.Form):
         else:
             raise ValidationError("Incorrect password.")
 
-    def clean_mentorclasschoice(self):
+    def clean_classchoice(self):
         """Raise error if the class they select to post is already
         in their user object.
         """
         username = self.cleaned_data['username']
-        classchoice = self.cleaned_data['mentorclasschoice']
+        classchoice = self.cleaned_data['classchoice']
+
+        if classchoice == 'none':
+            raise ValidationError("You must select a class.")
 
         db = start_db()
         users = collection_link(db, 'users')

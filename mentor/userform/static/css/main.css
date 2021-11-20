@@ -308,3 +308,16 @@ a.button:hover {
 .mentorlink{
     text-decoration: none!important;
 }
+
+.classchoiceform {
+    text-align:center;
+}
+
+.classchoiceblock {
+    display: inline-block;
+    text-align: right;
+}
+
+.profileinfo {
+    text-align:center;
+}

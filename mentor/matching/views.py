@@ -28,7 +28,7 @@ def ClassChoiceFormPageView(request):
 
         if form.is_valid():
             # update the object's class choices.
-            classchoice = form.cleaned_data.get("mentorclasschoice")
+            classchoice = form.cleaned_data.get("classchoice")
             action = form.cleaned_data.get("action")
             mentormentee = form.cleaned_data.get("mentormenteechoice")
 

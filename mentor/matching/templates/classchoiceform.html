@@ -13,44 +13,57 @@
 
 {% elif request.session.username %}
 <div>
-    <h2 class="formheader"> Choose a class to interact with, {{ request.session.username }}!</h2>
+    <h2 class="formheader"> Choose a class to add or remove, {{ request.session.username }}!</h2>
     <h3 class="formheader"> Class Choice Form </h3>
 </div>
 
 
-<form class="gbform" action="" method="post" novalidate>
-    <div class = "fieldWrapper">
-        <table id="mentorformtable">
-            {{ form.as_table }}
-            <tr>
-                <td>&nbsp;</td>
-                <td><input type="submit" value="Submit"></td>
-            </tr>
-        </table>
-        {% csrf_token %}
+<form class="classchoiceform" action="" method="post" novalidate>
+    <div class = "classchoiceblock">
+        <div class = "fieldWrapper">
+            {{ form.username.as_hidden }}
+        </div>
+        <div class = "fieldWrapper">
+            {{ form.password.label_tag }}
+            {{ form.password }}
+            {{ form.password.errors }}
+        </div>
+        <div class = "fieldWrapper">
+            {{ form.action.label_tag }}
+            {{ form.action }}
+            {{ form.action.errors }}
+        </div>
+        <div class = "fieldWrapper">
+            {{ form.mentormenteechoice.label_tag }}
+            {{ form.mentormenteechoice }}
+            {{ form.mentormenteechoice.errors }}
+        </div>
+        <div class = "fieldWrapper">
+            {{ form.classchoice.label_tag }}
+            {{ form.classchoice }}
+            {{ form.classchoice.errors }}
+        </div>
     </div>
+    <div class = fieldWrapper>
+        <tr>
+            <td>&nbsp;</td>
+            <td><input type="submit" value="Submit"></td>
+        </tr>
+    </div>  
+    {% csrf_token %}
 </form>
 
-<div id="details">
-    <ul id = "detaillist">
-      <li class="detailitem">
-        <span> <b> Classes Looking For Help In </b> : </span>
-      </li>
-      {% for class in user.menteeclasschoice %}
-          <li class="detailitem">
-          {{ class }}
-          </li>
-      {% endfor %}
-      <li class="detailitem">
-        <span> <b> Classes Looking To Mentor </b> : </span>
-      </li>
-      {% for class in user.mentorclasschoice %}
-          <li class="detailitem">
-          {{ class }}
-          </li>
-      {% endfor %}
-    </ul>
-  </div>
+<br>
+<div class = profileinfo>
+    <b>Classes Currently Looking For Help In:</b><br>
+        {% for class in user.menteeclasschoice %}
+            {{ class }}<br>
+        {% endfor %}
+    <br><b>Classes Currently Looking To Mentor:</b><br>
+        {% for class in user.mentorclasschoice %}
+            {{ class }}<br>
+        {% endfor %}
+</div>
 
 {% else %}
 
