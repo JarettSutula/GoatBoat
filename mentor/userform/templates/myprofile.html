@@ -43,11 +43,21 @@
             <span> <b> Profession </b>  : {{ context.profession }} </span>
         </li>
         <li class="detailitem">
-            <span> <b> Classes Looking For Help In </b> : </br> {{ context.mentorclasschoice }} </span>
+            <span> <b> Classes Looking For Help In </b> : </span>
         </li>
+            {% for class in context.menteeclasschoice %}
+                <li class="detailitem">
+                {{ class }}
+                </li>
+            {% endfor %}
         <li class="detailitem">
-            <span> <b> Classes Looking To Mentor </b> : </br> {{ context.menteeclasschoice }} </span>
+            <span> <b> Classes Looking To Mentor </b> : </span>
         </li>
+            {% for class in context.mentorclasschoice %}
+                <li class="detailitem">
+                {{ class }}
+                </li>
+            {% endfor %}
         <button onclick="location.href = '/profile/edit'">Edit Profile</button>
     </ul>
 </div>
@@ -77,7 +87,7 @@
 
 <div id="profilenotallowed">
     <a href="/login">
-        <h1> You need to login! </h1>
+        <h1> Please login to view your profile. </h1>
     </a>
 </div>
 

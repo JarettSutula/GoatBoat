@@ -41,16 +41,6 @@
       {{ form.major.errors}}
     </div>
     <div class = "fieldWrapper">
-      <midblock>{{ form.mentorclasschoice.label_tag }}</midblock>
-      {{ form.mentorclasschoice }}
-      {{ form.mentorclasschoice.errors }}
-    </div>
-    <div class = "fieldWrapper">
-      <midblock>{{ form.menteeclasschoice.label_tag }}</midblock>
-      {{ form.menteeclasschoice }}
-      {{ form.menteclasschoice.errors }}
-    </div>
-    <div class = "fieldWrapper">
       <botblock>{{ form.mondaystart.label_tag }}</botblock>
       {{ form.mondaystart }}
       {{ form.mondayend.label_tag }}
@@ -115,7 +105,7 @@
  {% else %}
   <div id="profilenotallowed">
     <a href="/login">
-        <h1> You need to login before you can edit your profile. </h1>
+        <h1> Please log in to view your profile. </h1>
     </a>
   </div>
    

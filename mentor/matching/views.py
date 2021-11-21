@@ -1,17 +1,74 @@
+import re
+from django.http.response import HttpResponseRedirect
 from django.shortcuts import render
+from matching.models import ClassChoiceForm
+from utils import start_db, collection_link
+
+db_handle = start_db()
+users = collection_link(db_handle, 'users')
+logins = collection_link(db_handle, 'logins')
 
 # Create your views here.
-
 def matchPageView(request):
     """View of the match page."""
     return render(request,'match.html')
 
 
-def mentorFormPageView(request):
+def ClassChoiceFormPageView(request):
     """View of the mentor form page."""
-    return render(request,'mentorform.html')
+    submitted = False
+    form = ClassChoiceForm()
+    user = {}
+    # if we are signed in and posting
+    if 'username' in request.session and request.method == 'POST':
+        form = ClassChoiceForm(request.POST)
+        db = start_db()
+        users = collection_link(db, 'users')
+        user = users.find_one({'username': request.session['username']})
 
+        if form.is_valid():
+            # update the object's class choices.
+            classchoice = form.cleaned_data.get("classchoice")
+            action = form.cleaned_data.get("action")
+            mentormentee = form.cleaned_data.get("mentormenteechoice")
 
-def menteeFormPageView(request):
-    """View of the mentee page."""
-    return render(request,'menteeform.html')
+            # grab the user's mentorclasschoice list.
+            mentorclasses = user['mentorclasschoice']
+            menteeclasses = user['menteeclasschoice']
+
+            # append the class chosen in the form.
+            if action == "adding":
+                if mentormentee == "mentor":
+                    mentorclasses.append(classchoice)
+                elif mentormentee == "mentee":
+                    menteeclasses.append(classchoice)
+
+            elif action == "removing":
+                if mentormentee == "mentor":
+                    mentorclasses.remove(classchoice)
+                elif mentormentee == "mentee":
+                    menteeclasses.remove(classchoice)
+
+            # update the user object field, according to mentormentee choice.
+            if mentormentee == "mentor":
+                users.update_one({'username': request.session['username']},
+                                    {'$set': {'mentorclasschoice': mentorclasses}})
+            elif mentormentee == "mentee":
+                users.update_one({'username': request.session['username']},
+                                    {'$set': {'menteeclasschoice': menteeclasses}})
+
+            submitted = True
+
+    # if we are signed in but not posting, fill hidden form with username.
+    elif 'username' in request.session:
+        # if they are logged in, get 'user' to display their class data.
+        db = start_db()
+        users = collection_link(db, 'users')
+        user = users.find_one({'username': request.session['username']})
+
+        form = ClassChoiceForm(initial= {'username': request.session['username']})
+
+    else: 
+        form = ClassChoiceForm()
+
+    return render(request,'classchoiceform.html', {'form': form, 'submitted': submitted, 'user':user})

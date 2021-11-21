@@ -69,8 +69,6 @@ class UserForm(forms.Form):
     email = forms.EmailField(required=False, label='Your Email Address')
     profession = forms.CharField(max_length=100, label='Profession')
     major = forms.CharField(max_length=100, label='Major')
-    mentorclasschoice= forms.CharField(label='What class are you looking to tutor for?', widget=forms.Select(choices=CLASS_CHOICES))
-    menteeclasschoice= forms.CharField(label='What class are you looking for help in?', widget=forms.Select(choices=CLASS_CHOICES))
 
     mondaystart= forms.IntegerField(required=False, label= 'Monday Availability', widget=forms.Select(choices=TIME_CHOICES))
     mondayend= forms.IntegerField(required=False, label= ' to ', widget=forms.Select(choices=TIME_CHOICES))
@@ -238,7 +236,7 @@ class LogInForm(forms.Form):
         if correct_password:
             print("it matches.")
         else: 
-            raise ValidationError('Incorrect password, please try again.')
+            raise ValidationError('Incorrect username or password, please try again.')
         
 
 class ProfileSearch(forms.Form):
@@ -253,8 +251,6 @@ class EditProfile(forms.Form):
     email = forms.EmailField(required=False, label='Your Email Address')
     profession = forms.CharField(max_length=100, label='Profession')
     major = forms.CharField(max_length=100, label='Major')
-    mentorclasschoice= forms.CharField(label='What class are you looking to tutor for?', widget=forms.Select(choices=CLASS_CHOICES))
-    menteeclasschoice= forms.CharField(label='What class are you looking for help in?', widget=forms.Select(choices=CLASS_CHOICES))
 
     mondaystart= forms.IntegerField(required=False, label= 'Monday Availability', widget=forms.Select(choices=TIME_CHOICES))
     mondayend= forms.IntegerField(required=False, label= ' to ', widget=forms.Select(choices=TIME_CHOICES))

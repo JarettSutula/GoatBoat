@@ -19,7 +19,6 @@ def create_user_form(request):
     if request.method == 'POST':
         form = UserForm(request.POST)
         if form.is_valid():
-            cd = form.cleaned_data
             # Base form fields
             username = form.cleaned_data.get("username")
             password = form.cleaned_data.get("password")
@@ -28,8 +27,6 @@ def create_user_form(request):
             email = form.cleaned_data.get("email")
             profession = form.cleaned_data.get("profession")
             major = form.cleaned_data.get("major")
-            mentorclasschoice = form.cleaned_data.get("mentorclasschoice")
-            menteeclasschoice = form.cleaned_data.get("menteeclasschoice")
 
             # Schedule-based form fields
             mondaystart = form.cleaned_data.get("mondaystart")
@@ -63,8 +60,8 @@ def create_user_form(request):
                        'email':email,
                        'profession':profession,
                        'major':major,
-                       'mentorclasschoice':mentorclasschoice,
-                       'menteeclasschoice':menteeclasschoice,
+                       'mentorclasschoice':[],
+                       'menteeclasschoice':[],
                        'currentmentors': [],
                        'currentmentees': [],
                        'schedule':{
