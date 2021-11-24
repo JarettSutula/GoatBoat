@@ -2,8 +2,9 @@ bcrypt==3.2.0
 certifi==2019.11.28
 Django==3.2.8
 dnspython==1.16.0
-psycopg2-binary>=2.8
 pymongo==3.12.0
 python-dotenv==0.19.1
 coverage==6.1.1
 mutmut==2.1.0
+safety==1.10.3
+liccheck==0.6.2
