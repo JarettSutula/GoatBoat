@@ -1,6 +1,6 @@
 from django.db import models
 from django import forms
-from utils import start_db, collection_link
+from utils import start_db, collection_link, dynamic_class_dropdown
 from django.core.exceptions import ValidationError
 import bcrypt
 
@@ -105,3 +105,20 @@ class ClassChoiceForm(forms.Form):
 
         # if no errors are raised, just pass back the field as cleaned.
         return classchoice
+
+
+class MentorMatchForm(forms.Form):
+    """Contains fields for matching with a mentor."""
+    username = forms.CharField(widget=forms.TextInput(attrs={'readonly':'readonly'}), label= "Username")
+    password = forms.CharField(widget=forms.PasswordInput)
+    classchoice = forms.CharField()
+
+    def __init__(self, **kwargs):
+        user_details = kwargs.pop('user_details', None)
+        super(MentorMatchForm, self).__init__(**kwargs)
+        if user_details:
+            self.fields['username'].initial = user_details[0]['username']
+
+            if 'menteeclasschoice' in user_details[0]:
+                myclasses = dynamic_class_dropdown(user_details[0]['username'], 'mentee')
+                self.fields['classchoice'] = forms.CharField(widget=forms.Select(choices=myclasses))

@@ -2,6 +2,7 @@ import os
 import pymongo
 from dotenv import load_dotenv
 import certifi
+import re
 
 def start_db():
     """This starts the connection to the mongo server.
@@ -121,3 +122,27 @@ def restructure_day_array(day):
         # return the ending value of the last 1-hour block
         endtime = day[-1]['endtime']
         return starttime, endtime
+
+def dynamic_class_dropdown(username, role):
+    """Restructures class choices to fit in dynamic drop down form."""
+    db = start_db()
+    users = collection_link(db, 'users')
+    our_user = users.find_one({'username': username})
+
+    # fill classes with appropriate user object values
+    if role == 'mentor':
+        classes = our_user['mentorclasschoice']
+    else:
+        classes = our_user['menteeclasschoice']
+
+    class_object = []
+
+    # for each course, change it into a key-value pair ('class101') -> ('class101', 'class 101')
+    # for django's form dropdown
+    for course in classes:
+        course_value = re.split('(\d+)', course)
+        course_tuple = (course, course_value[0]+" "+course_value[1])
+        class_object.append(course_tuple)
+
+
+
