@@ -33,6 +33,11 @@
                 <a class="" href="/match/chooseclass/">Add/Remove A Class</a>
             </li>
             {% endif %}
+            {% if request.session.username %}
+            <li>
+                <a class="" href="/match/">Find a Match</a>
+            </li>
+            {% endif %}
 
         {% if request.session.username %}
         </ul>

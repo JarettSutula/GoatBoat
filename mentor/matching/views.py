@@ -13,6 +13,46 @@ def matchPageView(request):
     """View of the match page."""
     return render(request,'match.html')
 
+def MentorFormPageView(request):
+    """View of the mentor form page."""
+    submitted = False
+    form = ClassChoiceForm()
+    user = {}
+    # if we are signed in and posting
+    if 'username' in request.session and request.method == 'POST':
+        form = ClassChoiceForm(request.POST)
+        db = start_db()
+        users = collection_link(db, 'users')
+        user = users.find_one({'username': request.session['username']})
+
+        if form.is_valid():
+
+            submitted = True
+
+    # if we are signed in but not posting, fill hidden form with username.
+    elif 'username' in request.session:
+        # if they are logged in, get 'user' to display their class data.
+        db = start_db()
+        users = collection_link(db, 'users')
+        user = users.find_one({'username': request.session['username']})
+
+        form = ClassChoiceForm(initial= {'username': request.session['username']})
+
+    else:
+        form = ClassChoiceForm()
+
+    return render(request,'classchoiceform.html', {'form': form, 'submitted': submitted, 'user':user})
+
+
+
+
+
+
+
+
+
+
+
 
 def ClassChoiceFormPageView(request):
     """View of the mentor form page."""
