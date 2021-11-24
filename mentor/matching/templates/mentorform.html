@@ -1,0 +1,26 @@
+{% load static %}
+{% include "navigation.html" %}
+
+{% if request.session.username %}
+<div>
+  <h2 class="formheader">{{ request.session.username }}, select a class you'd like help in. </h2>
+</div>
+<div id="mentordropdown">
+  <tr>
+    <td>
+      {{ form.as_table }}
+    </td>
+  </tr>
+</div>
+
+{% else %}
+
+<div>
+  <h2 class="formheader"> You need to Login! </h2>
+  <a class="formheader" href ="/login">
+    <h3> Login </h3>
+  </a>
+</div>
+
+
+{% endif %}

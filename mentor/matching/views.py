@@ -1,7 +1,7 @@
 import re
 from django.http.response import HttpResponseRedirect
 from django.shortcuts import render
-from matching.models import ClassChoiceForm
+from matching.models import ClassChoiceForm, MentorMatchForm
 from utils import start_db, collection_link
 
 db_handle = start_db()
@@ -16,11 +16,11 @@ def matchPageView(request):
 def MentorFormPageView(request):
     """View of the mentor form page."""
     submitted = False
-    form = ClassChoiceForm()
+    form = MentorMatchForm()
     user = {}
     # if we are signed in and posting
     if 'username' in request.session and request.method == 'POST':
-        form = ClassChoiceForm(request.POST)
+        form = MentorMatchForm(request.POST)
         db = start_db()
         users = collection_link(db, 'users')
         user = users.find_one({'username': request.session['username']})
@@ -36,12 +36,12 @@ def MentorFormPageView(request):
         users = collection_link(db, 'users')
         user = users.find_one({'username': request.session['username']})
 
-        form = ClassChoiceForm(initial= {'username': request.session['username']})
+        form = MentorMatchForm(initial= {'username': request.session['username']})
 
     else:
-        form = ClassChoiceForm()
+        form = MentorMatchForm()
 
-    return render(request,'classchoiceform.html', {'form': form, 'submitted': submitted, 'user':user})
+    return render(request,'mentorform.html', {'form': form, 'submitted': submitted, 'user':user})
 
 
 

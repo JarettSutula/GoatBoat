@@ -121,4 +121,5 @@ class MentorMatchForm(forms.Form):
 
             if 'menteeclasschoice' in user_details[0]:
                 myclasses = dynamic_class_dropdown(user_details[0]['username'], 'mentee')
+                print(myclasses)
                 self.fields['classchoice'] = forms.CharField(widget=forms.Select(choices=myclasses))
