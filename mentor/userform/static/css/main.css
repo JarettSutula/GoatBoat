@@ -321,3 +321,12 @@ a.button:hover {
 .profileinfo {
     text-align:center;
 }
+
+.matchingform {
+    text-align:center;
+}
+
+.matchingformblock{
+    display: inline-block;
+    text-align: center;
+}

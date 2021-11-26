@@ -26,7 +26,7 @@ def MentorFormPageView(request):
         user = users.find_one({'username': request.session['username']})
 
         if form.is_valid():
-
+            # send the user to matching, update the user object.
             submitted = True
 
     # if we are signed in but not posting, fill hidden form with username.
@@ -37,10 +37,9 @@ def MentorFormPageView(request):
         users = collection_link(db, 'users')
         user = users.find_one({'username': request.session['username']})
         user_details = {'username': user['username'],
-                        'mentorclasschoice': user['mentorclasschoice'],
                         'menteeclasschoice': user['menteeclasschoice']
                         }
-
+        # put the form's username and drop-down choices in.
         form = MentorMatchForm(user_details = user_details)
 
     else:
