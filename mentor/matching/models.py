@@ -117,9 +117,9 @@ class MentorMatchForm(forms.Form):
         user_details = kwargs.pop('user_details', None)
         super(MentorMatchForm, self).__init__(**kwargs)
         if user_details:
-            self.fields['username'].initial = user_details[0]['username']
+            self.fields['username'].initial = user_details['username']
 
-            if 'menteeclasschoice' in user_details[0]:
-                myclasses = dynamic_class_dropdown(user_details[0]['username'], 'mentee')
+            if 'menteeclasschoice' in user_details:
+                myclasses = dynamic_class_dropdown(user_details['username'], 'mentee')
                 print(myclasses)
                 self.fields['classchoice'] = forms.CharField(widget=forms.Select(choices=myclasses))

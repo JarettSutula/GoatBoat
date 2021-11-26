@@ -31,28 +31,22 @@ def MentorFormPageView(request):
 
     # if we are signed in but not posting, fill hidden form with username.
     elif 'username' in request.session:
-        # if they are logged in, get 'user' to display their class data.
+        # if they are logged in and not posting yet, fill the form with values.
+        # need username and respective class choices for dynamic dropdown.
         db = start_db()
         users = collection_link(db, 'users')
         user = users.find_one({'username': request.session['username']})
+        user_details = {'username': user['username'],
+                        'mentorclasschoice': user['mentorclasschoice'],
+                        'menteeclasschoice': user['menteeclasschoice']
+                        }
 
-        form = MentorMatchForm(initial= {'username': request.session['username']})
+        form = MentorMatchForm(user_details = user_details)
 
     else:
         form = MentorMatchForm()
 
     return render(request,'mentorform.html', {'form': form, 'submitted': submitted, 'user':user})
-
-
-
-
-
-
-
-
-
-
-
 
 def ClassChoiceFormPageView(request):
     """View of the mentor form page."""

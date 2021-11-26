@@ -144,5 +144,6 @@ def dynamic_class_dropdown(username, role):
         course_tuple = (course, course_value[0]+" "+course_value[1])
         class_object.append(course_tuple)
 
+    return class_object
 
 
