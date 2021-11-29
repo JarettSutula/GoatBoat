@@ -6,14 +6,13 @@
 
 <div id="usermeetingtimes">
 <h1> User Meeting Times </h1>
-  {{ classchoice }}
+  {{ request.session.username }}
+  {{ request.session.classchoice }}
 </div>
 
 
 <div id="mentormeetingtimes">
   <h1> Mentor Matches </h1>
-  {{ mentorname }}
-  {{ mentorclassmatch }}
 </div>
 
 

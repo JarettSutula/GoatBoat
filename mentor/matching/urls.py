@@ -6,4 +6,5 @@ urlpatterns = [
     path('mentorform/', MentorFormPageView, name='mentorMatch'),
     path('chooseclass/', ClassChoiceFormPageView, name='classChoiceForm'),
     path('mentormatching/', MentorMatchingPageView, name='mentorMatching'),
+    path('mentorresults/', MentorMatchingPageView, name="mentorResults" ),
 ]

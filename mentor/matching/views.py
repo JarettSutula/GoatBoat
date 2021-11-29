@@ -28,14 +28,12 @@ def MentorFormPageView(request):
         if form.is_valid():
             classchoice = form.cleaned_data.get("classchoice")
             print(classchoice)
-            db = start_db()
-            mentors = collection_link(db, 'users')
-            mentor = mentors.find_one({'mentorclasschoice': classchoice})
-            mentorname = mentor['username']
-            mentorclassmatch = mentor['mentorclasschoice']
 
-            return render(request,'mentormatch.html', {'classchoice': classchoice, 'mentorclassmatch': mentorclassmatch,
-             'mentorname': mentorname})
+            # if valid, move them to matching results with new classchoice in session.
+            submitted = True
+            request.session['classchoice'] = classchoice
+
+            return render(request,'mentorform.html', {'form': form, 'submitted': submitted, 'user':user})
 
     # if we are signed in but not posting, fill hidden form with username.
     elif 'username' in request.session:
@@ -130,7 +128,7 @@ def MentorMatchingPageView(request):
    #
    # need to get the mentorclassmatch variable to render in the template
 
-   return render(request, 'mentormatch.html', {'mentorclassmatch': mentorclassmatch })
+   return render(request, 'mentormatch.html')
 
 
 
