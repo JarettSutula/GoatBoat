@@ -114,21 +114,20 @@ def ClassChoiceFormPageView(request):
 
 def MentorMatchingPageView(request):
    """View of the mentor matching page."""
-#
-#    print("THIS IS THE CLASS CHOICE " + classchoice)
-#
-#    db = start_db()
-#    mentors = collection_link(db, 'users')
-#    mentor = mentors.find_one({'mentorclasschoice': classchoice})
-#    mentorclassmatch = mentor['mentorclasschoice']
-#    print(mentorclassmatch)
+   print(request.session['classchoice'])
+
+   db = start_db()
+   mentors = collection_link(db, 'users')
+   mentor = mentors.find_one({'mentorclasschoice': request.session['classchoice']})
+   mentorusername = mentor['username']
+   print(mentorusername)
 
    #
    #
    #
    # need to get the mentorclassmatch variable to render in the template
 
-   return render(request, 'mentormatch.html')
+   return render(request, 'mentormatch.html', {'mentorusername': mentorusername})
 
 
 
