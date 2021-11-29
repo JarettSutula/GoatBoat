@@ -28,11 +28,14 @@ def MentorFormPageView(request):
         if form.is_valid():
             classchoice = form.cleaned_data.get("classchoice")
             print(classchoice)
-            userclasschoice = MentorMatchingPageView(request,classchoice)
-            # send the user to matching, update the user object.
-            submitted = True
+            db = start_db()
+            mentors = collection_link(db, 'users')
+            mentor = mentors.find_one({'mentorclasschoice': classchoice})
+            mentorname = mentor['username']
+            mentorclassmatch = mentor['mentorclasschoice']
 
-            return render(request,'mentormatch.html', {'classchoice': classchoice, 'submitted': submitted, 'user':user})
+            return render(request,'mentormatch.html', {'classchoice': classchoice, 'mentorclassmatch': mentorclassmatch,
+             'mentorname': mentorname})
 
     # if we are signed in but not posting, fill hidden form with username.
     elif 'username' in request.session:
@@ -111,21 +114,21 @@ def ClassChoiceFormPageView(request):
 
     return render(request,'classchoiceform.html', {'form': form, 'submitted': submitted, 'user':user})
 
-def MentorMatchingPageView(request, classchoice):
+def MentorMatchingPageView(request):
    """View of the mentor matching page."""
-
-   print("THIS IS THE CLASS CHOICE " + classchoice)
-
-   db = start_db()
-   mentors = collection_link(db, 'users')
-   mentor = mentors.find_one({'mentorclasschoice': classchoice})
-   mentorclassmatch = mentor['mentorclasschoice']
-   print(mentorclassmatch)
+#
+#    print("THIS IS THE CLASS CHOICE " + classchoice)
+#
+#    db = start_db()
+#    mentors = collection_link(db, 'users')
+#    mentor = mentors.find_one({'mentorclasschoice': classchoice})
+#    mentorclassmatch = mentor['mentorclasschoice']
+#    print(mentorclassmatch)
 
    #
    #
    #
-   #need to get the mentorclassmatch variable to render in the template
+   # need to get the mentorclassmatch variable to render in the template
 
    return render(request, 'mentormatch.html', {'mentorclassmatch': mentorclassmatch })
 
