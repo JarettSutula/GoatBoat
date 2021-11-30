@@ -146,4 +146,36 @@ def dynamic_class_dropdown(username, role):
 
     return class_object
 
+def find_matching_schedule(user1, user2):
+    """Find a matching schedule block between two users."""
+    days = ['monday','tuesday','wednesday','thursday', 'friday', 'saturday', 'sunday']
+    matched_block = {}
+    # loop through the days for both users, only while matched_block is empty.
+    for day in days:
+        # for every 1-hour block in user1 for that day
+        for block in user1[day]:
+            # check if any blocks in user2 for that day match the start time.
+            for user2block in user2[day]:
+                if block['starttime'] == user2block['starttime']:
+                    matched_block = {'day': day.capitalize, 
+                                    'starttime': block['starttime'], 
+                                    'endtime': block['endtime'],
+                                    'starttime_string': get_time_string(block['starttime']),
+                                    'endtime_string': get_time_string(block['endtime'])}
+                    return matched_block
+
+    # if it goes through every one with no matches, return none.
+    return None
+
+
+def get_time_string(hour):
+    """Returns a string to display given a value 8-22 (8am to 10pm)"""
+    if hour < 12:
+        return str(hour) + ":00am"
+    elif hour == 12: 
+        return str(hour) + ":00pm"
+    else:
+        return str(hour-12) + ":00pm"
+
+
 

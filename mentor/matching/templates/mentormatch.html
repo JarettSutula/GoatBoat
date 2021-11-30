@@ -1,21 +1,68 @@
 {% load static %}
-
 {% include "navigation.html" %}
 
-<body>
+{% block content %}
 
-<div id="usermeetingtimes">
-<h1> User Meeting Times </h1>
-  {{ request.session.username }}
-  {{ request.session.classchoice }}
+{% if not matches_exist and request.session.username and request.session.classchoice %}
+<div>
+    <p class = "success">
+        Sorry, there are no mentors for {{ request.session.classchoice }} at your stated schedule times.
+        <a href= "\">Click here to go back.</a>
+    </p>
+</div>
+
+{% elif matches_exist and request.session.username and request.session.classchoice %}
+<div>
+    <h2 class="formheader"> Choose a mentor to match with for {{ request.session.classchoice }}, {{ request.session.username }}!</h2>
+    <h3 class="formheader"> Mentor Matching Selection Form </h3>
 </div>
 
 
-<div id="mentormeetingtimes">
-  <h1> Mentor Matches </h1>
-  {{ mentorusername }}
+<form class="matchingform" action="" method="post" novalidate>
+    <div class = "matchingformblock">
+        {% for match in matches %}
+        <h2>Mentor - {{ match.profile.username }}</h2>
+          <div class = fieldWrapper>
+            <b>Username:</b> {{ match.profile.username }}
+          </div>
+          <div class = fieldWrapper>
+            <b>First Name:</b> {{ match.profile.firstname }}
+          </div>
+          <div class = fieldWrapper>
+            <b>Last name:</b> {{ match.profile.lastname }}
+          </div>
+          <div class = fieldWrapper>
+            <b>Email:</b> {{ match.profile.email }}
+          </div>
+          <div class = fieldWrapper>
+            <b>Profession:</b> {{ match.profile.profession }}
+          </div>
+          <div class = fieldWrapper>
+            <b>Major:</b> {{ match.profile.major }}
+          </div>
+          <div class = fieldWrapper>
+            <b>Matched Day:</b> {{ match.block.day }}
+            from {{ match.block.starttime_string }} to {{ match.block.endtime_string }}
+            <br>
+          </div>
+        {% endfor %}
+    <div class = fieldWrapper>
+        <tr>
+            <td>&nbsp;</td>
+            <td><input type="submit" value="Submit"></td>
+        </tr>
+    </div>  
+    {% csrf_token %}
+</form>
+
+{% else %}
+
+<div>
+    <h2 class="formheader"> Please log in! </h2>
+    <a class="formheader" href ="/login">
+        <h3> Login </h3>
+    </a>
 </div>
 
-
-</body>
-</html>
+{% endif %}
+{% endblock content %}

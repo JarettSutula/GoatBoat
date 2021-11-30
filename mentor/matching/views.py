@@ -2,6 +2,7 @@ import re
 from django.http.response import HttpResponseRedirect
 from django.shortcuts import render
 from matching.models import ClassChoiceForm, MentorMatchForm
+from utils import find_matching_schedule, get_profile_snapshot
 from utils import start_db, collection_link
 
 db_handle = start_db()
@@ -114,20 +115,33 @@ def ClassChoiceFormPageView(request):
 
 def MentorMatchingPageView(request):
    """View of the mentor matching page."""
+   # grab the class choice from the previous from in session.
    print(request.session['classchoice'])
 
+   submitted = False
+   matches_exist = False
+
+   # connect to the DB and grab anyone that has the same class in their mentor class choices.
    db = start_db()
-   mentors = collection_link(db, 'users')
-   mentor = mentors.find_one({'mentorclasschoice': request.session['classchoice']})
-   mentorusername = mentor['username']
-   print(mentorusername)
+   users = collection_link(db, 'users')
+   # get the user's schedule and their matches.
+   user = users.find_one({'username':request.session['username']})
+   mentormatches = users.find({'mentorclasschoice': request.session['classchoice']})
+   matches = []
 
-   #
-   #
-   #
-   # need to get the mentorclassmatch variable to render in the template
+   # if we have found mentors with the class, loop through them and ensure they
+   # have a matching 1-hour block in their schedule.
+   # only get a max of 3 mentors!
+   if mentormatches is not None and len(matches) <= 3:
+       for mentor in mentormatches:
+           # see if the mentor has a matching schedule block.
+           context_schedule = find_matching_schedule(user['schedule'], mentor['schedule'])
+           if context_schedule != None:
+               matches_exist = True
+               context_profile = get_profile_snapshot(mentor['username'], True)
+               matches.append({'profile':context_profile, 'block':context_schedule})
 
-   return render(request, 'mentormatch.html', {'mentorusername': mentorusername})
+   return render(request, 'mentormatch.html', {'matches_exist':matches_exist, 'matches':matches})
 
 
 
