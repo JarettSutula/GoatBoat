@@ -149,4 +149,4 @@ class MentorMatchForm(forms.Form):
 
 class MentorSubmissionForm(forms.Form):
     """Contains fields for matching with a mentor."""
-    mentorusername = forms.CharField(max_length=100, label='Mentor Username')
+    mentorusername = forms.CharField(label='Mentor Username')

@@ -118,10 +118,10 @@ def MentorMatchingPageView(request):
    # grab the class choice from the previous from in session.
    print(request.session['classchoice'])
 
-   form = MentorSubmissionForm()
-
    submitted = False
    matches_exist = False
+
+   form = MentorSubmissionForm()
 
    # connect to the DB and grab anyone that has the same class in their mentor class choices.
    db = start_db()
@@ -143,7 +143,30 @@ def MentorMatchingPageView(request):
                context_profile = get_profile_snapshot(mentor['username'], True)
                matches.append({'profile':context_profile, 'block':context_schedule})
 
-   return render(request, 'mentormatch.html', {'matches_exist':matches_exist, 'matches':matches, 'form':form})
+       if 'username' in request.session and request.method == 'POST':
+            form = MentorSubmissionForm(request.POST)
+
+            if form.is_valid():
+                # update the user object's current match field.
+                mentorusername = form.cleaned_data.get("mentorusername")
+
+                db = start_db()
+                users = collection_link(db, 'users')
+                print(request.session['username'])
+                users.update_one({'username': request.session['username']},{'$set': {'currentmatches': mentorusername}})
+
+                submitted = True
+            else:
+                print("form not valid")
+                print(request.POST)
+                print(form.errors)
+                print(form.is_bound)
+       else:
+            print("request is not a POST")
+            print(request.POST)
+            print(form.errors)
+
+   return render(request, 'mentormatch.html', {'form':form, 'matches_exist':matches_exist, 'matches':matches})
 
 
 
