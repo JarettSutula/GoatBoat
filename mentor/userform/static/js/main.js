@@ -1,7 +1,6 @@
 /* When the user clicks on the button,
 toggle between hiding and showing the dropdown content */
 function myProfileDropdown() {
-console.log("WOAH DUDE!");
   document.getElementById("myProfileDropdown").classList.toggle("show");
 }
 
@@ -17,4 +16,10 @@ window.onclick = function(event) {
       }
     }
   }
+}
+
+/* When the user clicks on a mentor name on the results page,
+enter the name into the submission field*/
+function enterMentorName(clicked_id) {
+  document.getElementById('id_mentorusername').value = clicked_id;
 }

@@ -330,3 +330,11 @@ a.button:hover {
     display: inline-block;
     text-align: center;
 }
+
+.matchingmentorresults{
+    float:left;
+}
+
+.mentorusername{
+    cursor: pointer;
+}

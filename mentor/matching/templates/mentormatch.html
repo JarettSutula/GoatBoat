@@ -20,34 +20,73 @@
 
 <form class="matchingform" action="" method="post" novalidate>
     <div class = "matchingformblock">
+
         {% for match in matches %}
-        <h2>Mentor - {{ match.profile.username }}</h2>
-          <div class = fieldWrapper>
-            <b>Username:</b> {{ match.profile.username }}
-          </div>
-          <div class = fieldWrapper>
-            <b>First Name:</b> {{ match.profile.firstname }}
-          </div>
-          <div class = fieldWrapper>
-            <b>Last name:</b> {{ match.profile.lastname }}
-          </div>
-          <div class = fieldWrapper>
-            <b>Email:</b> {{ match.profile.email }}
-          </div>
-          <div class = fieldWrapper>
-            <b>Profession:</b> {{ match.profile.profession }}
-          </div>
-          <div class = fieldWrapper>
-            <b>Major:</b> {{ match.profile.major }}
-          </div>
-          <div class = fieldWrapper>
-            <b>Matched Day:</b> {{ match.block.day }}
-            from {{ match.block.starttime_string }} to {{ match.block.endtime_string }}
-            <br>
-          </div>
+        <table class="matchingmentorresults">
+        <td>
+            <tr>
+                <th>
+                    <h2 class="mentorusername" onClick="enterMentorName(this.id)" id="{{ match.profile.username }}">Mentor - {{ match.profile.username }}</h2>
+                </th>
+            </tr>
+            <tr>
+                <th>
+                  <div class = fieldWrapper>
+                    <b>Username:</b> {{ match.profile.username }}
+                  </div>
+                </th>
+            </tr>
+            <tr>
+                <th>
+                  <div class = fieldWrapper>
+                    <b>First Name:</b> {{ match.profile.firstname }}
+                  </div>
+                </th>
+            </tr>
+            <tr>
+                <th>
+                  <div class = fieldWrapper>
+                    <b>Last name:</b> {{ match.profile.lastname }}
+                  </div>
+                </th>
+            </tr>
+            <tr>
+                <th>
+                  <div class = fieldWrapper>
+                    <b>Email:</b> {{ match.profile.email }}
+                  </div>
+                </th>
+            </tr>
+            <tr>
+                <th>
+                  <div class = fieldWrapper>
+                    <b>Profession:</b> {{ match.profile.profession }}
+                  </div>
+                </th>
+            </tr>
+            <tr>
+                <th>
+                  <div class = fieldWrapper>
+                    <b>Major:</b> {{ match.profile.major }}
+                  </div>
+                </th>
+            </tr>
+            <tr>
+                <th>
+                  <div class = fieldWrapper>
+                    <b>Matched Day:</b> {{ match.block.day }}
+                    from {{ match.block.starttime_string }} to {{ match.block.endtime_string }}
+                    <br>
+                  </div>
+                </th>
+            </tr>
+        </td>
+        </table>
         {% endfor %}
+
     <div class = fieldWrapper>
         <tr>
+            {{ form.as_table }}
             <td>&nbsp;</td>
             <td><input type="submit" value="Submit"></td>
         </tr>

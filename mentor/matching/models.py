@@ -145,3 +145,8 @@ class MentorMatchForm(forms.Form):
             return password
         else:
             raise ValidationError("Incorrect password.")
+
+
+class MentorSubmissionForm(forms.Form):
+    """Contains fields for matching with a mentor."""
+    mentorusername = forms.CharField(max_length=100, label='Mentor Username')

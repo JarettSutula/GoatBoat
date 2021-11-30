@@ -1,7 +1,7 @@
 import re
 from django.http.response import HttpResponseRedirect
 from django.shortcuts import render
-from matching.models import ClassChoiceForm, MentorMatchForm
+from matching.models import ClassChoiceForm, MentorMatchForm, MentorSubmissionForm
 from utils import find_matching_schedule, get_profile_snapshot
 from utils import start_db, collection_link
 
@@ -118,6 +118,8 @@ def MentorMatchingPageView(request):
    # grab the class choice from the previous from in session.
    print(request.session['classchoice'])
 
+   form = MentorSubmissionForm()
+
    submitted = False
    matches_exist = False
 
@@ -141,7 +143,7 @@ def MentorMatchingPageView(request):
                context_profile = get_profile_snapshot(mentor['username'], True)
                matches.append({'profile':context_profile, 'block':context_schedule})
 
-   return render(request, 'mentormatch.html', {'matches_exist':matches_exist, 'matches':matches})
+   return render(request, 'mentormatch.html', {'matches_exist':matches_exist, 'matches':matches, 'form':form})
 
 
 
