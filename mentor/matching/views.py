@@ -144,12 +144,14 @@ def MentorMatchingPageView(request):
                matches.append({'profile':context_profile, 'block':context_schedule})
 
        if 'username' in request.session and request.method == 'POST':
+            #set form to be bound
             form = MentorSubmissionForm(request.POST)
 
             if form.is_valid():
                 # update the user object's current match field.
                 mentorusername = form.cleaned_data.get("mentorusername")
 
+                #start db connection and update the users currentmatch field with mentor username.
                 db = start_db()
                 users = collection_link(db, 'users')
                 print(request.session['username'])
@@ -157,11 +159,13 @@ def MentorMatchingPageView(request):
 
                 submitted = True
             else:
+                #printing errors that caused form to be invalid
                 print("form not valid")
                 print(request.POST)
                 print(form.errors)
                 print(form.is_bound)
        else:
+            #printing errors when form is not a POST
             print("request is not a POST")
             print(request.POST)
             print(form.errors)
