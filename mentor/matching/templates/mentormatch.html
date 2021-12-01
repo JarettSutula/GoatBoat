@@ -15,10 +15,23 @@
 <div>
     <h2 class="formheader"> Choose a mentor to match with for {{ request.session.classchoice }}, {{ request.session.username }}!</h2>
     <h3 class="formheader"> Mentor Matching Selection Form </h3>
+    <h3 class="formheader"> Click on a mentor's username and then submit to match! Clicking on a photo will show you their details.  </h3>
 </div>
 
 
 <form class="matchingform" action="" method="post" novalidate>
+
+    <div class = fieldWrapper>
+        <tr>
+            {{ form.as_table }}
+            <td>&nbsp;</td>
+            <td><input type="submit" value="Submit"></td>
+            <td><input type="reset" value="Clear"></td>
+        </tr>
+    </div>
+    {% csrf_token %}
+    </div>
+
     <div class = "matchingformblock">
 
         {% for match in matches %}
@@ -26,10 +39,17 @@
         <td>
             <tr>
                 <th>
-                    <h2 class="mentorusername" onClick="enterMentorName(this.id)" id="{{ match.profile.username }}">Mentor - {{ match.profile.username }}</h2>
+                    <h2 class="mentorusername" onClick="enterMentorName(this.id)" id="{{ match.profile.username }}">{{ match.profile.username }}</h2>
                 </th>
             </tr>
             <tr>
+                <th>
+                    <img class="goatpro" id="{{ match.profile.username }}" onClick="openMentorDetails(this.id)" src="{% static 'images/gblogo.png' %}">
+                </th>
+            </tr>
+            <tr>
+        </table>
+        <table class="mathchingmentordetails" id="details{{ match.profile.username }}" style="width:0px;">
                 <th>
                   <div class = fieldWrapper>
                     <b>Username:</b> {{ match.profile.username }}
@@ -82,20 +102,9 @@
             </tr>
         </td>
         </table>
+
         {% endfor %}
-
-    <div class = fieldWrapper>
-        <tr>
-            {{ form.as_table }}
-            <td>&nbsp;</td>
-            <td><input type="submit" value="Submit"></td>
-        </tr>
-    </div>  
-    {% csrf_token %}
-    </div>
 </form>
-
-
 {% else %}
 
 <div>
@@ -107,3 +116,20 @@
 
 {% endif %}
 {% endblock content %}
+
+<script>
+    var list = document.getElementsByClassName("goatpro");
+
+    urls = [
+        '/static/images/profilepics/goatmask.jpg',
+        '/static/images/profilepics/Goats-maximili.jpg',
+        '/static/images/profilepics/image-20160708-24096-1mslcn7.jpg',
+        '/static/images/profilepics/o3i7agz4-720.jpg'
+    ];
+
+    for(var i = 0; i < list.length; i++){
+        randIndex = Math.floor(Math.random() * urls.length);
+        randUrl = urls[randIndex];
+   	    list[i].src = randUrl;
+    }
+</script>

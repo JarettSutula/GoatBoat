@@ -157,6 +157,7 @@ a.button:hover {
 
 .fieldWrapper{
     padding: 10px;
+    font-weight: initial;
 }
 
 .fieldWrapper topblock label{
@@ -337,4 +338,34 @@ a.button:hover {
 
 .mentorusername{
     cursor: pointer;
+    font-family: sans-serif;
+}
+
+.goatpro{
+    height:150px;
+    cursor:pointer;
+}
+
+.mathchingmentordetails{
+    float:left;
+    text-align: left;
+    margin-top: 65px;
+    font-family: sans-serif;
+    transition: width 0.5s;
+    width:0px;
+    display:none;
+}
+
+.matchingmentorresults{
+    transition: width 0.5s;
+    padding: 35px;
+    padding-top:10px;
+}
+
+#detailsmentortestuser{
+    width:0px;
+}
+
+.resultsseparator{
+
 }

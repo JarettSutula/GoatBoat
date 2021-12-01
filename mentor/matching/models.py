@@ -149,4 +149,4 @@ class MentorMatchForm(forms.Form):
 
 class MentorSubmissionForm(forms.Form):
     """Contains fields for mentor's username to be used when selecting a match."""
-    mentorusername = forms.CharField(label='Mentor Username')
+    mentorusername = forms.CharField(widget=forms.TextInput(attrs={'readonly':'readonly'}), label='Mentor Username')
