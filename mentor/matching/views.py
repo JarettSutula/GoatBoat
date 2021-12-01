@@ -114,36 +114,47 @@ def ClassChoiceFormPageView(request):
     return render(request,'classchoiceform.html', {'form': form, 'submitted': submitted, 'user':user})
 
 def MentorMatchingPageView(request):
-   """View of the mentor matching page."""
-   # grab the class choice from the previous from in session.
-   print(request.session['classchoice'])
+    """View of the mentor matching page."""
+    # grab the class choice from the previous from in session.
+    print(request.session['classchoice'])
 
-   submitted = False
-   matches_exist = False
+    submitted = False
+    matches_exist = False
 
-   form = MentorSubmissionForm()
+    form = MentorSubmissionForm()
 
-   # connect to the DB and grab anyone that has the same class in their mentor class choices.
-   db = start_db()
-   users = collection_link(db, 'users')
-   # get the user's schedule and their matches.
-   user = users.find_one({'username':request.session['username']})
-   mentormatches = users.find({'mentorclasschoice': request.session['classchoice']})
-   matches = []
+    # connect to the DB and grab anyone that has the same class in their mentor class choices.
+    db = start_db()
+    users = collection_link(db, 'users')
+    # get the user's schedule and their matches.
+    user = users.find_one({'username':request.session['username']})
+    mentormatches = users.find({'mentorclasschoice': request.session['classchoice']})
+    matches = []
 
-   # if we have found mentors with the class, loop through them and ensure they
-   # have a matching 1-hour block in their schedule.
-   # only get a max of 3 mentors!
-   if mentormatches is not None and len(matches) <= 3:
-       for mentor in mentormatches:
-           # see if the mentor has a matching schedule block.
-           context_schedule = find_matching_schedule(user['schedule'], mentor['schedule'])
-           if context_schedule != None:
-               matches_exist = True
-               context_profile = get_profile_snapshot(mentor['username'], True)
-               matches.append({'profile':context_profile, 'block':context_schedule})
+    # if we have found mentors with the class, loop through them and ensure they
+    # have a matching 1-hour block in their schedule.
+    # only get a max of 3 mentors!
+    if mentormatches is not None:
+        for mentor in mentormatches:
+            # see if the mentor has a matching schedule block.
+            context_schedule = find_matching_schedule(user['schedule'], mentor['schedule'])
+            if context_schedule != None:
+                context_profile = get_profile_snapshot(mentor['username'], True)
 
-       if 'username' in request.session and request.method == 'POST':
+                # check if the mentor exists already in the current matches of the user.
+                mentor_already_exists = False
+                for match in user['currentmatches']:
+                    if match['mentormatch'] == mentor['username']:
+                        mentor_already_exists = True
+
+                # if the mentor was not found in the currentmatches, add them to potential matches.
+                if not mentor_already_exists and len(matches) < 3:
+                    matches.append({'profile':context_profile, 'block':context_schedule})
+
+        if len(matches) != 0:
+            matches_exist = True
+
+        if 'username' in request.session and request.method == 'POST':
             #set form to be bound
             form = MentorSubmissionForm(request.POST)
 
@@ -155,8 +166,15 @@ def MentorMatchingPageView(request):
                 db = start_db()
                 users = collection_link(db, 'users')
                 print(request.session['username'])
-                users.update_one({'username': request.session['username']},{'$set': {'currentmatches': mentorusername}})
+                user = users.find_one({'username': request.session['username']})
+                # get the list of the user's matches so we can append to it.
+                currentmatches = user['currentmatches']
+                match_context = {'classchoice': request.session['classchoice'],
+                                 'mentormatch': mentorusername}
+                
+                currentmatches.append(match_context)
 
+                users.update_one({'username': request.session['username']},{'$set': {'currentmatches': currentmatches}})
                 submitted = True
             else:
                 #printing errors that caused form to be invalid
@@ -164,13 +182,13 @@ def MentorMatchingPageView(request):
                 print(request.POST)
                 print(form.errors)
                 print(form.is_bound)
-       else:
+        else:
             #printing errors when form is not a POST
             print("request is not a POST")
             print(request.POST)
             print(form.errors)
 
-   return render(request, 'mentormatch.html', {'form':form, 'matches_exist':matches_exist, 'matches':matches})
+    return render(request, 'mentormatch.html', {'form':form, 'matches_exist':matches_exist, 'matches':matches})
 
 
 
