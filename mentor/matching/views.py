@@ -346,16 +346,76 @@ def MenteeMatchingPageView(request):
                 #start db connection and update the users currentmatch field with mentor username.
                 db = start_db()
                 users = collection_link(db, 'users')
-                print(request.session['username'])
-                user = users.find_one({'username': request.session['username']})
-                # get the list of the user's matches so we can append to it.
-                currentmatches = user['currentmatches']
-                match_context = {'classchoice': request.session['classchoice'],
-                                 'menteematch': menteeusername}
                 
-                currentmatches.append(match_context)
+                # get USER and MENTEE to compare and update.
+                final_user = users.find_one({'username': request.session['username']})
+                final_mentee = users.find_one({'username': menteeusername})
 
-                users.update_one({'username': request.session['username']},{'$set': {'currentmatches': currentmatches}})
+                # get the list of the user's matches so we can append to it.
+                user_currentmatches = final_user['currentmatches']
+                user_match_context = {'classchoice': request.session['classchoice'],
+                                      'menteematch': menteeusername}
+                # update USER
+                user_currentmatches.append(user_match_context)
+                users.update_one({'username': request.session['username']},{'$set': {'currentmatches': user_currentmatches}})
+
+                # do the same for mentee
+                mentee_currentmatches = final_mentee['currentmatches']
+                mentee_match_context = {'classchoice': request.session['classchoice'],
+                                        'mentormatch': final_user['username']}
+                # update MENTEE
+                mentee_currentmatches.append(mentee_match_context)
+                users.update_one({'username': menteeusername},{'$set': {'currentmatches': mentee_currentmatches}})
+
+                #Grab the mentor class choice list, remove the classchoice that was selected at the beginning of finding
+                #a match, and update the user object.
+                mentorclasslist = final_user['mentorclasschoice']
+                mentorclasslist.remove(request.session['classchoice'])
+                users.update_one({'username': request.session['username']},{'$set': {'mentorclasschoice': mentorclasslist}})
+
+                # # update the mentee's class choices as well
+                menteeclasslist = final_mentee['menteeclasschoice']
+                menteeclasslist.remove(request.session['classchoice'])
+                users.update_one({'username': menteeusername}, {'$set': {'menteeclasschoice': menteeclasslist}} )
+
+                # changing user and mentee's schedule.
+                #  relevant_block is the 1-hour block user and mentor matched on
+                relevant_block = {}
+
+                # get the appropriate block they matched on based on username
+                for mentee in matches:
+                    if mentee['profile']['username'] == menteeusername :
+                        relevant_block = mentee['block']
+
+                # un-capitalize the block's day.
+                day_matched = relevant_block['day']
+                day_matched = day_matched.lower()
+                relevant_block['day'] = day_matched
+
+                # get the schedule blocks to update and later pass into the database.
+                userblock = final_user['schedule']
+                menteeblock = final_mentee['schedule']
+
+                # pass in the day they matched on and remove that 1-hour block.
+                final_user_day = userblock[relevant_block['day']]
+                final_mentee_day = menteeblock[relevant_block['day']]
+
+                # update the user's day block.
+                for one_hour_block in final_user_day:
+                    if one_hour_block['starttime'] == relevant_block['starttime']:
+                        final_user_day.remove(one_hour_block)
+                # update the mentee's day block
+                for one_hour_block in final_mentee_day:
+                    if one_hour_block['starttime'] == relevant_block['starttime']:
+                        final_mentee_day.remove(one_hour_block)
+                
+                # update the entire schedule block
+                userblock[relevant_block['day']] = final_user_day
+                menteeblock[relevant_block['day']] = final_user_day
+
+                # update the respective database objects with the updated schedule blocks
+                users.update_one({'username': request.session['username']},{'$set': {'schedule': userblock}})
+                users.update_one({'username': menteeusername},{'$set': {'schedule': menteeblock}})
                 submitted = True
             else:
                 #printing errors that caused form to be invalid

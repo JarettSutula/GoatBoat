@@ -67,9 +67,11 @@
     <span> <b> Mentor Matches </b> </span>
         <ul id="mentorlist">
             {% for match in context.currentmatches %}
-            <li class="detailitem">
-                {{ match.classchoice }} - {{ match.mentormatch }}
-            </li>
+                {% if match.mentormatch %}
+                    <li class="detailitem">
+                        {{ match.classchoice }} - {{ match.mentormatch }}
+                    </li>
+                {% endif %}
             {% endfor %}
         </ul>
 </div>
@@ -77,10 +79,13 @@
 <div id="menteematches">
     <span> <b> Mentee Matches </b> </span>
     <ul id="menteelist">
-        <li class="menteelistitem"> Tommy Bahama </li>
-        <li class="menteelistitem"> Coffee Drinkington </li>
-        <li class="menteelistitem"> Silverstein Bandington </li>
-        <li class="menteelistitem"> Old Halloweendecore </li>
+        {% for match in context.currentmatches %}
+                {% if match.menteematch %}
+                    <li class="detailitem">
+                        {{ match.classchoice }} - {{ match.menteematch }}
+                    </li>
+                {% endif %}
+            {% endfor %}
     </ul>
 </div>
 
