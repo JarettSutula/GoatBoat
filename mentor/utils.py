@@ -157,7 +157,8 @@ def find_matching_schedule(user1, user2):
             # check if any blocks in user2 for that day match the start time.
             for user2block in user2[day]:
                 if block['starttime'] == user2block['starttime']:
-                    matched_block = {'day': day.capitalize, 
+                    capitalized_day = day[0].upper() + day[1:]
+                    matched_block = {'day': capitalized_day,
                                     'starttime': block['starttime'], 
                                     'endtime': block['endtime'],
                                     'starttime_string': get_time_string(block['starttime']),

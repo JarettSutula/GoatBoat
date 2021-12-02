@@ -144,8 +144,9 @@ def MentorMatchingPageView(request):
                 # check if the mentor exists already in the current matches of the user.
                 mentor_already_exists = False
                 for match in user['currentmatches']:
-                    if match['mentormatch'] == mentor['username']:
-                        mentor_already_exists = True
+                    if 'mentormatch' in match:
+                        if match['mentormatch'] == mentor['username']:
+                            mentor_already_exists = True
 
                 # if the mentor was not found in the currentmatches, add them to potential matches.
                 if not mentor_already_exists and len(matches) < 3:
@@ -165,54 +166,76 @@ def MentorMatchingPageView(request):
                 #start db connection and update the users currentmatch field with mentor username.
                 db = start_db()
                 users = collection_link(db, 'users')
-                print(request.session['username'])
-                user = users.find_one({'username': request.session['username']})
-                # get the list of the user's matches so we can append to it.
-                currentmatches = user['currentmatches']
-
-                match_context = {'classchoice': request.session['classchoice'],
-                                 'mentormatch': mentorusername}
                 
-                currentmatches.append(match_context)
+                # get USER and MENTOR to compare and update.
+                final_user = users.find_one({'username': request.session['username']})
+                final_mentor = users.find_one({'username': mentorusername})
 
-                users.update_one({'username': request.session['username']},{'$set': {'currentmatches': currentmatches}})
+                # get the list of the user's matches so we can append to it.
+                user_currentmatches = final_user['currentmatches']
+                user_match_context = {'classchoice': request.session['classchoice'],
+                                      'mentormatch': mentorusername}
+                # update USER
+                user_currentmatches.append(user_match_context)
+                users.update_one({'username': request.session['username']},{'$set': {'currentmatches': user_currentmatches}})
+
+                # do the same for mentor
+                mentor_currentmatches = final_mentor['currentmatches']
+                mentor_match_context = {'classchoice': request.session['classchoice'],
+                                        'menteematch': final_user['username']}
+                # update MENTOR
+                mentor_currentmatches.append(mentor_match_context)
+                users.update_one({'username': mentorusername},{'$set': {'currentmatches': mentor_currentmatches}})
 
                 #Grab the mentee class choice list, remove the classchoice that was selected at the beginning of finding
                 #a match, and update the user object.
-                menteeclasslist = user['menteeclasschoice']
+                menteeclasslist = final_user['menteeclasschoice']
                 menteeclasslist.remove(request.session['classchoice'])
                 users.update_one({'username': request.session['username']},{'$set': {'menteeclasschoice': menteeclasslist}})
 
+                # # update the mentor's class choices as well
+                mentorclasslist = final_mentor['mentorclasschoice']
+                mentorclasslist.remove(request.session['classchoice'])
+                users.update_one({'username': mentorusername}, {'$set': {'mentorclasschoice': mentorclasslist}} )
 
-
-                #Comparing user and mentor schedule
+                # changing user and mentor's schedule.
+                #  relevant_block is the 1-hour block user and mentor matched on
                 relevant_block = {}
-                user = users.find_one({'username': mentorusername})
-#                 print(user)
-#                 print(matches)
 
+                # get the appropriate block they matched on based on username
                 for mentor in matches:
                     if mentor['profile']['username'] == mentorusername :
                         relevant_block = mentor['block']
 
-                print("user schedule:")
-                print(user['schedule'])
+                # un-capitalize the block's day.
+                day_matched = relevant_block['day']
+                day_matched = day_matched.lower()
+                relevant_block['day'] = day_matched
 
+                # get the schedule blocks to update and later pass into the database.
+                userblock = final_user['schedule']
+                mentorblock = final_mentor['schedule']
 
-                userblock = user['schedule']
+                # pass in the day they matched on and remove that 1-hour block.
+                final_user_day = userblock[relevant_block['day']]
+                final_mentor_day = mentorblock[relevant_block['day']]
 
-                for userday in userblock:
-                    if userday == relevant_block['day']:
-                        print(userday)
-                        userblock.remove(relevant_block['day'])
+                # update the user's day block.
+                for one_hour_block in final_user_day:
+                    if one_hour_block['starttime'] == relevant_block['starttime']:
+                        final_user_day.remove(one_hour_block)
+                # update the mentor's day block
+                for one_hour_block in final_mentor_day:
+                    if one_hour_block['starttime'] == relevant_block['starttime']:
+                        final_mentor_day.remove(one_hour_block)
+                
+                # update the entire schedule block
+                userblock[relevant_block['day']] = final_user_day
+                mentorblock[relevant_block['day']] = final_user_day
 
-
-
-                print("Relevant")
-                print(relevant_block)
-
-                print("User Block")
-                print(userblock)
+                # update the respective database objects with the updated schedule blocks
+                users.update_one({'username': request.session['username']},{'$set': {'schedule': userblock}})
+                users.update_one({'username': mentorusername},{'$set': {'schedule': mentorblock}})
 
                 submitted = True
             else:
