@@ -3,7 +3,15 @@
 
 {% block content %}
 
-{% if not matches_exist and request.session.username and request.session.classchoice %}
+{% if submitted %}
+<div>
+  <p class = "success">
+    Congrats on your matching, {{ request.session.username }}!
+    <a href= "\profile">Click here to return to your profile.</a>
+  </p>
+</div>
+
+{% elif not matches_exist and request.session.username and request.session.classchoice %}
 <div>
     <p class = "success">
         Sorry, there are no mentors for {{ request.session.classchoice }} at your stated schedule times.

@@ -188,7 +188,7 @@ def MentorMatchingPageView(request):
             print(request.POST)
             print(form.errors)
 
-    return render(request, 'mentormatch.html', {'form':form, 'matches_exist':matches_exist, 'matches':matches})
+    return render(request, 'mentormatch.html', {'form':form, 'matches_exist':matches_exist, 'matches':matches, 'submitted':submitted})
 
 
 
