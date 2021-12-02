@@ -1,0 +1,33 @@
+{% load static %}
+{% include "navigation.html" %}
+
+{% if request.session.username %}
+<div>
+    <h2 class="formheader"> Looking for some help, {{ request.session.username }}?</h2>
+</div>
+<div id="mentorbuttons">
+    <tr>
+        <td>
+            <a class="mentorlink" href="/match/mentorform">
+                <input class="mentorbutton" type="submit" value="I'm looking for a Mentor">
+            </a>
+        </td>
+        <td>
+            <a class="mentorlink" href="/match/menteeform">
+                <input class="mentorbutton" type="submit" value="I'm looking for a Mentee">
+            </a>
+        </td>
+    </tr>
+</div>
+
+{% else %}
+
+<div>
+    <h2 class="formheader"> You need to Login! </h2>
+    <a class="formheader" href ="/login">
+        <h3> Login </h3>
+    </a>
+</div>
+
+
+{% endif %}

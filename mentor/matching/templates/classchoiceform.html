@@ -1,0 +1,78 @@
+{% load static %}
+{% include "navigation.html" %}
+
+{% block content %}
+
+{% if submitted %}
+<div>
+    <p class = "success">
+        Your class choice was successfully added or removed. Thank you.
+        <a href= "\">Click here to go back.</a>
+    </p>
+</div>
+
+{% elif request.session.username %}
+<div>
+    <h2 class="formheader"> Choose a class to add or remove, {{ request.session.username }}!</h2>
+    <h3 class="formheader"> Class Choice Form </h3>
+</div>
+
+
+<form class="classchoiceform" action="" method="post" novalidate>
+    <div class = "classchoiceblock">
+        <div class = "fieldWrapper">
+            {{ form.username.as_hidden }}
+        </div>
+        <div class = "fieldWrapper">
+            {{ form.password.label_tag }}
+            {{ form.password }}
+            {{ form.password.errors }}
+        </div>
+        <div class = "fieldWrapper">
+            {{ form.action.label_tag }}
+            {{ form.action }}
+            {{ form.action.errors }}
+        </div>
+        <div class = "fieldWrapper">
+            {{ form.mentormenteechoice.label_tag }}
+            {{ form.mentormenteechoice }}
+            {{ form.mentormenteechoice.errors }}
+        </div>
+        <div class = "fieldWrapper">
+            {{ form.classchoice.label_tag }}
+            {{ form.classchoice }}
+            {{ form.classchoice.errors }}
+        </div>
+    </div>
+    <div class = fieldWrapper>
+        <tr>
+            <td>&nbsp;</td>
+            <td><input type="submit" value="Submit"></td>
+        </tr>
+    </div>  
+    {% csrf_token %}
+</form>
+
+<br>
+<div class = profileinfo>
+    <b>Classes Currently Looking For Help In:</b><br>
+        {% for class in user.menteeclasschoice %}
+            {{ class }}<br>
+        {% endfor %}
+    <br><b>Classes Currently Looking To Mentor:</b><br>
+        {% for class in user.mentorclasschoice %}
+            {{ class }}<br>
+        {% endfor %}
+</div>
+
+{% else %}
+
+<div>
+    <h2 class="formheader"> Please log in! </h2>
+    <a class="formheader" href ="/login">
+        <h3> Login </h3>
+    </a>
+</div>
+
+{% endif %}
+{% endblock content %}

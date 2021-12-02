@@ -1,6 +1,6 @@
   {% load static %}
   {% include "navigation.html" %}
-  {% include "createuserheader.html" %}
+  {% include "editprofileheader.html" %}
   <head>
     <link rel="stylesheet" type="text/css" href="{% static 'css/formstyle.css' %}">
   </head>
@@ -9,26 +9,12 @@
   
   {% if submitted %}
     <p class="success">
-     Your user was submitted successfully. Thank you.
+     Your profile was edited successfully. Thank you.
+     <a href="/profile">Click here to go to your profile.</a>
    </p>
  
-  {% else %}
+  {% elif request.session.username %}
    <form class="gbform" action="" method="post" novalidate>
-    <div class = "fieldWrapper">
-      <topblock>{{ form.username.label_tag }}</topblock>
-      {{ form.username }}
-      {{ form.username.errors }}
-    </div>
-    <div class = "fieldWrapper">
-      <topblock>{{ form.password.label_tag }}</topblock>
-      {{ form.password }}
-      {{ form.password.errors }}
-    </div>
-    <div class = "fieldWrapper">
-      <topblock>{{ form.confirmpassword.label_tag }}</topblock>
-      {{ form.confirmpassword }}
-      {{ form.confirmpassword.errors }}
-    </div>
     <div class = "fieldWrapper">
       <topblock>{{ form.firstname.label_tag }}</topblock>
       {{ form.firstname }}
@@ -116,5 +102,12 @@
     </tr>
     {% csrf_token %}
    </form>
+ {% else %}
+  <div id="profilenotallowed">
+    <a href="/login">
+        <h1> Please log in to view your profile. </h1>
+    </a>
+  </div>
+   
  {% endif %}
  {% endblock content %}

@@ -1,8 +1,8 @@
 from django import db, forms
-from userform.models import UserForm, LogInForm
+from userform.models import UserForm, LogInForm, ProfileSearch
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
-from utils import start_db, collection_link, create_day_array
+from utils import start_db, collection_link, create_day_array, get_profile_snapshot
 import bcrypt
 
 db_handle = start_db()
@@ -19,7 +19,6 @@ def create_user_form(request):
     if request.method == 'POST':
         form = UserForm(request.POST)
         if form.is_valid():
-            cd = form.cleaned_data
             # Base form fields
             username = form.cleaned_data.get("username")
             password = form.cleaned_data.get("password")
@@ -28,8 +27,6 @@ def create_user_form(request):
             email = form.cleaned_data.get("email")
             profession = form.cleaned_data.get("profession")
             major = form.cleaned_data.get("major")
-            mentorclasschoice = form.cleaned_data.get("mentorclasschoice")
-            menteeclasschoice = form.cleaned_data.get("menteeclasschoice")
 
             # Schedule-based form fields
             mondaystart = form.cleaned_data.get("mondaystart")
@@ -57,14 +54,14 @@ def create_user_form(request):
             sunday = create_day_array(sundaystart, sundayend)
 
             # Object to be passed into users
-            context= { 'username': username,
+            user_context= { 'username': username,
                        'firstname': firstname,
                        'lastname':lastname,
                        'email':email,
                        'profession':profession,
                        'major':major,
-                       'mentorclasschoice':mentorclasschoice,
-                       'menteeclasschoice':menteeclasschoice,
+                       'mentorclasschoice':[],
+                       'menteeclasschoice':[],
                        'currentmentors': [],
                        'currentmentees': [],
                        'schedule':{
@@ -85,14 +82,12 @@ def create_user_form(request):
             byte_password = password.encode('UTF-8')
             hashed_password = bcrypt.hashpw(byte_password, bcrypt.gensalt())
 
-            context_2 = { 'username': username,
+            login_context = { 'username': username,
                           'password': hashed_password
                         }
-
-            print(context)
             
-            users.insert_one(context)
-            logins.insert_one(context_2)
+            users.insert_one(user_context)
+            logins.insert_one(login_context)
 
             return HttpResponseRedirect('/createuser?submitted=True')
     else:
@@ -130,7 +125,28 @@ def login_form(request):
 
     else:
         form = LogInForm()
-        if 'submitted' in request.GET:
-            submitted = True
 
     return render(request, 'loginform.html', {'form': form})
+
+def profile_search(request):
+    """Provides snapshot of a user's profile."""
+    # initialize the resulting profile as blank, in case we don't get anything.
+    profile = {}
+    form = ProfileSearch()
+    if request.method == 'POST':
+        form = ProfileSearch(request.POST)
+        if form.is_valid():
+            cd = form.cleaned_data
+            username = form.cleaned_data.get("username")
+
+            # fill profile with snapshot information, use False to dictate only a snapshot.
+            profile = get_profile_snapshot(username, False)
+            # return route, if necessary.
+            # return HttpResponseRedirect('/')
+    
+    else:
+        # just return the form.
+        form = ProfileSearch()
+
+    return render(request, 'profilesearch.html', {'form': form, 'profile': profile})
+

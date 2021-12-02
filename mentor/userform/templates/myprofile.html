@@ -43,11 +43,22 @@
             <span> <b> Profession </b>  : {{ context.profession }} </span>
         </li>
         <li class="detailitem">
-            <span> <b> Classes Looking For Help In </b> : </br> {{ context.mentorclasschoice }} </span>
+            <span> <b> Classes Looking For Help In </b> : </span>
         </li>
+            {% for class in context.menteeclasschoice %}
+                <li class="detailitem">
+                {{ class }}
+                </li>
+            {% endfor %}
         <li class="detailitem">
-            <span> <b> Classes Looking To Mentor </b> : </br> {{ context.menteeclasschoice }} </span>
+            <span> <b> Classes Looking To Mentor </b> : </span>
         </li>
+            {% for class in context.mentorclasschoice %}
+                <li class="detailitem">
+                {{ class }}
+                </li>
+            {% endfor %}
+        <button onclick="location.href = '/profile/edit'">Edit Profile</button>
     </ul>
 </div>
 
@@ -55,20 +66,26 @@
 <div id="mentormatches">
     <span> <b> Mentor Matches </b> </span>
         <ul id="mentorlist">
-            <li class="mentorlistitem"> Judy Snoozy </li>
-            <li class="mentorlistitem"> Apple Banana </li>
-            <li class="mentorlistitem"> Bookshelf Shoezen </li>
-            <li class="mentorlistitem"> Carpet Dirtilley </li>
+            {% for match in context.currentmatches %}
+                {% if match.mentormatch %}
+                    <li class="detailitem">
+                        {{ match.classchoice }} - {{ match.mentormatch }}
+                    </li>
+                {% endif %}
+            {% endfor %}
         </ul>
 </div>
 
 <div id="menteematches">
-    <span> <b> Mentor Matches </b> </span>
+    <span> <b> Mentee Matches </b> </span>
     <ul id="menteelist">
-        <li class="menteelistitem"> Tommy Bahama </li>
-        <li class="menteelistitem"> Coffee Drinkington </li>
-        <li class="menteelistitem"> Silverstein Bandington </li>
-        <li class="menteelistitem"> Old Halloweendecore </li>
+        {% for match in context.currentmatches %}
+                {% if match.menteematch %}
+                    <li class="detailitem">
+                        {{ match.classchoice }} - {{ match.menteematch }}
+                    </li>
+                {% endif %}
+            {% endfor %}
     </ul>
 </div>
 
@@ -76,7 +93,7 @@
 
 <div id="profilenotallowed">
     <a href="/login">
-        <h1> You need to login! </h1>
+        <h1> Please login to view your profile. </h1>
     </a>
 </div>
 
