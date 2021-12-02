@@ -38,7 +38,8 @@ def myProfileView(request):
             'profession': result['profession'],
             'major': result['major'],
             'mentorclasschoice': result['mentorclasschoice'],
-            'menteeclasschoice': result['menteeclasschoice']
+            'menteeclasschoice': result['menteeclasschoice'],
+            'currentmatches': result['currentmatches']
         }
 
     return render(request,'myprofile.html', {'context':context})
