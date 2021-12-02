@@ -1,0 +1,59 @@
+{% load static %}
+{% include "navigation.html" %}
+
+{% if submitted %}
+<div>
+  <p class = "success">
+    Your match has been submitted, thank you!
+    <a href = "\match\menteeresults">Click here to see your matching results.</a>
+  </p>
+</div>
+
+{% elif request.session.username and not user.menteeclasschoice %}
+<div>
+  <h2 class="formheader"> There are no mentor classes on your profile yet. </h2>
+  <a class="formheader" href="/match/chooseclass">
+    <h3>Click here to add a class.</h3>
+  </a>
+</div>
+
+{% elif request.session.username %}
+<div>
+  <h2 class="formheader">{{ request.session.username }}, select a class you'd like to help others in. </h2>
+</div>
+<form class="matchingform" action="" method="post" novalidate>
+  <div class="matchingformblock">
+    <div class = "fieldWrapper">
+      {{ form.username.as_hidden }}
+    </div>
+    <div class = "fieldWrapper">
+      {{ form.password.label_tag }}
+      {{ form.password }}
+      {{ form.password.errors }}
+    </div>
+    <div class = "fieldWrapper">
+      {{ form.classchoice.label_tag }}
+      {{ form.classchoice }}
+      {{ form.classchoice.errors }}
+    </div>
+  </div>
+  <div class = fieldWrapper>
+    <tr>
+        <td>&nbsp;</td>
+        <td><input type="submit" value="Submit"></td>
+    </tr>
+  </div>  
+  {% csrf_token %}
+</form>
+
+{% else %}
+
+<div>
+  <h2 class="formheader"> Please login first! </h2>
+  <a class="formheader" href ="/login">
+    <h3> Login </h3>
+  </a>
+</div>
+
+
+{% endif %}
