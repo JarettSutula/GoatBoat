@@ -40,3 +40,9 @@ function openMentorDetails(mentor_id) {
              }, 20);
         }
 }
+
+/* When the user clicks on a mentee name on the results page,
+enter the name into the submission field*/
+function enterMenteeName(clicked_id) {
+  document.getElementById('id_menteeusername').value = clicked_id;
+}
