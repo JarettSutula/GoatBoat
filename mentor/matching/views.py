@@ -169,12 +169,20 @@ def MentorMatchingPageView(request):
                 user = users.find_one({'username': request.session['username']})
                 # get the list of the user's matches so we can append to it.
                 currentmatches = user['currentmatches']
+
                 match_context = {'classchoice': request.session['classchoice'],
                                  'mentormatch': mentorusername}
                 
                 currentmatches.append(match_context)
 
                 users.update_one({'username': request.session['username']},{'$set': {'currentmatches': currentmatches}})
+
+                #Grab the mentee class choice list, remove the classchoice that was selected at the beginning of finding
+                #a match, and update the user object.
+                menteeclasslist = user['menteeclasschoice']
+                menteeclasslist.remove(request.session['classchoice'])
+                users.update_one({'username': request.session['username']},{'$set': {'menteeclasschoice': menteeclasslist}})
+
                 submitted = True
             else:
                 #printing errors that caused form to be invalid
