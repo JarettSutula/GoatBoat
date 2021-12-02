@@ -183,6 +183,37 @@ def MentorMatchingPageView(request):
                 menteeclasslist.remove(request.session['classchoice'])
                 users.update_one({'username': request.session['username']},{'$set': {'menteeclasschoice': menteeclasslist}})
 
+
+
+                #Comparing user and mentor schedule
+                relevant_block = {}
+                user = users.find_one({'username': mentorusername})
+#                 print(user)
+#                 print(matches)
+
+                for mentor in matches:
+                    if mentor['profile']['username'] == mentorusername :
+                        relevant_block = mentor['block']
+
+                print("user schedule:")
+                print(user['schedule'])
+
+
+                userblock = user['schedule']
+
+                for userday in userblock:
+                    if userday == relevant_block['day']:
+                        print(userday)
+                        userblock.remove(relevant_block['day'])
+
+
+
+                print("Relevant")
+                print(relevant_block)
+
+                print("User Block")
+                print(userblock)
+
                 submitted = True
             else:
                 #printing errors that caused form to be invalid
