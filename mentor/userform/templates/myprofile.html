@@ -66,15 +66,16 @@
 <div id="mentormatches">
     <span> <b> Mentor Matches </b> </span>
         <ul id="mentorlist">
-            <li class="mentorlistitem"> Judy Snoozy </li>
-            <li class="mentorlistitem"> Apple Banana </li>
-            <li class="mentorlistitem"> Bookshelf Shoezen </li>
-            <li class="mentorlistitem"> Carpet Dirtilley </li>
+            {% for match in context.currentmatches %}
+            <li class="detailitem">
+                {{ match.classchoice }} - {{ match.mentormatch }}
+            </li>
+            {% endfor %}
         </ul>
 </div>
 
 <div id="menteematches">
-    <span> <b> Mentor Matches </b> </span>
+    <span> <b> Mentee Matches </b> </span>
     <ul id="menteelist">
         <li class="menteelistitem"> Tommy Bahama </li>
         <li class="menteelistitem"> Coffee Drinkington </li>

@@ -1,6 +1,6 @@
 from django.db import models
 from django import forms
-from utils import start_db, collection_link
+from utils import start_db, collection_link, dynamic_class_dropdown
 from django.core.exceptions import ValidationError
 import bcrypt
 
@@ -105,3 +105,48 @@ class ClassChoiceForm(forms.Form):
 
         # if no errors are raised, just pass back the field as cleaned.
         return classchoice
+
+
+class MentorMatchForm(forms.Form):
+    """Contains fields for matching with a mentor."""
+    username = forms.CharField(widget=forms.TextInput(attrs={'readonly':'readonly'}), label= "Username")
+    password = forms.CharField(widget=forms.PasswordInput)
+    classchoice = forms.CharField()
+
+    # allow username/class choices be passed in through kwargs.
+    def __init__(self, *args, **kwargs):
+        # pass in a dictionary for user_details.
+        user_details = kwargs.pop('user_details', None)
+        super(MentorMatchForm, self).__init__(*args, **kwargs)
+        # if there is something in it...
+        if user_details:
+            # set the username (which is hidden) to the logged-in user.
+            self.fields['username'].initial = user_details['username']
+
+            # ensure that we have the classes they are looking for by seeing if
+            # the menteeclasschoice field is empty - if true, it's not empty.
+            if user_details['menteeclasschoice']:
+                myclasses = dynamic_class_dropdown(user_details['username'], 'mentee')
+                print(myclasses)
+                self.fields['classchoice'] = forms.CharField(widget=forms.Select(choices=myclasses))
+
+    def clean_password(self):
+        """Raise error if the password is incorrect."""
+        username = self.cleaned_data['username']
+        password = self.cleaned_data['password']
+
+        db = start_db()
+        logins = collection_link(db, 'logins')
+
+        user = logins.find_one({'username': username})
+        byte_password = password.encode('UTF-8')
+
+        if bcrypt.checkpw(byte_password, user['password']):
+            return password
+        else:
+            raise ValidationError("Incorrect password.")
+
+
+class MentorSubmissionForm(forms.Form):
+    """Contains fields for mentor's username to be used when selecting a match."""
+    mentorusername = forms.CharField(widget=forms.TextInput(attrs={'readonly':'readonly'}), label='Mentor Username')

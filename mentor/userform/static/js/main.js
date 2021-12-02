@@ -1,7 +1,6 @@
 /* When the user clicks on the button,
 toggle between hiding and showing the dropdown content */
 function myProfileDropdown() {
-console.log("WOAH DUDE!");
   document.getElementById("myProfileDropdown").classList.toggle("show");
 }
 
@@ -17,4 +16,27 @@ window.onclick = function(event) {
       }
     }
   }
+}
+
+/* When the user clicks on a mentor name on the results page,
+enter the name into the submission field*/
+function enterMentorName(clicked_id) {
+  document.getElementById('id_mentorusername').value = clicked_id;
+}
+
+/* Opens mentor details section in mentor matching results */
+function openMentorDetails(mentor_id) {
+   	var list = document.getElementById("details"+mentor_id);
+
+     if(list.style.width == "0px"){
+            list.style.display = "block";
+            setTimeout(function(){
+                list.style.width = "400px";
+             }, 20);
+        } else if(list.style.width == "400px") {
+            list.style.width = "0px";
+             setTimeout(function(){
+                list.style.display = "none";
+             }, 20);
+        }
 }
