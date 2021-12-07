@@ -1,5 +1,5 @@
 import unittest
-from mentor.utils import create_day_array, collection_link, start_db, restructure_day_array
+from mentor.utils import create_day_array, collection_link, find_matching_schedule, get_time_string, start_db, restructure_day_array
 
 # Create your tests here.
 
@@ -80,6 +80,105 @@ class TestMethods(unittest.TestCase):
         # should return (8, 10).
         test_day_restructured = restructure_day_array(test_day)
         self.assertEqual(test_day_restructured, (8, 10))
+
+    def test_find_matching_schedule_none(self):
+        """Test specifically if there is no matching blocks."""
+        test_user_1 = {'monday': [{'starttime':8, 'endtime': 9}],
+                       'tuesday': [],
+                       'wednesday': [],
+                       'thursday': [],
+                       'friday': [],
+                       'saturday': [],
+                       'sunday': []
+                       }
+
+        test_user_2 = {'monday': [],
+                       'tuesday': [],
+                       'wednesday': [],
+                       'thursday': [],
+                       'friday': [],
+                       'saturday': [],
+                       'sunday': [{'starttime':10, 'endtime': 11}]
+                       }
+
+        match = find_matching_schedule(test_user_1, test_user_2)
+        self.assertIsNone(match)
+
+    def test_find_matching_schedule_true(self):
+        """Test that it matches at the same time."""
+        test_user_1 = {'monday': [{'starttime':10, 'endtime': 11}],
+                       'tuesday': [],
+                       'wednesday': [],
+                       'thursday': [],
+                       'friday': [],
+                       'saturday': [],
+                       'sunday': []
+                       }
+
+        test_user_2 = {'monday': [{'starttime':10, 'endtime': 11}],
+                       'tuesday': [],
+                       'wednesday': [],
+                       'thursday': [],
+                       'friday': [],
+                       'saturday': [],
+                       'sunday': []
+                       }
+
+        match = find_matching_schedule(test_user_1, test_user_2)
+        self.assertEqual(match['day'], 'Monday')
+        self.assertEqual(match['starttime'], 10)
+        self.assertEqual(match['endtime'], 11)
+
+    def test_find_matching_schedule_first(self):
+        """Test that it matches specifically the first block."""
+        test_user_1 = {'monday': [{'starttime':10, 'endtime': 11}],
+                       'tuesday': [],
+                       'wednesday': [{'starttime':10, 'endtime': 11}],
+                       'thursday': [],
+                       'friday': [],
+                       'saturday': [],
+                       'sunday': []
+                       }
+
+        test_user_2 = {'monday': [{'starttime':10, 'endtime': 11}],
+                       'tuesday': [],
+                       'wednesday': [{'starttime':10, 'endtime': 11}],
+                       'thursday': [],
+                       'friday': [],
+                       'saturday': [],
+                       'sunday': []
+                       }
+
+        match = find_matching_schedule(test_user_1, test_user_2)
+        self.assertEqual(match['day'], 'Monday')
+
+    def test_get_time_string_am(self):
+        """Test to make sure an early morning block is correct to display."""
+        # 8 --> 8:00am
+        test_hour = 8
+        test_hour_stringified = get_time_string(test_hour)
+        self.assertEqual(test_hour_stringified, "8:00am")
+
+    def test_get_time_string_noon(self):
+        """Test to make sure noon-block display 12:00pm not am."""
+        # 12 --> 12:00pm 
+        test_hour = 12
+        test_hour_stringified = get_time_string(test_hour)
+        self.assertEqual(test_hour_stringified, "12:00pm")
+
+    def test_get_time_string_pm(self):
+        """Test to make sure evening hours generate correctly."""
+        # 16 --> 4:00pm 
+        test_hour = 16
+        test_hour_stringified = get_time_string(test_hour)
+        self.assertEqual(test_hour_stringified, "4:00pm")
+
+    def test_get_time_string_valid(self):
+        """Test to make sure invalid times get None back."""
+        # 23 --> 11:00pm , invalid, return None
+        test_hour = 23
+        test_hour_stringified = get_time_string(test_hour)
+        self.assertIsNone(test_hour_stringified)
 
 if __name__ == '__main__':
     unittest.main()

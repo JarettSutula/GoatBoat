@@ -175,8 +175,9 @@ def get_time_string(hour):
         return str(hour) + ":00am"
     elif hour == 12: 
         return str(hour) + ":00pm"
-    else:
+    elif hour > 12 and hour < 23:
         return str(hour-12) + ":00pm"
-
+    else:
+         return None
 
 
