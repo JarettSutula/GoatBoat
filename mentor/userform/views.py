@@ -2,11 +2,10 @@ from re import sub
 import bcrypt
 from django.shortcuts import render
 from django.http import HttpResponse
-from utils import collection_link, start_db, restructure_day_array, create_day_array
+from utils import collection_link, start_db, restructure_day_array, create_day_array, log_warning, log_info, log_error
 from userform.models import UserForm, EditProfile, ResetPassword
 
 # Create your views here.
-
 
 def homePageView(request):
     """View of the home page."""
@@ -20,6 +19,10 @@ def myProfileView(request):
     """View for the user's profile.
     This will return relevant user object fields to the html page.
     """
+
+    log_info('MY PROFILE INFO')
+    log_warning('MY PROFILE WARNING')
+    log_error('MY PROFILE ERROR')
     # before checking anything, initialize blank context. If they don't log in and 
     # still find themselves on profile, blank context will remove errors.
     context = {}
