@@ -21,7 +21,6 @@ setup: requirements.txt
 #run tests
 test: 
 	python ./mentor/userform/tests.py
-	python ./mentor/formtests.py
 
 #build dist
 build:
