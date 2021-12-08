@@ -48,6 +48,9 @@ def myProfileView(request):
             'menteeclasschoice': result['menteeclasschoice'],
             'currentmatches': result['currentmatches']
         }
+    else:
+        log_warning("User is not signed in.")
+
 
     return render(request,'myprofile.html', {'context':context})
 
@@ -65,8 +68,10 @@ def userSuccess(request):
         emailvalue= form.cleaned_data.get("email")
 
 
-    context= {'form': form, 'firstname': firstname, 'lastname':lastname,
-              'submitbutton': submitbutton, 'emailvalue':emailvalue}
+        context= {'form': form, 'firstname': firstname, 'lastname':lastname,
+                  'submitbutton': submitbutton, 'emailvalue':emailvalue}
+    else:
+        log_warning("Form is not valid")
 
     return render(request, 'form.html', context)
 
@@ -187,6 +192,7 @@ def editProfileView(request):
         form = EditProfile(initial= profile_context)
     
     else:
+        log_warning("User is not logged in.")
         form = EditProfile()
     
     return render(request, 'editprofile.html', {'form':form, 'submitted':submitted})
@@ -219,6 +225,7 @@ def changePasswordView(request):
         form = ResetPassword(initial={'username': request.session['username']})
 
     else:
+        log_warning("User is not logged in.")
         form = ResetPassword()
 
     return render(request, 'resetpassword.html', {'form':form, 'submitted':submitted})

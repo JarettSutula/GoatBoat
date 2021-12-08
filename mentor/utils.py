@@ -1,8 +1,32 @@
 import os
 import pymongo
+import logging
 from dotenv import load_dotenv
 import certifi
 import re
+
+"""The following logging code allows us
+    to setup the logger once and use it
+    multiple times throughout the project
+    using log_info, log_warning, and log_error.
+    """
+
+#set up logging instance
+logging.basicConfig(filename='goatboat-out.log', encoding='utf-8',
+    format='%(asctime)s: %(levelname)s: %(message)s', level=logging.DEBUG)
+log = logging.getLogger("goatboat-logger")
+
+#log info messages
+def log_info(message):
+    log.info(message)
+
+#log warning messages
+def log_warning(message):
+    log.warning(message)
+
+#log error messages
+def log_error(message):
+    log.error(message)
 
 def start_db():
     """This starts the connection to the mongo server.
