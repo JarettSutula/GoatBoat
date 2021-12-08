@@ -1,14 +1,14 @@
 from django.urls import path
-from .views import homePageView, myProfileView, editProfileView, changePasswordView
+from .views import homePageView, myProfileView, editProfileView, changePasswordView, createUserView, loginFormView, profileSearchView
 from . import form
 
 
 urlpatterns = [
     path('', homePageView, name='home'),
-    path('createuser/', form.create_user_form, name='createuserform'),
-    path('login/', form.login_form, name='loginform'),
+    path('createuser/', createUserView, name='createuserform'),
+    path('login/', loginFormView, name='loginform'),
     path('profile/', myProfileView, name='myprofile'),
     path('profile/edit/', editProfileView, name='editprofile'),
-    path('search/', form.profile_search, name='profilesearch'),
+    path('search/', profileSearchView, name='profilesearch'),
     path('changepassword/', changePasswordView, name = 'changepassword')
 ]
