@@ -233,9 +233,7 @@ class LogInForm(forms.Form):
         byte_password = password.encode('UTF-8')
         correct_password = bcrypt.checkpw(byte_password, user['password'])
         
-        if correct_password:
-            print("it matches.")
-        else: 
+        if not correct_password:
             raise ValidationError('Incorrect username or password, please try again.')
         
 
