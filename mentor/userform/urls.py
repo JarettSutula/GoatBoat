@@ -1,7 +1,5 @@
 from django.urls import path
 from .views import homePageView, myProfileView, editProfileView, changePasswordView, createUserView, loginFormView, profileSearchView
-from . import form
-
 
 urlpatterns = [
     path('', homePageView, name='home'),
