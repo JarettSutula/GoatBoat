@@ -45,6 +45,7 @@ setup(
       entry_points={
         'console_scripts': [
             'goatboat = mentor.manage:main',
+            'hello = hello:cli'
         ],
       }
 )
