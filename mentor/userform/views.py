@@ -2,11 +2,10 @@ from re import sub
 import bcrypt
 from django.shortcuts import render
 from django.http import HttpResponse
-from utils import collection_link, start_db, restructure_day_array, create_day_array
+from utils import collection_link, start_db, restructure_day_array, create_day_array, log_warning, log_info, log_error
 from userform.models import UserForm, EditProfile, ResetPassword
 
 # Create your views here.
-
 
 def homePageView(request):
     """View of the home page."""
@@ -41,6 +40,9 @@ def myProfileView(request):
             'menteeclasschoice': result['menteeclasschoice'],
             'currentmatches': result['currentmatches']
         }
+    else:
+        log_warning("User is not signed in.")
+
 
     return render(request,'myprofile.html', {'context':context})
 
@@ -58,8 +60,10 @@ def userSuccess(request):
         emailvalue= form.cleaned_data.get("email")
 
 
-    context= {'form': form, 'firstname': firstname, 'lastname':lastname,
-              'submitbutton': submitbutton, 'emailvalue':emailvalue}
+        context= {'form': form, 'firstname': firstname, 'lastname':lastname,
+                  'submitbutton': submitbutton, 'emailvalue':emailvalue}
+    else:
+        log_warning("Form is not valid")
 
     return render(request, 'form.html', context)
 
@@ -180,6 +184,7 @@ def editProfileView(request):
         form = EditProfile(initial= profile_context)
     
     else:
+        log_warning("User is not logged in.")
         form = EditProfile()
     
     return render(request, 'editprofile.html', {'form':form, 'submitted':submitted})
@@ -212,6 +217,7 @@ def changePasswordView(request):
         form = ResetPassword(initial={'username': request.session['username']})
 
     else:
+        log_warning("User is not logged in.")
         form = ResetPassword()
 
     return render(request, 'resetpassword.html', {'form':form, 'submitted':submitted})
