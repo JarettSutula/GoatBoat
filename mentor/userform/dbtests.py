@@ -41,7 +41,7 @@ class TestDatabaseMethods(unittest.TestCase):
         self.assertNotEqual(db_collection.estimated_document_count(), 0)
     
 
-    def connect_db():
+    def connect_db(self):
         ca = certifi.where()
 
         # load the .env file in local directories for DB access.
