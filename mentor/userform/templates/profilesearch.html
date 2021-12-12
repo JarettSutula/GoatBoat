@@ -9,7 +9,7 @@
 
 <form class="profilesearchform" action="" method="post" novalidate>
     <div class = "fieldWrapper">
-            <b>{{ form.username.label_tag }}</b>
+            <strong>{{ form.username.label_tag }}</strong>
             {{ form.username }}
             {{ form.username.errors }}
             <tr>
@@ -23,10 +23,10 @@
 {% if profile.firstname %}
     <div class= "profilesearchform">
         <div class= 'profileblock'>
-            <b>First Name</b>: {{ profile.firstname }}<br>
-            <b>Last Name</b>: {{ profile.lastname }}<br>
-            <b>Profession</b>: {{ profile.profession }}<br>
-            <b>Major</b>: {{ profile.major }}<br>
+            <strong>First Name</strong>: {{ profile.firstname }}<br>
+            <strong>Last Name</strong>: {{ profile.lastname }}<br>
+            <strong>Profession</strong>: {{ profile.profession }}<br>
+            <strong>Major</strong>: {{ profile.major }}<br>
         </div>
     </div>
 
