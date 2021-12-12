@@ -30,16 +30,14 @@ class TestFormCreation(unittest.TestCase):
         """create_day_array needs to only return time frames between 8am and
         10pm, indicated by integer values 8-22."""
         with self.assertRaises(ValueError):
-            test_day1 = create_day_array(-5, 10)
+            create_day_array(-5, 10)
         with self.assertRaises(ValueError):
-            test_day2 = create_day_array(10, 23)
-            
-        test_day3 = create_day_array(8, 22)
+            create_day_array(10, 23)
 
     def test_day_array_input(self):
         """Testing the input of day_array."""
         with self.assertRaises(TypeError):
-            test_day1 = create_day_array('string', 1)
+            create_day_array('string', 1)
 
     def test_start_db(self):
         """Testing the connection to the database."""
