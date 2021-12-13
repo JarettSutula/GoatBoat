@@ -123,10 +123,6 @@ def get_profile_snapshot(username, full_profile):
                 'major': attempted_find['major']
         }
 
-        # if not passed in somehow, default to empty.
-        else:
-            profile = {}
-
     return profile
 
 def restructure_day_array(day):
@@ -152,6 +148,10 @@ def dynamic_class_dropdown(username, role):
     db = start_db()
     users = collection_link(db, 'users')
     our_user = users.find_one({'username': username})
+
+    # if the user doesn't exist, raise a value error.
+    if our_user == None:
+        raise ValueError("User not found.")
 
     # fill classes with appropriate user object values
     if role == 'mentor':
@@ -199,8 +199,9 @@ def get_time_string(hour):
         return str(hour) + ":00am"
     elif hour == 12: 
         return str(hour) + ":00pm"
-    else:
+    elif hour > 12 and hour < 23:
         return str(hour-12) + ":00pm"
-
+    else:
+         return None
 
 
