@@ -19,6 +19,8 @@ pipeline {
                 sh """
                 python3 ./mentor/userform/tests.py
                 python3 ./mentor/formtests.py
+                coverage run tests.py
+                coverage report -m
                 """
             }
         }
