@@ -9,6 +9,7 @@ pipeline {
                 which python
                 python3 -v
                 whoami
+                pwd
                 ls
                 python3 ./setup.py install --user
                 """
