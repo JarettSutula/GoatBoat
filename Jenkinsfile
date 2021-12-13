@@ -14,12 +14,11 @@ pipeline {
         }
         stage('setup') {
             steps {
+                echo 'Setup...'
                 sh """
                 which python
                 whoami
-                rm -rf GoatBoat
-                git clone git@github.com:JarettSutula/GoatBoat.git
-                export PATH=$HOME/GoatBoat/.local/bin:$PATH
+                ls
                 """
             }
         }
