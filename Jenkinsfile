@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     stages {
-        stage('setup') {
+        stage('Setup') {
             steps {
                 echo 'Setup...'
                 sh """
@@ -14,7 +14,7 @@ pipeline {
                 """
             }
         }
-        stage('test') {
+        stage('Test') {
             steps {
                 python3 ./mentor/userform/tests.py
                 python3 ./mentor/formtests.py
@@ -25,18 +25,6 @@ pipeline {
                 echo 'Building..'
             }
         }
-        stage('Build') {
-            steps {
-                echo 'Building..'
-            }
-        }
-        stage('Test') {
-            steps {
-                echo 'Testing..'
-            }
-        }
-
-
         stage('Deploy') {
             steps {
                 echo 'Deploying....'
