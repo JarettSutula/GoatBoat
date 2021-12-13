@@ -16,8 +16,10 @@ pipeline {
         }
         stage('Test') {
             steps {
+                sh """
                 python3 ./mentor/userform/tests.py
                 python3 ./mentor/formtests.py
+                """
             }
         }
         stage('Build') {
