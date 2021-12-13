@@ -19,6 +19,7 @@ pipeline {
                 which python
                 whoami
                 ls
+                python setup.py
                 """
             }
         }
