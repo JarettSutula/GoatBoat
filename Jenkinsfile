@@ -1,10 +1,5 @@
 pipeline {
-    agent {
-          docker {
-            image 'python:3'
-            label 'my-build-agent'
-          }
-    }
+    agent any
 
     stages {
         stage('Build') {
@@ -22,8 +17,10 @@ pipeline {
                 echo 'Setup...'
                 sh """
                 which python
-                python --version
-                python ./setup.py
+                python3 -v
+                whoami
+                ls
+                python3 setup.py
                 """
             }
         }
