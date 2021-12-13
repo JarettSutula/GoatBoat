@@ -20,7 +20,7 @@ pipeline {
                 python3 -v
                 whoami
                 ls
-                python3 setup.py
+                python3 ./setup.py
                 """
             }
         }
