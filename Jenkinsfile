@@ -18,7 +18,7 @@ pipeline {
                 which python
                 whoami
                 rm -rf GoatBoat
-                git clone https://github.com/JarettSutula/GoatBoat
+                git clone git@github.com:JarettSutula/GoatBoat.git
                 export PATH=$HOME/GoatBoat/.local/bin:$PATH
                 """
             }
