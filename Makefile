@@ -20,7 +20,7 @@ setup: requirements.txt
 
 #run tests
 test: 
-	python ./mentor/userform/tests.py
+	python ./mentor/tests.py
 
 #build dist
 build:

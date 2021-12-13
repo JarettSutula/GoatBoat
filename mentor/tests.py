@@ -1,5 +1,5 @@
 import unittest
-from mentor.utils import create_day_array, collection_link, find_matching_schedule, get_time_string, start_db, restructure_day_array
+from utils import create_day_array, collection_link, find_matching_schedule, get_time_string, start_db, restructure_day_array
 
 # Create your tests here.
 
@@ -50,16 +50,16 @@ class TestMethods(unittest.TestCase):
         with self.assertRaises(TypeError):
             create_day_array('string', 1)
 
-    # def test_start_db(self):
-    #     """Testing the connection to the database."""
-    #     result = start_db()
-    #     self.assertEqual(result.list_collection_names()[0], 'users')
+    def test_start_db(self):
+        """Testing the connection to the database."""
+        result = start_db()
+        self.assertEqual(result.list_collection_names()[0], 'users')
 
-    # def test_collection_link(self):
-    #     """Testing the connection to a specific collection in db."""
-    #     my_db = start_db()
-    #     my_collection = collection_link(my_db, 'users')
-    #     self.assertGreater(my_collection.estimated_document_count(), 0)
+    def test_collection_link(self):
+        """Testing the connection to a specific collection in db."""
+        my_db = start_db()
+        my_collection = collection_link(my_db, 'users')
+        self.assertGreater(my_collection.estimated_document_count(), 0)
 
     def test_restructure_day_array_valid(self):
         """Testing if an empty day returns invalid numbers."""
