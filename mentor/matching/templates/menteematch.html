@@ -43,66 +43,66 @@
     <div class = "matchingformblock">
 
         {% for match in matches %}
-        <table class="matchingmentorresults">
+        <table class="matchingmentorresults" aria-describedby="mentoroptionname">
         <td>
             <tr>
-                <th>
+                <th id="matchingmentorusername">
                     <h2 class="mentorusername" onClick="enterMenteeName(this.id)" id="{{ match.profile.username }}">{{ match.profile.username }}</h2>
                 </th>
             </tr>
             <tr>
-                <th>
-                    <img class="goatpro" id="{{ match.profile.username }}" onClick="openMentorDetails(this.id)" src="{% static 'images/gblogo.png' %}">
+                <th id="goatprofilepicture">
+                    <img class="goatpro" alt="profile picture of a goat" id="{{ match.profile.username }}" onClick="openMentorDetails(this.id)" src="{% static 'images/gblogo.png' %}">
                 </th>
             </tr>
             <tr>
         </table>
-        <table class="mathchingmentordetails" id="details{{ match.profile.username }}" style="width:0px;">
-                <th>
+        <table class="mathchingmentordetails" id="details{{ match.profile.username }}" style="width:0px;" aria-describedby="mentoroption">
+                <th id="matchingmentorusernamefield">
                   <div class = fieldWrapper>
-                    <b>Username:</b> {{ match.profile.username }}
+                    <strong>Username:</strong> {{ match.profile.username }}
                   </div>
                 </th>
             </tr>
             <tr>
-                <th>
+                <th id="matchingmentorfirstnamefield">
                   <div class = fieldWrapper>
-                    <b>First Name:</b> {{ match.profile.firstname }}
+                    <strong>First Name:</strong> {{ match.profile.firstname }}
                   </div>
                 </th>
             </tr>
             <tr>
-                <th>
+                <th id="matchingmentorlastnamefield">
                   <div class = fieldWrapper>
-                    <b>Last name:</b> {{ match.profile.lastname }}
+                    <strong>Last name:</strong> {{ match.profile.lastname }}
                   </div>
                 </th>
             </tr>
             <tr>
-                <th>
+                <th id="matchingmentoremailfield">
                   <div class = fieldWrapper>
-                    <b>Email:</b> {{ match.profile.email }}
+                    <strong>Email:</strong> {{ match.profile.email }}
                   </div>
                 </th>
             </tr>
             <tr>
-                <th>
+                <th id="matchingmentorprofessionfield">
                   <div class = fieldWrapper>
-                    <b>Profession:</b> {{ match.profile.profession }}
+                    <strong>Profession:</strong> {{ match.profile.profession }}
                   </div>
                 </th>
             </tr>
             <tr>
-                <th>
+                <th id="matchingmentormajorfield">
                   <div class = fieldWrapper>
-                    <b>Major:</b> {{ match.profile.major }}
+                    <strong>Major:</strong> {{ match.profile.major }}
                   </div>
                 </th>
             </tr>
             <tr>
-                <th>
+                <th id="matchingmentordateandtimefield">
                   <div class = fieldWrapper>
-                    <b>Matched Day:</b> {{ match.block.day }}
+                    <strong>Matched Day:</strong> {{ match.block.day }}
                     from {{ match.block.starttime_string }} to {{ match.block.endtime_string }}
                     <br>
                   </div>

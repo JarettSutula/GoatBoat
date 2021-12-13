@@ -2,7 +2,7 @@ from re import sub
 import bcrypt
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
-from utils import collection_link, start_db, restructure_day_array, create_day_array
+from utils import collection_link, start_db, restructure_day_array, create_day_array, log_warning
 from userform.models import UserForm, EditProfile, ResetPassword, LogInForm, ProfileSearch
 from utils import start_db, collection_link, create_day_array, get_profile_snapshot
 from django import db, forms

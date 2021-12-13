@@ -11,7 +11,7 @@
 <div id="picandusername">
     <ul id="profile">
         <li>
-            <img id="profilepic" src="https://th-thumbnailer.cdn-si-edu.com/S1QUXEGEJ_0Tr1aiVUSYlKxNP7s=/1000x750/filters:no_upscale()/https://tf-cmsv2-smithsonianmag-media.s3.amazonaws.com/filer/b9/d2/b9d271f3-7f66-4132-b5af-7d33844505b7/goat.jpg">
+            <img id="profilepic" alt="goatphoto" src="https://th-thumbnailer.cdn-si-edu.com/S1QUXEGEJ_0Tr1aiVUSYlKxNP7s=/1000x750/filters:no_upscale()/https://tf-cmsv2-smithsonianmag-media.s3.amazonaws.com/filer/b9/d2/b9d271f3-7f66-4132-b5af-7d33844505b7/goat.jpg">
         </li>
         <li>
             <h1 id="profilename"> {{ request.session.username }} </h1>
@@ -25,25 +25,25 @@
             <span id="accountdetails"> Account Details </span>
         </li>
         <li class="detailitem">
-            <span> <b> Username </b> : {{ context.username }}</span>
+            <span> <strong> Username </strong> : {{ context.username }}</span>
         </li>
         <li class="detailitem">
-            <span> <b> First Name </b>  : {{ context.firstname }} </span>
+            <span> <strong> First Name </strong>  : {{ context.firstname }} </span>
         </li>
         <li class="detailitem">
-            <span> <b> Last Name </b>  : {{ context.lastname }} </span>
+            <span> <strong> Last Name </strong>  : {{ context.lastname }} </span>
         </li>
         <li class="detailitem">
-            <span> <b> Email </b>  : {{ context.email }} </span>
+            <span> <strong> Email </strong>  : {{ context.email }} </span>
         </li>
         <li class="detailitem">
-            <span> <b> Major </b>  : {{ context.major }} </span>
+            <span> <strong> Major </strong>  : {{ context.major }} </span>
         </li>
         <li class="detailitem">
-            <span> <b> Profession </b>  : {{ context.profession }} </span>
+            <span> <strong> Profession </strong>  : {{ context.profession }} </span>
         </li>
         <li class="detailitem">
-            <span> <b> Classes Looking For Help In </b> : </span>
+            <span> <strong> Classes Looking For Help In </strong> : </span>
         </li>
             {% for class in context.menteeclasschoice %}
                 <li class="detailitem">
@@ -51,7 +51,7 @@
                 </li>
             {% endfor %}
         <li class="detailitem">
-            <span> <b> Classes Looking To Mentor </b> : </span>
+            <span> <strong> Classes Looking To Mentor </strong> : </span>
         </li>
             {% for class in context.mentorclasschoice %}
                 <li class="detailitem">
@@ -64,7 +64,7 @@
 
 
 <div id="mentormatches">
-    <span> <b> Mentor Matches </b> </span>
+    <span> <strong> Mentor Matches </strong> </span>
         <ul id="mentorlist">
             {% for match in context.currentmatches %}
                 {% if match.mentormatch %}
@@ -77,7 +77,7 @@
 </div>
 
 <div id="menteematches">
-    <span> <b> Mentee Matches </b> </span>
+    <span> <strong> Mentee Matches </strong> </span>
     <ul id="menteelist">
         {% for match in context.currentmatches %}
                 {% if match.menteematch %}
