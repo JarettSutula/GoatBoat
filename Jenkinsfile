@@ -17,6 +17,7 @@ pipeline {
                 echo 'Setup...'
                 sh """
                 which python
+                python -v
                 whoami
                 ls
                 python setup.py
