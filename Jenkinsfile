@@ -14,6 +14,17 @@ pipeline {
                 """
             }
         }
+        stage('test') {
+            steps {
+                python3 ./mentor/userform/tests.py
+                python3 ./mentor/formtests.py
+            }
+        }
+        stage('Build') {
+            steps {
+                echo 'Building..'
+            }
+        }
         stage('Build') {
             steps {
                 echo 'Building..'
