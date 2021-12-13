@@ -1,5 +1,5 @@
 import unittest
-from utils import create_day_array, collection_link, find_matching_schedule, get_time_string, start_db, restructure_day_array
+from utils import create_day_array, collection_link, find_matching_schedule, get_time_string, start_db, restructure_day_array, get_profile_snapshot, dynamic_class_dropdown
 
 # Create your tests here.
 
@@ -179,6 +179,74 @@ class TestMethods(unittest.TestCase):
         test_hour = 23
         test_hour_stringified = get_time_string(test_hour)
         self.assertIsNone(test_hour_stringified)
+
+    def test_get_profile_snapshot_invalid(self):
+        """Test that profile snapshots return a failed profile."""
+        # make sure we use a name that doesn't exist.
+        # should return profile = {'failed':True}
+        test_profile = get_profile_snapshot('totallyrandomguy685', True)
+        self.assertEqual(test_profile['failed'], True) 
+
+    def test_get_profile_snapshot_valid_not_full(self):
+        """Test that a valid profile returns only the shortened version
+        when the 'full_profile' parameter is false.
+        """
+        # test the 'donotdelete' user with small snapshot.
+        test_profile = get_profile_snapshot('donotdelete', False)
+
+        # see if email is returned. It shouldn't be.
+        does_email_exist = True
+        if 'firstname' in test_profile and 'email' not in test_profile:
+            # if we have the username but not the email, we got the small snapshot.
+            does_email_exist = False
+
+        self.assertFalse(does_email_exist)
+
+    def test_get_profile_snapshot_valid_full(self):
+        """Test that a valid profile returns only the shortened version
+        when the 'full_profile' parameter is true.
+        """
+        # test the 'donotdelete' user with full snapshot.
+        test_profile = get_profile_snapshot('donotdelete', True)
+
+        # see if email is returned. It should.
+        does_email_exist = False
+        if 'firstname' in test_profile and 'email' in test_profile:
+            # if we have the username and the email, we got the full snapshot.
+            does_email_exist = True
+
+        self.assertTrue(does_email_exist)
+
+    def test_dynamic_class_dropdown_invalid_mentor(self):
+        """Test dynamic class dropdown raises error if invalid as a mentor."""
+        with self.assertRaises(ValueError):
+            dynamic_class_dropdown('totallyrandomguy685', 'mentor')
+
+    def test_dynamic_class_dropdown_invalid_mentee(self):
+        """Test dynamic class dropdown raises error if invalid as a mentee."""
+        with self.assertRaises(ValueError):
+            dynamic_class_dropdown('totallyrandomguy685', 'mentee')
+
+    def test_dynamic_class_dropdown_valid_mentor(self):
+        """Test dynamic class dropdown returning correct values as a mentor."""
+        # user donotdelete has 1 class as a mentor - MATH393
+        test_class_choices = dynamic_class_dropdown('donotdelete', 'mentor')
+
+        # assert length 1 and that the class is Math393.
+        self.assertEqual(len(test_class_choices), 1)
+        self.assertEqual(test_class_choices[0][0], 'MATH393')
+        self.assertEqual(test_class_choices[0][1], 'MATH 393')
+    
+    def test_dynamic_class_dropdown_valid_mentee(self):
+        """Test dynamic class dropdown returning correct values as a mentee."""
+        # user donotdelete has 1 class as a mentee - MATH394
+        test_class_choices = dynamic_class_dropdown('donotdelete', 'mentee')
+
+        # assert length 1 and that the class is Math394.
+        self.assertEqual(len(test_class_choices), 1)
+        self.assertEqual(test_class_choices[0][0], 'MATH394')
+        self.assertEqual(test_class_choices[0][1], 'MATH 394')
+
 
 if __name__ == '__main__':
     unittest.main()

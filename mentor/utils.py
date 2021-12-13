@@ -99,10 +99,6 @@ def get_profile_snapshot(username, full_profile):
                 'major': attempted_find['major']
         }
 
-        # if not passed in somehow, default to empty.
-        else:
-            profile = {}
-
     return profile
 
 def restructure_day_array(day):
@@ -128,6 +124,10 @@ def dynamic_class_dropdown(username, role):
     db = start_db()
     users = collection_link(db, 'users')
     our_user = users.find_one({'username': username})
+
+    # if the user doesn't exist, raise a value error.
+    if our_user == None:
+        raise ValueError("User not found.")
 
     # fill classes with appropriate user object values
     if role == 'mentor':
