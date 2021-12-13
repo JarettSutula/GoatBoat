@@ -17,8 +17,8 @@ pipeline {
         stage('Test') {
             steps {
                 sh """
-                python3 coverage run ./mentor/tests.py
-                python3 coverage report -m
+                python3 -m coverage run ./mentor/tests.py
+                python3 -m coverage report -m
                 """
             }
         }
