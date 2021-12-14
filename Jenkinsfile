@@ -15,7 +15,7 @@ pipeline {
                 """
             }
         }
-        stage('Env') {
+        environment {
             MY_ENV = credentials('gb_atlas_env')
         }
 
