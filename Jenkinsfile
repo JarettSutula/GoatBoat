@@ -18,7 +18,7 @@ pipeline {
         stage('Test') {
             steps {
                 sh """
-                python3 -m coverage run ./mentor/tests.py
+                python3 -m coverage run ./mentor/jenkins-test.py
                 python3 -m coverage report -m
                 """
             }
