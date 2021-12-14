@@ -11,7 +11,7 @@ import re
     using log_info, log_warning, and log_error.
     """
 
-print getpass.getuser()
+print(getpass.getuser())
 
 #set up logging instance
 logging.basicConfig(filename='goatboat-out.log', encoding='utf-8',
