@@ -1,6 +1,10 @@
 pipeline {
     agent any
 
+    environment {
+            MY_ENV = credentials('gb_atlas_env')
+    }
+
     stages {
         stage('Setup') {
             steps {
@@ -15,10 +19,6 @@ pipeline {
                 """
             }
         }
-        environment {
-            MY_ENV = credentials('gb_atlas_env')
-        }
-
         stage('Test') {
             steps {
                 sh """
