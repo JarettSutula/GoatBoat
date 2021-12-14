@@ -22,7 +22,8 @@ pipeline {
         stage('Test') {
             steps {
                 sh """
-                echo 'MY_ENV' > .env
+                echo '$MY_ENV' > .env
+                ls
                 python3 -m coverage run ./mentor/tests.py
                 python3 -m coverage report -m
                 """
