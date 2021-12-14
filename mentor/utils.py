@@ -13,7 +13,7 @@ import re
 
 #set up logging instance
 logging.basicConfig(filename='goatboat-out.log', encoding='utf-8',
-    format='%(asctime)s: %(levelname)s: %(message)s', level=logging.DEBUG)
+    format="%(asctime)s: %(levelname)s: %(message)s", level=logging.DEBUG)
 log = logging.getLogger("goatboat-logger")
 
 #log info messages
