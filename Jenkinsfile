@@ -15,6 +15,20 @@ pipeline {
                 """
             }
         }
+        stage('Env') {
+            steps {
+                script {
+                  withCredentials([
+                    usernamePassword(credentialsId: 'gb_atlas_env',
+                      usernameVariable: 'DB_USERNAME',
+                      passwordVariable: 'DB_PASSWORD')
+                  ]) {
+                    print 'username=' + username + 'password=' + password
+                  }
+                }
+            }
+        }
+
         stage('Test') {
             steps {
                 sh """
