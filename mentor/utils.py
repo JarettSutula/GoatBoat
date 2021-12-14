@@ -10,13 +10,6 @@ import re
     multiple times throughout the project
     using log_info, log_warning, and log_error.
     """
-
-
-
-#set up logging instance
-# logging.basicConfig(filename='goatboat-out.log', encoding='utf-8',
-#     format="[%(asctime)s] %(levelname)s: %(message)s", level=logging.DEBUG)
-
 logging.basicConfig(handlers=[logging.FileHandler(filename="goatboat-out.log", 
                                                  encoding='utf-8', mode='a+')],
                     format="[%(asctime)s] %(name)s:%(levelname)s:%(message)s", 

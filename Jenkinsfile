@@ -16,22 +16,13 @@ pipeline {
             }
         }
         stage('Env') {
-            steps {
-                script {
-                  withCredentials([
-                    usernamePassword(credentialsId: 'gb_atlas_env',
-                      usernameVariable: 'DB_USERNAME',
-                      passwordVariable: 'DB_PASSWORD')
-                  ]) {
-                    print 'username=' + username + 'password=' + password
-                  }
-                }
-            }
+            MY_ENV = credentials('gb_atlas_env')
         }
 
         stage('Test') {
             steps {
                 sh """
+                echo 'MY_ENV' > .env
                 python3 -m coverage run ./mentor/tests.py
                 python3 -m coverage report -m
                 """
