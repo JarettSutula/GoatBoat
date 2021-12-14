@@ -6,8 +6,10 @@ sys.path.append(parentdir)
 
 
 if(getpass.getuser() == 'jenkins'):
+    print("THIS IS JENKINS")
     from mentor.utils import create_day_array, collection_link, find_matching_schedule, get_time_string, start_db, restructure_day_array, get_profile_snapshot, dynamic_class_dropdown
 else:
+    print("NOT JENKINS")
     from utils import create_day_array, collection_link, find_matching_schedule, get_time_string, start_db, restructure_day_array, get_profile_snapshot, dynamic_class_dropdown
 
 # Create your tests here.
