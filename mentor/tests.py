@@ -1,10 +1,14 @@
 import unittest
-import os, sys
+import os, sys, getpass
 currentdir = os.path.dirname(os.path.realpath(__file__))
 parentdir = os.path.dirname(currentdir)
 sys.path.append(parentdir)
 
-from utils import create_day_array, collection_link, find_matching_schedule, get_time_string, start_db, restructure_day_array, get_profile_snapshot, dynamic_class_dropdown
+
+if(getpass.getuser() == 'jenkins'):
+    from mentor.utils import create_day_array, collection_link, find_matching_schedule, get_time_string, start_db, restructure_day_array, get_profile_snapshot, dynamic_class_dropdown
+else:
+    from utils import create_day_array, collection_link, find_matching_schedule, get_time_string, start_db, restructure_day_array, get_profile_snapshot, dynamic_class_dropdown
 
 # Create your tests here.
 

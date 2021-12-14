@@ -1,4 +1,4 @@
-import os, getpass
+import os
 import pymongo
 import logging
 from dotenv import load_dotenv
@@ -11,7 +11,7 @@ import re
     using log_info, log_warning, and log_error.
     """
 
-print(getpass.getuser())
+
 
 #set up logging instance
 logging.basicConfig(filename='goatboat-out.log', encoding='utf-8',
