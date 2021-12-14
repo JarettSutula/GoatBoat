@@ -23,7 +23,7 @@ pipeline {
             steps {
                 sh """
                 echo '$MY_ENV' > .env
-                ls
+                ls -a
                 python3 -m coverage run ./mentor/tests.py
                 python3 -m coverage report -m
                 """
