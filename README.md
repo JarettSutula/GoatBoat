@@ -31,6 +31,7 @@ GoatBoat requires specific python packages for our team to help foster our users
 > pip install -r requirements.txt
 
 # Installation
+test for jenkins hook
 
 # Acknowledgements
 
