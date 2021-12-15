@@ -30,9 +30,8 @@ pipeline {
         }
         stage('SonarQube Analysis') {
             steps {
-                scannerHome = tool 'SonarScanner';
                 withSonarQubeEnv('Goat Boat Sonar') {
-                    sh "${scannerHome}/bin/sonar-scanner"
+                    sh "/bitnami/jenkins/home/tools/hudson.plugins.sonar.SonarRunnerInstallation/SonarQubeScanner/sonar-scanner-4.6.2.2472-linux/bin/sonar-scanner -Dsonar.projectKey=Goat-Boat"
                 }
             }
         }
