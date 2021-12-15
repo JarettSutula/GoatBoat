@@ -47,12 +47,8 @@ def start_db():
 
     # load the .env file in local directories for DB access.
     load_dotenv()
-    if(getpass.getuser() == 'jenkins'):
-        DB_USERNAME = JENKINS_DB_USER
-        DB_PASSWORD = JENKINS_DB_PASS
-    else:
-        DB_USERNAME = os.getenv('DB_USERNAME')
-        DB_PASSWORD = os.getenv('DB_PASSWORD')
+    DB_USERNAME = os.getenv('DB_USERNAME')
+    DB_PASSWORD = os.getenv('DB_PASSWORD')
 
     connection_string = "mongodb+srv://"+DB_USERNAME+":"+DB_PASSWORD+"@gb-mentoring-cluster.jhwgr.mongodb.net/?retryWrites=true&w=majority"
 
