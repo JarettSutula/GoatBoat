@@ -16,19 +16,16 @@ pipeline {
         }
         stage('Test') {
             steps {
-                sh '''
+                sh """
                 python3 -m coverage run ./mentor/tests_jenkins.py
-                '''
+                """
             }
         }
-        stage('Build') {
+        stage('Safety Check') {
             steps {
-                echo 'Building..'
-            }
-        }
-        stage('Deploy') {
-            steps {
-                echo 'Deploying....'
+                sh """
+                python3 -m safety check -r requirements.txt
+                """
             }
         }
     }
