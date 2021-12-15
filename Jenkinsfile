@@ -11,6 +11,7 @@ pipeline {
                 whoami
                 pwd
                 python3 ./setup.py install --user
+                npm install node
                 """
             }
         }
@@ -31,7 +32,7 @@ pipeline {
         stage('SonarQube Analysis') {
             steps {
                 withSonarQubeEnv('Goat Boat Sonar') {
-                    sh "/bitnami/jenkins/home/tools/hudson.plugins.sonar.SonarRunnerInstallation/SonarQubeScanner/sonar-scanner-4.6.2.2472-linux/bin/sonar-scanner -Dsonar.projectKey=Goat-Boat"
+                    sh "/bitnami/jenkins/home/tools/hudson.plugins.sonar.SonarRunnerInstallation/SonarQubeScanner/sonar-scanner-4.6.2.2472-linux/bin/sonar-scanner -Dsonar.projectKey=Goat-Boat -Dsonar.python.version=3.7"
                 }
             }
         }
