@@ -29,9 +29,11 @@ pipeline {
             }
         }
         stage('SonarQube Analysis') {
-            def scannerHome = tool 'SonarScanner';
-            withSonarQubeEnv('Goat Boat Sonar') {
-            sh "${scannerHome}/bin/sonar-scanner"
+            steps {
+                def scannerHome = tool 'SonarScanner';
+                withSonarQubeEnv('Goat Boat Sonar') {
+                    sh "${scannerHome}/bin/sonar-scanner"
+                }
             }
         }
     }
