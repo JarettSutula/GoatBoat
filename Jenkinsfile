@@ -11,7 +11,6 @@ pipeline {
                 whoami
                 pwd
                 python3 ./setup.py install --user
-                npm install node
                 """
             }
         }
