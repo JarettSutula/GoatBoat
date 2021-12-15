@@ -47,6 +47,11 @@ def start_db():
 
     # load the .env file in local directories for DB access.
     load_dotenv()
+    # if(getpass.getuser() == 'jenkins'):
+    #     # jenkins_DB will be called in JenkinsFile with parameterized credentials from Jenkins.
+    #     DB_USERNAME = JENKINS_DB_USER
+    #     DB_PASSWORD = JENKINS_DB_PASS
+    # else:
     DB_USERNAME = os.getenv('DB_USERNAME')
     DB_PASSWORD = os.getenv('DB_PASSWORD')
 
