@@ -1,11 +1,7 @@
 import unittest
-import getpass
 
 # if the user is jenkins, import utils from mentor to not have 'module not found' error.
-if(getpass.getuser() == 'jenkins'):
-    from mentor.utils import create_day_array, collection_link, find_matching_schedule, get_time_string, start_db, restructure_day_array, get_profile_snapshot, dynamic_class_dropdown
-else:
-    from utils import create_day_array, collection_link, find_matching_schedule, get_time_string, start_db, restructure_day_array, get_profile_snapshot, dynamic_class_dropdown
+from mentor.utils import create_day_array, find_matching_schedule, get_time_string, restructure_day_array
 
 class TestMethods(unittest.TestCase):
     """Tests functions from util helper functions."""

@@ -1,10 +1,6 @@
 pipeline {
     agent any
 
-    environment {
-            MY_ENV = credentials('gb_atlas_env')
-    }
-
     stages {
         stage('Setup') {
             steps {
@@ -14,7 +10,6 @@ pipeline {
                 python3 -v
                 whoami
                 pwd
-                ls
                 python3 ./setup.py install --user
                 """
             }
@@ -22,11 +17,7 @@ pipeline {
         stage('Test') {
             steps {
                 sh '''
-                echo $MY_ENV > .env
-                ls -a
-                cat .env
                 python3 -m coverage run ./mentor/tests_jenkins.py
-                python3 -m coverage report -m
                 '''
             }
         }
