@@ -3,7 +3,7 @@ version: "3.9"
 services:
   web:
     build: .
-    command: python ./mentor/manage.py runserver 0.0.0.0:8000
+    command: python ./mentor/manage.py runserver --insecure 0.0.0.0:8000
     volumes:
       - .:/code
     ports:
