@@ -1,4 +1,4 @@
-run: clean install setup check test mutatetest build
+run: clean install setup check test mutatetest build migrate
 	docker compose up
 
 #cleans up cached files
@@ -33,3 +33,6 @@ check:
 	python -m safety check -r requirements.txt
 	-python -m liccheck -s authorized_licenses.ini -r requirements.txt
 	
+migrate:
+	python ./mentor/manage.py makemigrations
+	python ./mentor/manage.py migrate
