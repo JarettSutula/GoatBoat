@@ -20,7 +20,8 @@ setup: requirements.txt
 
 #run tests
 test: 
-	python ./mentor/tests.py
+	coverage run ./mentor/tests.py
+	coverage report -m
 
 #build dist
 build:
