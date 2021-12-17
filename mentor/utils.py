@@ -1,8 +1,34 @@
 import os
 import pymongo
+import logging
 from dotenv import load_dotenv
 import certifi
 import re
+
+"""The following logging code allows us
+    to setup the logger once and use it
+    multiple times throughout the project
+    using log_info, log_warning, and log_error.
+    """
+logging.basicConfig(handlers=[logging.FileHandler(filename="goatboat-out.log", 
+                                                 encoding='utf-8', mode='a+')],
+                    format="[%(asctime)s] %(name)s:%(levelname)s:%(message)s", 
+                    datefmt="%F %A %T", 
+                    level=logging.DEBUG)
+
+log = logging.getLogger("goatboat-logger")
+
+#log info messages
+def log_info(message):
+    log.info(message)
+
+#log warning messages
+def log_warning(message):
+    log.warning(message)
+
+#log error messages
+def log_error(message):
+    log.error(message)
 
 def start_db():
     """This starts the connection to the mongo server.
@@ -14,6 +40,7 @@ def start_db():
     load_dotenv()
     DB_USERNAME = os.getenv('DB_USERNAME')
     DB_PASSWORD = os.getenv('DB_PASSWORD')
+
     connection_string = "mongodb+srv://"+DB_USERNAME+":"+DB_PASSWORD+"@gb-mentoring-cluster.jhwgr.mongodb.net/?retryWrites=true&w=majority"
 
     client = pymongo.MongoClient(connection_string, tlsCAfile = certifi.where())
@@ -99,10 +126,6 @@ def get_profile_snapshot(username, full_profile):
                 'major': attempted_find['major']
         }
 
-        # if not passed in somehow, default to empty.
-        else:
-            profile = {}
-
     return profile
 
 def restructure_day_array(day):
@@ -128,6 +151,10 @@ def dynamic_class_dropdown(username, role):
     db = start_db()
     users = collection_link(db, 'users')
     our_user = users.find_one({'username': username})
+
+    # if the user doesn't exist, raise a value error.
+    if our_user == None:
+        raise ValueError("User not found.")
 
     # fill classes with appropriate user object values
     if role == 'mentor':
@@ -175,8 +202,9 @@ def get_time_string(hour):
         return str(hour) + ":00am"
     elif hour == 12: 
         return str(hour) + ":00pm"
-    else:
+    elif hour > 12 and hour < 23:
         return str(hour-12) + ":00pm"
-
+    else:
+         return None
 
 

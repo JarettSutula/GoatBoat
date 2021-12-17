@@ -4,6 +4,7 @@ from django.shortcuts import render
 from matching.models import ClassChoiceForm, MentorMatchForm, MentorSubmissionForm, MenteeMatchForm, MenteeSubmissionForm
 from utils import find_matching_schedule, get_profile_snapshot
 from utils import start_db, collection_link
+from utils import log_warning, log_info, log_error
 
 db_handle = start_db()
 users = collection_link(db_handle, 'users')
@@ -28,7 +29,7 @@ def MentorFormPageView(request):
 
         if form.is_valid():
             classchoice = form.cleaned_data.get("classchoice")
-            print(classchoice)
+            log_info(classchoice)
 
             # if valid, move them to matching results with new classchoice in session.
             submitted = True
@@ -50,6 +51,7 @@ def MentorFormPageView(request):
         form = MentorMatchForm(user_details = user_details)
 
     else:
+        log_warning("User is not signed in.")
         form = MentorMatchForm()
 
     return render(request,'mentorform.html', {'form': form, 'submitted': submitted, 'user':user})
@@ -68,7 +70,7 @@ def MenteeFormPageView(request):
 
         if form.is_valid():
             classchoice = form.cleaned_data.get("classchoice")
-            print(classchoice)
+            log_info(classchoice)
 
             # if valid, move them to matching results with new classchoice in session.
             submitted = True
@@ -90,6 +92,7 @@ def MenteeFormPageView(request):
         form = MenteeMatchForm(user_details = user_details)
 
     else:
+        log_warning("User is not signed in.")
         form = MenteeMatchForm()
 
     return render(request,'menteeform.html', {'form': form, 'submitted': submitted, 'user':user})
@@ -148,7 +151,8 @@ def ClassChoiceFormPageView(request):
 
         form = ClassChoiceForm(initial= {'username': request.session['username']})
 
-    else: 
+    else:
+        log_warning("User is not signed in.")
         form = ClassChoiceForm()
 
     return render(request,'classchoiceform.html', {'form': form, 'submitted': submitted, 'user':user})
@@ -156,7 +160,7 @@ def ClassChoiceFormPageView(request):
 def MentorMatchingPageView(request):
     """View of the mentor matching page."""
     # grab the class choice from the previous from in session.
-    print(request.session['classchoice'])
+    log_info(request.session['classchoice'])
 
     submitted = False
     matches_exist = False
@@ -280,15 +284,16 @@ def MentorMatchingPageView(request):
                 submitted = True
             else:
                 #printing errors that caused form to be invalid
-                print("form not valid")
-                print(request.POST)
-                print(form.errors)
-                print(form.is_bound)
+                log_warning("form not valid")
+                log_warning(request.POST)
+                log_warning(form.errors)
+                log_warning(form.is_bound)
+
         else:
             #printing errors when form is not a POST
-            print("request is not a POST")
-            print(request.POST)
-            print(form.errors)
+            log_warning("request is not a POST.")
+            log_warning(request.POST)
+            log_warning(form.errors)
 
     return render(request, 'mentormatch.html', {'form':form, 'matches_exist':matches_exist, 'matches':matches, 'submitted':submitted})
 
@@ -296,7 +301,7 @@ def MentorMatchingPageView(request):
 def MenteeMatchingPageView(request):
     """View of the mentee matching page."""
     # grab the class choice from the previous from in session.
-    print(request.session['classchoice'])
+    log_info(request.session['classchoice'])
 
     submitted = False
     matches_exist = False
@@ -419,14 +424,14 @@ def MenteeMatchingPageView(request):
                 submitted = True
             else:
                 #printing errors that caused form to be invalid
-                print("form not valid")
-                print(request.POST)
-                print(form.errors)
-                print(form.is_bound)
+                log_warning("form not valid")
+                log_warning(request.POST)
+                log_warning(form.errors)
+                log_warning(form.is_bound)
         else:
             #printing errors when form is not a POST
-            print("request is not a POST")
-            print(request.POST)
-            print(form.errors)
+            log_warning('request is not a POST.')
+            log_warning(request.POST)
+            log_warning(form.errors)
 
     return render(request, 'menteematch.html', {'form':form, 'matches_exist':matches_exist, 'matches':matches, 'submitted':submitted})

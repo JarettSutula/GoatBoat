@@ -16,15 +16,14 @@
         <ul id="navbar">
             <li>
                 <a id="logoclick" href="/">
-                    <img id="gblogo" src="{% static 'images/gblogo.png' %}">
+                    <img id="gblogo" alt="goatboatlogo" src="{% static 'images/gblogo.png' %}">
                 </a>
             </li>
-            <li>
-                <a class="" href="/">Home</a>
-            </li>
+            {% if request.session.username is None %}
             <li>
                 <a class="" href="/createuser/">Create A User</a>
             </li>
+            {% endif %}
             <li>
                 <a class="" href="/search/">Search Profiles</a>
             </li>
